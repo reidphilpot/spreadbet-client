@@ -1,0 +1,11 @@
+#IntelliJ
+.idea/
+*.iml
+*.iws
+
+# NPM Files
+node_modules
+
+/dist
+
+.DS_Store

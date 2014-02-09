@@ -1,0 +1,84 @@
+.match-setup {
+    width: 700px;
+    margin: 0 auto;
+}
+
+.home-team, .away-team, .versus {
+    width: 200px;
+    float:left;
+}
+
+.versus {
+    width: 300px;
+    text-align: center;
+}
+
+.match-in-progress {
+    width: 550px;
+    margin: 0 auto;
+}
+
+.match-in-progress .versus {
+    width: 150px;
+}
+
+.versus .vs {
+    font-size: 80px;
+    margin-top: 50px;
+}
+
+.versus .score {
+    font-size: 40px;
+    margin-top: 20px;
+}
+
+.match-setup .home-team img, .match-setup .away-team img {
+    margin: 15px 0 20px 0;
+}
+
+.game-events {
+    margin-top: 15px;
+}
+.match-jumbotron {
+    padding-top: 25px;
+    padding-bottom: 20px;
+}
+
+.spreadly-table>tbody>tr>td {
+    line-height: 32px;
+}
+
+.robot-container {
+    width: 100%;
+    background: #ccffd9;
+    margin-bottom: 20px;
+    height: 150px;
+    position:relative;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.robot {
+    background: url(/img/robot.gif) no-repeat;
+    background-size: 300px;
+    background-position: -75px -40px;
+    width: 150px;
+    height: 150px;
+    position:absolute;
+    left:10px;
+    top:0;
+}
+
+.robot-feedback {
+    position:absolute;
+    left:0;
+    top:0;
+    margin: 10px 100px 20px 180px;
+
+}
+
+.robot-feedback p {
+    color: #2FBBAC;
+    font-size: 18px;
+    line-height: 28px;
+}
