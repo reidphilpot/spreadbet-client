@@ -19,11 +19,18 @@ define(function() {
             templateUrl: '/js/app/security/templates/register.html',
             controller: 'registerController'
         });
-        $routeProvider.when('/game', {
+        $routeProvider.when('/user/:username', {
+            templateUrl: '/js/app/user/templates/user.html',
+            controller: 'userController'
+        });
+        $routeProvider.when('/user/:username/game/new', {
+            templateUrl: '/js/app/game/templates/config.html',
+            controller: 'configController'
+        });
+        $routeProvider.when('/user/:username/game/:gameId', {
             templateUrl: '/js/app/game/templates/game.html',
             controller: 'gameController'
         });
-
         $routeProvider.otherwise( { redirectTo: '/'} );
         $locationProvider.html5Mode(false);
     };

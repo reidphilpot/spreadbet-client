@@ -48,7 +48,7 @@ module.exports = function (grunt) {
                         '*': {
                             'css': 'lib/require-css/css'
                         }
-                    },
+                    }
                 }
             }
         },
@@ -67,6 +67,7 @@ module.exports = function (grunt) {
                 eqnull: true,
                 browser: true,
                 globals: {
+                    console: true,
                     requirejs: true,
                     require: true,
                     jQuery: true,

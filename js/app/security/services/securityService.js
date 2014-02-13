@@ -7,7 +7,9 @@ define(["../models/user"], function(User) {
         this.xhrService = xhrService;
         this.$cookieStore = $cookieStore;
 
-        this.loggedInUser = this.isLoggedIn() ? new User("Test User") : null;
+        if(this.isLoggedIn()) {
+            this.loggedInUser = new User(JSON.parse(this.$cookieStore.get("spread.session")));
+        }
     }
 
     SecurityService.$inject = ["xhrService", "$location", "$timeout", "$cookieStore"];
@@ -26,25 +28,24 @@ define(["../models/user"], function(User) {
     };
 
     SecurityService.prototype.register = function(username, password) {
-        this.xhrService.register(username, password).done(this.handleSuccess.bind(this));
+        this.xhrService.register({ username: username, password: password})
+            .done(this.handleSuccess.bind(this));
     };
 
     SecurityService.prototype.isLoggedIn = function() {
         return this.$cookieStore.get("spread.session") !== undefined;
     };
 
-    // todo this shouldn't need to do a timeout here
-    SecurityService.prototype.handleSuccess = function (/*data, textStatus, jqXHR*/) {
-        this.$cookieStore.put("spread.session", "test");
+    SecurityService.prototype.handleSuccess = function (user) {
+        this.$cookieStore.put("spread.session", JSON.stringify(user));
 
         this.$timeout(function() {
             this.$location.path('/');
         }.bind(this));
 
-        this.loggedInUser = new User("Test User");
+        this.loggedInUser = new User(user);
     };
 
-    // todo this shouldn't need to do a timeout here
     SecurityService.prototype.handleError = function (/*data, textStatus, jqXHR*/) {
         this.$timeout(function() {
             this.error = "Incorrect username or password";

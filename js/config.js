@@ -9,7 +9,8 @@ define({
     },
     shim : {
         "angular": {
-            exports : "angular"
+            exports : "angular",
+            deps: ["jquery"]
         },
         "angular-route": {
             deps : ["angular"]

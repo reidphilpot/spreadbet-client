@@ -8,7 +8,7 @@
             <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
             <p>
                 <a ng-hide="securityService.isLoggedIn()" class="btn btn-lg btn-success" role="button" ng-click="$location.path('/register')">Register to play</a>
-                <a ng-show="securityService.isLoggedIn()" class="btn btn-lg btn-success" role="button" ng-click="$location.path('/game')">Start new game</a>
+                <a ng-show="securityService.isLoggedIn()" class="btn btn-lg btn-success" role="button" ng-click="$location.path('/user/' + securityService.loggedInUser.username + '/game/new')">Start new game</a>
             </p>
         </div>
 

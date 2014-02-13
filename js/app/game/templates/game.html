@@ -1,51 +1,14 @@
 <div class="container game">
 
-    <spreadbot></spreadbot>
+    <div spreadbot></div>
 
-    <div ng-hide="configured">
-
-        <div class="jumbotron">
-
-            <div class="match-setup clearfix">
-
-                <div class="home-team">
-                    <div>
-                        <span class="h4">Home Team</span>
-                    </div>
-                    <div>
-                        <img src="/img/{{homeTeam.id}}.png" height="175" />
-                    </div>
-                    <select class="form-control" ng-model="homeTeam" ng-options="team.name for team in teams"></select>
-                </div>
-
-                <div class="versus">
-                    <div class="vs">vs</div>
-                    <button class="btn btn-default" ng-click="configured = true">Confirm match setup</button>
-                </div>
-
-                <div class="away-team">
-                    <div>
-                        <span class="h4">Away Team</span>
-                    </div>
-                    <div>
-                        <img src="/img/{{awayTeam.id}}.png" height="175" />
-                    </div>
-                    <select class="form-control" ng-model="awayTeam" ng-options="team.name for team in teams"></select>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="jumbotron match-jumbotron" ng-show="configured">
+    <div class="jumbotron match-jumbotron">
 
         <div class="match-in-progress clearfix">
 
             <div class="home-team">
                 <div>
-                    <img src="/img/{{homeTeam.id}}.png" height="100" />
+                    <img src="/img/{{homeTeam.mnemonic}}.png" height="100" />
                 </div>
                 <div class="game-events">
                     <ul class="list-unstyled">
@@ -62,7 +25,7 @@
 
             <div class="away-team">
                 <div>
-                    <img src="/img/{{awayTeam.id}}.png" height="100" />
+                    <img src="/img/{{awayTeam.mnemonic}}.png" height="100" />
                 </div>
                 <div class="game-events">
                     <ul class="list-unstyled">
@@ -75,7 +38,7 @@
 
     </div>
 
-    <div ng-show="configured">
+    <div>
 
         <table class="table table-striped table-hover spreadly-table">
             <thead>

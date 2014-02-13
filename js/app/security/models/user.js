@@ -1,8 +1,8 @@
 define(function() {
 
-    function User(name) {
-        this.name = name;
-        this.balance = 100;
+    function User(config) {
+        this.username = config.username;
+        this.balance = config.balance;
     }
 
     return User;

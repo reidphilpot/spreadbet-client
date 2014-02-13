@@ -12,39 +12,24 @@ define(["jquery"], function($) {
         return this.$http.get(this.endPoint + '/teams');
     };
 
-    XhrService.prototype.getMarkets = function(homeTeam, awayTeam) {
-        return this.$http({
-            method: "GET",
-            url: this.endPoint + '/markets',
-            params: {
-                homeTeam: homeTeam,
-                awayTeam: awayTeam
-            }
-        });
-    };
-
-    // todo this should use an $http.post instead of jquery
     XhrService.prototype.login = function(username, password) {
-        return $.ajax({
-            type: "POST",
-            url: this.endPoint + '/login',
-            data: {
-                username: username,
-                password: password
-            }
-        });
+        return $.ajax({type: "POST", url: this.endPoint + '/login', data: { username: username, password: password }});
     };
 
-    // todo this should use an $http.post instead of jquery
-    XhrService.prototype.register = function(username, password) {
-        return $.ajax({
-            type: "POST",
-            url: this.endPoint + '/register',
-            data: {
-                username: username,
-                password: password
-            }
-        });
+    XhrService.prototype.register = function(postData) {
+        return $.ajax({type: "POST", url: this.endPoint + '/register', data: postData});
+    };
+
+    XhrService.prototype.createGame = function(putData) {
+        return $.ajax({type: "PUT", url: this.endPoint + '/game/new', data: putData});
+    };
+
+    XhrService.prototype.getGame = function(username, gameId) {
+        return this.$http.get(this.endPoint + '/user/' + username + '/game/' + gameId);
+    };
+
+    XhrService.prototype.getUser = function(username) {
+        return this.$http.get(this.endPoint + '/user/' + username);
     };
 
     XhrService.prototype.logout = function() {

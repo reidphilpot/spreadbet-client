@@ -1,78 +1,92 @@
 define([],function() {
     'use strict';
 
-    function GameCtrl($scope, xhrService, securityService, $location, $interval, socketService ) {
+    function GameCtrl(
+        $scope,
+        xhrService,
+        securityService,
+        gameService,
+        subscriptionService,
+        gameStates,
+        $location,
+        $interval,
+        socketService,
+        $routeParams
+    ){
+
         $scope.securityService = securityService;
         $scope.$location = $location;
 
-        $scope.teams = [];
+        gameService.state = gameStates.CONFIG;
+
         $scope.homeTeam = {};
         $scope.awayTeam = {};
         $scope.markets = [];
 
         $scope.homeTeamGoals = 0;
         $scope.awayTeamGoals = 0;
-
+        $scope.timer = 0;
         $scope.matchEvents = [];
 
-        $scope.configured = false;
-        $scope.started = false;
+        var subscriptionId = subscriptionService.subscribe('matchEvent', function(data) {
+           console.log("got matchEvent", data);
+        });
 
-        $scope.selectedMatch = function() {
-            return $scope.homeTeam.id + $scope.awayTeam.id;
-        };
+        console.log("subscriptionId", subscriptionId);
+
+        setTimeout(function() {
+            subscriptionService.unsubscribe(subscriptionId);
+        }, 10000);
+
+        if($routeParams.gameId) {
+            xhrService.getGame($routeParams.username, $routeParams.gameId)
+                .success(function(data) {
+                    $scope.markets = data.markets;
+                    $scope.homeTeam = data.homeTeam;
+                    $scope.awayTeam = data.awayTeam;
+                });
+        }
 
         $scope.startGame = function() {
-            xhrService.startGame();
-            $scope.started = true;
+            xhrService.startGame().success(function() {
+                var interval = $interval(function() {
+                    $scope.timer++;
+                }, 1000);
 
-            var interval = $interval(function() {
-                $scope.timer++;
-            },1000);
+                socketService.on("matchEvent", function(matchEvent) {
+                    $scope.$apply(function() {
+                        if(matchEvent.type === "Goal") {
+                            if(matchEvent.team === 0) {
+                                $scope.homeTeamGoals++;
+                            } else {
+                                $scope.awayTeamGoals++;
+                            }
+                        }
 
-            socketService.on("matchEvent", function(matchEvent) {
-                //console.log(matchEvent);
-                $scope.$apply(function() {
-                    if(matchEvent.type === "Goal") {
-                        if(matchEvent.team === 0) {
-                            $scope.homeTeamGoals++;
-                        } else {
-                        } $scope.awayTeamGoals++;
-                    }
+                        if(matchEvent.type === "FullTime") {
+                            $interval.cancel(interval);
+                        }
 
-                    if(matchEvent.type === "Fulltime") {
-                        $interval.cancel(interval);
-                    }
-
-                    $scope.matchEvents.push(matchEvent);
+                        $scope.matchEvents.push(matchEvent);
+                    });
                 });
+
             });
         };
-
-        xhrService.getTeams().success(function(data) {
-            $scope.teams = data.teams;
-
-            $scope.teams.sort(function(a, b) {
-                return a.name > b.name;
-            });
-
-            $scope.homeTeam = $scope.teams[0];
-            $scope.awayTeam = $scope.teams[1];
-        });
-
-        $scope.$watch("selectedMatch()", function() {
-            if($scope.homeTeam && $scope.awayTeam) {
-                xhrService.getMarkets($scope.homeTeam.name, $scope.awayTeam.name).success(function(data) {
-                    $scope.markets = data.markets;
-                });
-            }
-        });
-
-        $scope.timer = 0;
 
     }
 
-    GameCtrl.$inject = ["$scope", "xhrService", "securityService", "$location", "$interval", "socketService"];
+    GameCtrl.$inject = [
+        "$scope",
+        "xhrService",
+        "securityService",
+        "gameService",
+        "subscriptionService",
+        "gameStates",
+        "$location",
+        "$interval",
+        "socketService",
+        "$routeParams"];
 
     return GameCtrl;
 });

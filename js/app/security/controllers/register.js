@@ -3,10 +3,7 @@ define(['jquery'],function($) {
 
     function RegisterCtrl($scope, securityService) {
         $scope.register = function() {
-            var u = $('input[type=username]').val();
-            var p = $('input[type=password]').val();
-
-            securityService.register(u, p);
+            securityService.register($('input[type=username]').val(), $('input[type=password]').val());
         };
     }
 

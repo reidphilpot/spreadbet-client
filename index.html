@@ -40,7 +40,7 @@
                     </form>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#">Account Balance: {{securityService.loggedInUser.balance | currency:"£"}}</a></li>
-                        <li><a href="#">Logged in as: {{securityService.loggedInUser.name}}</a></li>
+                        <li><a ng-click="$location.path('/user/' + securityService.loggedInUser.username)">Logged in as: {{securityService.loggedInUser.username}}</a></li>
                     </ul>
                 </div>
 
