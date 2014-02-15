@@ -1,7 +1,7 @@
-define(function() {
+define(function () {
     'use strict';
 
-    return ['endPoint', 'subscriptionService', function(endPoint, subscriptionService) {
+    return ['endPoint', 'subscriptionService', function (endPoint, subscriptionService) {
 
         var ws = new WebSocket(endPoint.replace(/^http/, 'ws'));
 
@@ -11,7 +11,6 @@ define(function() {
 
         ws.onopen = function () {
             console.info("socket opened");
-//            ws.send("startSimulator");
         };
 
         ws.onclose = function (messageEvent) {

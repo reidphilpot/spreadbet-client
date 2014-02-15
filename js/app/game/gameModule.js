@@ -6,13 +6,7 @@ define([
     "./models/game",
     "./directives/spreadBotDirective",
     "css!./css/game.css"
-],function (
-    angular,
-    gameController,
-    configController,
-    gameStates,
-    Game,
-    spreadBotDirective) {
+], function (angular, gameController, configController, gameStates, Game, spreadBotDirective) {
     'use strict';
 
     angular.module("gameModule", [])
@@ -21,8 +15,8 @@ define([
         .factory('gameFactory', Game)
         .service('gameStates', gameStates)
         .directive('spreadBot', spreadBotDirective)
-        .run(["securityService", "$location", function(securityService, $location) {
-            if(!securityService.isLoggedIn()) {
+        .run(["securityService", "$location", function (securityService, $location) {
+            if (!securityService.isLoggedIn()) {
                 $location.path("/");
             }
         }]);

@@ -2,7 +2,9 @@
 
     <form class="form-signin login" ng-submit="login()" method="post">
         <h2 class="form-signin-heading">Please sign in</h2>
-        <p class="text-danger" ng-show="securityService.error"><span class="glyphicon glyphicon-exclamation-sign"></span> {{securityService.error}}</p>
+
+        <p class="text-danger" ng-show="securityService.error"><span
+                class="glyphicon glyphicon-exclamation-sign"></span> {{securityService.error}}</p>
         <input type="username" class="form-control" placeholder="Username" value="testuser" required autofocus>
         <input type="password" class="form-control" placeholder="Password" value="spreadbet" required>
         <label class="checkbox">

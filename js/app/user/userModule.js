@@ -1,9 +1,7 @@
 define([
     "angular",
     "./controllers/userController"
-],function (
-    angular,
-    userController) {
+], function (angular, userController) {
     'use strict';
 
     angular.module("userModule", [])

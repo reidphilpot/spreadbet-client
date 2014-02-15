@@ -1,8 +1,8 @@
-define(['jquery'],function($) {
+define(['jquery'], function ($) {
     'use strict';
 
     function RegisterCtrl($scope, securityService) {
-        $scope.register = function() {
+        $scope.register = function () {
             securityService.register($('input[type=username]').val(), $('input[type=password]').val());
         };
     }

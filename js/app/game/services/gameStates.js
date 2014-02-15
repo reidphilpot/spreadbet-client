@@ -1,10 +1,9 @@
-define(function() {
-   return function() {
-       return {
-           CONFIG: 0,
-           BET_PLACEMENT: 1,
-           DURING: 2,
-           FINISHED: 3
-       };
-   };
+define(function () {
+    return function () {
+        return {
+            BEFORE: 0,
+            DURING: 1,
+            FINISHED: 2
+        };
+    };
 });

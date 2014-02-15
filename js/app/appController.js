@@ -1,7 +1,7 @@
-define([],function() {
+define([], function () {
     'use strict';
 
-    function MainCtrl( $scope, securityService, $location ) {
+    function MainCtrl($scope, securityService, $location) {
         $scope.securityService = securityService;
         $scope.$location = $location;
     }

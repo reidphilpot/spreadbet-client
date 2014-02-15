@@ -1,47 +1,7 @@
-define([],function() {
+define([], function () {
     'use strict';
 
-    function GameCtrl(
-        $scope,
-        xhrService,
-        securityService,
-        Game,
-        subscriptionService,
-        gameStates,
-        $location,
-        socketService,
-        $routeParams
-    ){
-
-        this.$scope = $scope;
-        this.subscriptionService = subscriptionService;
-
-        $scope.game = null;
-
-        $scope.securityService = securityService;
-        $scope.$location = $location;
-        $scope.gameStates = gameStates;
-
-        $scope.timer = 0;
-
-        if($routeParams.gameId) {
-            xhrService.getGame($routeParams.username, $routeParams.gameId)
-                .success(function(data) {
-                    $scope.game = new Game(data);
-                    console.log("game created", $scope.game);
-                }.bind(this));
-        }
-
-        this.subscribeToMatchEvents();
-
-        $scope.startGame = function() {
-            $scope.game.state = gameStates.DURING;
-            socketService.send("startSimulator");
-        };
-
-    }
-
-    GameCtrl.$inject = [
+    return [
         "$scope",
         "xhrService",
         "securityService",
@@ -50,40 +10,52 @@ define([],function() {
         "gameStates",
         "$location",
         "socketService",
-        "$routeParams"];
+        "$routeParams",
 
-    GameCtrl.prototype.subscribeToMatchEvents = function() {
+        function GameCtrl($scope, xhrService, securityService, Game, subscriptionService, gameStates, $location, socketService, $routeParams) {
+            $scope.timer = 0;
+            $scope.gameStates = gameStates;
 
-        var subscriptionId = this.subscriptionService.subscribe('matchEvent', function(matchEvent) {
+            // get game by game id
+            xhrService.getGame($routeParams.username, $routeParams.gameId)
+                .success(function (data) {
+                    $scope.game = new Game(data);
+                    console.log("game created", $scope.game);
+                });
 
-            this.$scope.$apply(function() {
+            // send request to start simulation on server
+            $scope.startSimulation = function () {
+                $scope.game.state = gameStates.DURING;
+                socketService.send("startSimulation");
+            };
 
-                switch(matchEvent.type) {
-                    case "Clock":
-                        this.$scope.timer = matchEvent.time;
-                        break;
+            // subscribe to simulated match events
+            var subscriptionId = subscriptionService.subscribe('matchEvent', function (matchEvent) {
+                $scope.$apply(function () {
+                    switch (matchEvent.type) {
+                        case "Clock":
+                            $scope.timer = matchEvent.time;
+                            break;
 
-                    case "Goal":
-                        if(matchEvent.team === 0) {
-                            this.$scope.game.homeTeam.score++;
-                        } else {
-                            this.$scope.game.awayTeam.score++;
-                        }
-                        break;
+                        case "Goal":
+                            if (matchEvent.team === 0) {
+                                $scope.game.homeTeam.score++;
+                            } else {
+                                $scope.game.awayTeam.score++;
+                            }
+                            break;
 
-                    case "FullTime":
-                        this.subscriptionService.unsubscribe(subscriptionId);
-                        break;
-                }
+                        case "FullTime":
+                            subscriptionService.unsubscribe(subscriptionId);
+                            break;
+                    }
+                    $scope.game.matchEvents.push(matchEvent);
 
-                this.$scope.game.matchEvents.push(matchEvent);
+                });
+            });
 
-            }.bind(this));
+        }
 
-        }.bind(this));
-
-    };
-
-    return GameCtrl;
+    ];
 });
 

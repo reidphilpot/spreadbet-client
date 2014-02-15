@@ -1,11 +1,11 @@
-define(['text!../templates/spreadbot.html'], function(template) {
+define(['text!../templates/spreadbot.html'], function (template) {
     'use strict';
 
-    return function() {
+    return function () {
         return {
-            restrict : "EA",
-            template : template,
-            replace : true
+            restrict: "EA",
+            template: template,
+            replace: true
         };
     };
 

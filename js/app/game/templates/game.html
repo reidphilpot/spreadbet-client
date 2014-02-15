@@ -8,28 +8,34 @@
 
             <div class="home-team">
                 <div>
-                    <img src="/img/{{game.homeTeam.mnemonic}}.png" height="100" />
+                    <img src="/img/{{game.homeTeam.mnemonic}}.png" height="100"/>
                 </div>
                 <div class="game-events">
                     <ul class="list-unstyled">
-                        <li ng-repeat="matchEvent in game.matchEvents | filter:{ team: 0, type: 'Goal' }">'{{matchEvent.time}} {{matchEvent.type}}</li>
+                        <li ng-repeat="matchEvent in game.matchEvents | filter:{ team: 0, type: 'Goal' }">
+                            '{{matchEvent.time}} {{matchEvent.type}}
+                        </li>
                     </ul>
                 </div>
             </div>
 
             <div class="versus">
-                <div class="score">{{game.homeTeam.score}} - {{game.awayTeam.score}} </div>
+                <div class="score">{{game.homeTeam.score}} - {{game.awayTeam.score}}</div>
                 <div class="countdown" ng-show="game.state === gameStates.DURING">{{timer}}:00</div>
-                <button class="btn btn-default" ng-click="startGame()" ng-hide="game.state === gameStates.DURING">Kick-off</button>
+                <button class="btn btn-default" ng-click="startSimulation()" ng-hide="game.state === gameStates.DURING">
+                    Kick-off
+                </button>
             </div>
 
             <div class="away-team">
                 <div>
-                    <img src="/img/{{game.awayTeam.mnemonic}}.png" height="100" />
+                    <img src="/img/{{game.awayTeam.mnemonic}}.png" height="100"/>
                 </div>
                 <div class="game-events">
                     <ul class="list-unstyled">
-                        <li ng-repeat="matchEvent in game.matchEvents | filter:{ team: 1, type: 'Goal' }">'{{matchEvent.time}} {{matchEvent.type}}</li>
+                        <li ng-repeat="matchEvent in game.matchEvents | filter:{ team: 1, type: 'Goal' }">
+                            '{{matchEvent.time}} {{matchEvent.type}}
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -49,12 +55,16 @@
             <th style="width:125px;text-align:center"></th>
             </thead>
             <tbody>
-            <tr ng-repeat="market in markets">
+            <tr ng-repeat="market in game.markets">
                 <td>{{market.title}}</td>
                 <td style="text-align:center">{{market.soFar}}</td>
-                <td style="text-align:center"><button class="btn btn-danger">Sell</button></td>
+                <td style="text-align:center">
+                    <button class="btn btn-danger">Sell</button>
+                </td>
                 <td style="text-align:center">{{market.sellPrice}} - {{market.buyPrice}}</td>
-                <td style="text-align:center"><button class="btn btn-success">Buy</button></td>
+                <td style="text-align:center">
+                    <button class="btn btn-success">Buy</button>
+                </td>
             </tr>
             </tbody>
         </table>

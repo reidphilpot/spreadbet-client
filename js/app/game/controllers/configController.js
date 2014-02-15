@@ -1,4 +1,4 @@
-define([],function() {
+define([], function () {
     'use strict';
 
     function GameConfigCtrl($scope, xhrService, securityService, $location) {
@@ -6,12 +6,16 @@ define([],function() {
         $scope.homeTeam = {};
         $scope.awayTeam = {};
 
-        xhrService.getTeams().success(function(teams) {
+        xhrService.getTeams().success(function (teams) {
             $scope.teams = teams;
 
-            $scope.teams.sort(function(a, b) {
-                if(a.name < b.name) { return -1; }
-                if(a.name > b.name) { return 1;  }
+            $scope.teams.sort(function (a, b) {
+                if (a.name < b.name) {
+                    return -1;
+                }
+                if (a.name > b.name) {
+                    return 1;
+                }
                 return 0;
             });
 
@@ -19,16 +23,16 @@ define([],function() {
             $scope.awayTeam = $scope.teams[1];
         });
 
-        $scope.createGame = function() {
+        $scope.createGame = function () {
             xhrService.createGame({
                 homeTeam: $scope.homeTeam._id,
                 awayTeam: $scope.awayTeam._id
             })
-            .then(function(data) {
-                $scope.$apply(function() {
-                    $location.path('/user/' + securityService.loggedInUser.username + '/game/' + data.game._id);
+                .then(function (data) {
+                    $scope.$apply(function () {
+                        $location.path('/user/' + securityService.loggedInUser.username + '/game/' + data.game._id);
+                    });
                 });
-            });
         };
 
     }

@@ -16,32 +16,31 @@ module.exports = function (grunt) {
                     name: "main",
                     baseUrl: "js",
                     mainConfigFile: "js/config.js",
-                    out: "dist/<%= pkg.name %>.js",
+                    out: "dist/<%= pkg.name %>-min.js",
                     optimize: "uglify",
                     findNestedDependencies: true,
-                    paths : {
+                    paths: {
                         "jquery": "lib/jquery/jquery.min",
                         "angular": "lib/angular/angular",
                         "angular-route": "lib/angular-route/angular-route",
                         "angular-cookies": "lib/angular-cookies/angular-cookies",
-                        "sockets.io": "lib/socket.io-client/dist/socket.io.min",
                         "text": "lib/requirejs-text/text"
                     },
-                    shim : {
+                    shim: {
                         "angular": {
-                            exports : "angular"
+                            exports: "angular"
                         },
                         "angular-route": {
-                            deps : ["angular"]
+                            deps: ["angular"]
                         },
                         "angular-cookies": {
-                            deps : ["angular"]
+                            deps: ["angular"]
                         },
                         "sockets.io": {
-                            exports : "io"
+                            exports: "io"
                         },
                         "jquery": {
-                            exports : "$"
+                            exports: "$"
                         }
                     },
                     map: {
@@ -71,13 +70,11 @@ module.exports = function (grunt) {
                     requirejs: true,
                     require: true,
                     jQuery: true,
-                    define: true,
-                    describe: true,
-                    it: true
+                    define: true
                 }
             },
             lib_test: {
-                src: ['js/*.js', 'js/app/*.js', 'js/app/**/*.js', 'test/spec/*.js']
+                src: ['js/*.js', 'js/app/*.js', 'js/app/**/*.js']
             }
         },
         watch: {

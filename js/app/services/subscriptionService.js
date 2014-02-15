@@ -1,4 +1,4 @@
-define(function() {
+define(function () {
     'use strict';
 
     function SubscriptionService() {
@@ -13,7 +13,7 @@ define(function() {
      * @param cb
      * @returns {string}
      */
-    SubscriptionService.prototype.subscribe = function(topic, cb) {
+    SubscriptionService.prototype.subscribe = function (topic, cb) {
         this.validateTopic(topic);
 
         var subscriptionId = this.nextSubscriptionIdForTopic(topic);
@@ -37,7 +37,7 @@ define(function() {
      *
      * @param subscriptionId
      */
-    SubscriptionService.prototype.unsubscribe = function(subscriptionId) {
+    SubscriptionService.prototype.unsubscribe = function (subscriptionId) {
         console.info('removing subscription ' + subscriptionId);
 
         var topic = this.topicFromSubscriptionId(subscriptionId);
@@ -48,7 +48,8 @@ define(function() {
             if (Object.keys(subs).length === 0) {
                 delete this._subscriptions[topic];
             }
-            this._totalSubscriptions--;
+            this._subscriptionCounters[topic] = Math.max(this._subscriptionCounters[topic]-1, 0);
+            this._totalSubscriptions = Math.max(this._totalSubscriptions-1, 0);
         }
     };
 
@@ -125,6 +126,17 @@ define(function() {
         }
 
         return parts[0];
+    };
+
+    /**
+     * Returns an associative array of all subscriptions to a topic, indexed by subscription id.
+     * @param topic
+     * @returns {*}
+     */
+    SubscriptionService.prototype.subscriptionsForTopic = function (topic) {
+        this.validateTopic(topic, true);
+
+        return this._subscriptions[topic];
     };
 
     return SubscriptionService;

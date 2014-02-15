@@ -1,7 +1,7 @@
-define(function() {
+define(function () {
     'use strict';
 
-    return function($routeProvider, $locationProvider) {
+    return function ($routeProvider, $locationProvider) {
         // routes
         $routeProvider.when('/', {
             templateUrl: '/js/app/templates/main.html',
@@ -31,7 +31,7 @@ define(function() {
             templateUrl: '/js/app/game/templates/game.html',
             controller: 'gameController'
         });
-        $routeProvider.otherwise( { redirectTo: '/'} );
+        $routeProvider.otherwise({ redirectTo: '/'});
         $locationProvider.html5Mode(false);
     };
 

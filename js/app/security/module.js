@@ -6,13 +6,7 @@ define([
     "./controllers/register",
     "./services/securityService",
     "css!./css/login.css"
-],function (
-    angular,
-    angularCookies,
-    loginController,
-    logoutController,
-    registerController,
-    securityService) {
+], function (angular, angularCookies, loginController, logoutController, registerController, securityService) {
     'use strict';
 
     angular.module("securityModule", ['ngCookies'])

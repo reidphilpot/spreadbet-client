@@ -1,4 +1,4 @@
-define(function() {
+define(function () {
 
     function User(config) {
         this.username = config.username;
