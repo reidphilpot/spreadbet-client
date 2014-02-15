@@ -1,9 +1,9 @@
 define(function () {
     return function () {
         return {
-            BEFORE: 0,
+            BEFORE: -1,
             DURING: 1,
-            FINISHED: 2
+            FINISHED: 0
         };
     };
 });

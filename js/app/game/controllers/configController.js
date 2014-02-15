@@ -24,10 +24,7 @@ define([], function () {
         });
 
         $scope.createGame = function () {
-            xhrService.createGame({
-                homeTeam: $scope.homeTeam._id,
-                awayTeam: $scope.awayTeam._id
-            })
+            xhrService.createGame({ homeTeam: $scope.homeTeam._id, awayTeam: $scope.awayTeam._id })
                 .then(function (data) {
                     $scope.$apply(function () {
                         $location.path('/user/' + securityService.loggedInUser.username + '/game/' + data.game._id);

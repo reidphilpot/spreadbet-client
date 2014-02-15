@@ -21,7 +21,7 @@
 
             <div class="versus">
                 <div class="score">{{game.homeTeam.score}} - {{game.awayTeam.score}}</div>
-                <div class="countdown" ng-show="game.state === gameStates.DURING">{{timer}}:00</div>
+                <div class="countdown" ng-show="game.state === gameStates.DURING">{{game.clock}}:00</div>
                 <button class="btn btn-default" ng-click="startSimulation()" ng-hide="game.state === gameStates.DURING">
                     Kick-off
                 </button>
