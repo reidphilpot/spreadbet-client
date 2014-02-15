@@ -8,7 +8,7 @@ define(['../../js/app/services/subscriptionService.js'], function(Subscription) 
             subscriptionService = new Subscription();
         });
 
-        it("Topic name is valid", function () {
+        it("topic name is valid", function () {
             var topics = ['test', 't', 'test_1', 'test.1', 'test/1'];
 
             for (var i = 0; i < topics.length; i++) {

@@ -13,21 +13,13 @@ requirejs.config({
 
     paths: {
         'jquery': '../js/lib/jquery/jquery-min',
-        'angular': '../js/lib/angular/angular',
-        'angular-route': '../js/lib/angular-route/angular-route',
-        'angular-cookies': '../js/lib/angular-cookies/angular-cookies'
+        'angular': '../js/lib/angular/angular'
     },
 
     shim: {
         "angular": {
             exports: "angular",
             deps: ["jquery"]
-        },
-        "angular-route": {
-            deps: ["angular"]
-        },
-        "angular-cookies": {
-            deps: ["angular"]
         },
         "jquery": {
             exports: "$"

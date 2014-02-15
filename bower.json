@@ -1,26 +1,26 @@
 {
-  "name": "spreadbet-client",
-  "version": "0.0.0",
-  "dependencies": {
-    "jquery": "1.9",
-    "requirejs": "~2.1.10",
-    "requirejs-text": "~2.0.10",
-    "angular": "~1.2.11",
-    "angular-route": "~1.2.10",
-    "angular-cookies": "~1.2.11",
-    "bootstrap": "~3.1.0",
-    "require-css": "~0.1.2"
-  },
-  "authors": [
-    "Reid Philpot <reidphilpot@gmail.com>"
-  ],
-  "license": "MIT",
-  "private": true,
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ]
+    "name": "spreadbet-client",
+    "version": "0.0.0",
+    "dependencies": {
+        "jquery": "1.9",
+        "requirejs": "~2.1.10",
+        "requirejs-text": "~2.0.10",
+        "angular": "~1.2.11",
+        "angular-route": "~1.2.10",
+        "angular-cookies": "~1.2.11",
+        "bootstrap": "~3.1.0",
+        "require-css": "~0.1.2"
+    },
+    "authors": [
+        "Reid Philpot <reidphilpot@gmail.com>"
+    ],
+    "license": "MIT",
+    "private": true,
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ]
 }
