@@ -2,25 +2,25 @@ define([
     "angular",
     "./controllers/gameController",
     "./controllers/configController",
-    "./services/gameService",
     "./services/gameStates",
-    "./directives/spreadbotDirective",
+    "./models/game",
+    "./directives/spreadBotDirective",
     "css!./css/game.css"
 ],function (
     angular,
     gameController,
     configController,
-    gameService,
     gameStates,
-    spreadbotDirective) {
+    Game,
+    spreadBotDirective) {
     'use strict';
 
     angular.module("gameModule", [])
         .controller('gameController', gameController)
         .controller('configController', configController)
-        .service('gameService', gameService)
+        .factory('gameFactory', Game)
         .service('gameStates', gameStates)
-        .directive('spreadbot', spreadbotDirective)
+        .directive('spreadBot', spreadBotDirective)
         .run(["securityService", "$location", function(securityService, $location) {
             if(!securityService.isLoggedIn()) {
                 $location.path("/");

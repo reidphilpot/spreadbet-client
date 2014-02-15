@@ -1,12 +1,10 @@
 define([],function() {
     'use strict';
 
-    function GameConfigCtrl($scope, xhrService, securityService, gameService, gameStates, $location) {
+    function GameConfigCtrl($scope, xhrService, securityService, $location) {
         $scope.teams = [];
         $scope.homeTeam = {};
         $scope.awayTeam = {};
-
-        gameService.state = gameStates.BET_PLACEMENT;
 
         xhrService.getTeams().success(function(teams) {
             $scope.teams = teams;
@@ -35,7 +33,7 @@ define([],function() {
 
     }
 
-    GameConfigCtrl.$inject = ["$scope", "xhrService", "securityService", "gameService", "gameStates", "$location"];
+    GameConfigCtrl.$inject = ["$scope", "xhrService", "securityService", "$location"];
 
     return GameConfigCtrl;
 });

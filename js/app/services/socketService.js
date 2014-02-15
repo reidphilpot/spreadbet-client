@@ -9,8 +9,9 @@ define(function() {
             console.error("socket error", messageEvent);
         };
 
-        ws.onopen = function (messageEvent) {
-            console.info("socket opened", messageEvent);
+        ws.onopen = function () {
+            console.info("socket opened");
+//            ws.send("startSimulator");
         };
 
         ws.onclose = function (messageEvent) {
@@ -19,9 +20,6 @@ define(function() {
 
         ws.onmessage = function (messageEvent) {
             var msg = JSON.parse(messageEvent.data);
-
-            console.debug("websocket message received: ", msg);
-
             subscriptionService.publish(msg.topic, msg.data);
         };
 

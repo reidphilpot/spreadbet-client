@@ -1,4 +1,5 @@
 define(function() {
+    'use strict';
 
     function SubscriptionService() {
         this._subscriptions = {};
@@ -26,6 +27,8 @@ define(function() {
         this._subscriptions[topic][subscriptionId] = cb;
 
         this._totalSubscriptions++;
+
+        console.info('registering subscription ' + subscriptionId);
 
         return subscriptionId;
     };
@@ -69,7 +72,7 @@ define(function() {
      * Generates the next unique subscription id for a topic.
      *
      * Subscription ids will be of the format <topic>-<counter> where <counter>
-     * is an incrementing integer unique to the topic.
+     * is an incrementing integer unique to the topic.'use strict';
      *
      * @param topic
      * @returns {string}

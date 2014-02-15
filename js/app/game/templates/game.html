@@ -1,6 +1,6 @@
 <div class="container game">
 
-    <div spreadbot></div>
+    <div spread-bot></div>
 
     <div class="jumbotron match-jumbotron">
 
@@ -8,28 +8,28 @@
 
             <div class="home-team">
                 <div>
-                    <img src="/img/{{homeTeam.mnemonic}}.png" height="100" />
+                    <img src="/img/{{game.homeTeam.mnemonic}}.png" height="100" />
                 </div>
                 <div class="game-events">
                     <ul class="list-unstyled">
-                        <li ng-repeat="matchEvent in matchEvents | filter:{ team: 0, type: 'Goal' }">'{{matchEvent.time}} {{matchEvent.type}}</li>
+                        <li ng-repeat="matchEvent in game.matchEvents | filter:{ team: 0, type: 'Goal' }">'{{matchEvent.time}} {{matchEvent.type}}</li>
                     </ul>
                 </div>
             </div>
 
             <div class="versus">
-                <div class="score">{{homeTeamGoals}} - {{awayTeamGoals}} </div>
-                <div class="countdown" ng-show="started">{{timer}}:00</div>
-                <button class="btn btn-default" ng-click="startGame()" ng-hide="started">Kick-off</button>
+                <div class="score">{{game.homeTeam.score}} - {{game.awayTeam.score}} </div>
+                <div class="countdown" ng-show="game.state === gameStates.DURING">{{timer}}:00</div>
+                <button class="btn btn-default" ng-click="startGame()" ng-hide="game.state === gameStates.DURING">Kick-off</button>
             </div>
 
             <div class="away-team">
                 <div>
-                    <img src="/img/{{awayTeam.mnemonic}}.png" height="100" />
+                    <img src="/img/{{game.awayTeam.mnemonic}}.png" height="100" />
                 </div>
                 <div class="game-events">
                     <ul class="list-unstyled">
-                        <li ng-repeat="matchEvent in matchEvents | filter:{ team: 1, type: 'Goal' }">'{{matchEvent.time}} {{matchEvent.type}}</li>
+                        <li ng-repeat="matchEvent in game.matchEvents | filter:{ team: 1, type: 'Goal' }">'{{matchEvent.time}} {{matchEvent.type}}</li>
                     </ul>
                 </div>
             </div>
