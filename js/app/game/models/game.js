@@ -1,6 +1,7 @@
 define(function () {
+    'use strict';
 
-    return ['gameStates', 'subscriptionService', 'marketFactory', function (gameStates, subscriptionService, Market) {
+    return ['gameStates', 'socketService', 'marketFactory', function (gameStates, socket, Market) {
 
         function Game(config, $scope) {
             this.clock = config.clock || 0;
@@ -15,17 +16,10 @@ define(function () {
             this.markets = config.markets.map(function(market) { return new Market(market, $scope) });
 
             // subscribe to simulated match events
-            this.subscriptionId = subscriptionService.subscribe('matchEvent', function(matchEvent) {
+            socket.on('matchEvent', function(matchEvent) {
                 $scope.$apply(function() { this._handleMatchEvent(matchEvent); }.bind(this));
             }.bind(this));
         }
-
-        /**
-         * unsubscribe from simulated match events
-         */
-        Game.prototype.unsubscribe = function() {
-            subscriptionService.unsubscribe(this.subscriptionId);
-        };
 
         Game.prototype._handleMatchEvent = function(matchEvent) {
             switch (matchEvent.type) {
@@ -42,10 +36,6 @@ define(function () {
                     break;
 
                 case "FullTime":
-                    this.unsubscribe();
-                    this.markets.forEach(function(market) {
-                        market.unsubscribe();
-                    });
                     break;
             }
             this.matchEvents.push(matchEvent);

@@ -27,7 +27,7 @@ define([], function () {
             // send request to start simulation on server
             $scope.startSimulation = function () {
                 $scope.game.state = gameStates.DURING;
-                socketService.send("startSimulation");
+                socketService.emit("startSimulation");
             };
 
         }

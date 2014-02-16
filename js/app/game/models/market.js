@@ -1,12 +1,13 @@
 define(function () {
+    'use strict';
 
-    return ['subscriptionService', function (subscriptionService) {
+    return ['socketService', function (socket) {
 
         function Market(config, $scope) {
             this.set(config);
             // subscribe to simulated market events
-            this.subscriptionId = subscriptionService.subscribe('marketEvent', function(marketEvent) {
-                $scope.$apply(function() { this.set(marketEvent); }.bind(this));
+            socket.on('marketEvent', function(marketEvent) {
+                $scope.$apply(function() { this._handleMatchEvent(marketEvent); }.bind(this));
             }.bind(this));
         }
 
@@ -17,13 +18,6 @@ define(function () {
             this.buyPrice = config.buyPrice;
             this.soFar = config.soFar;
             this.description = config.description;
-        };
-
-        /**
-         * unsubscribe from simulated market events
-         */
-        Market.prototype.unsubscribe = function() {
-            subscriptionService.unsubscribe(this.subscriptionId);
         };
 
         return Market;
