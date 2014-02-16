@@ -1,20 +1,22 @@
 define(["../models/user"], function (User) {
     'use strict';
 
-    function SecurityService(xhrService, $location, $timeout, $cookieStore) {
+    function SecurityService(xhrService, $location, $timeout, $cookieStore, loadingService) {
         this.$timeout = $timeout;
         this.$location = $location;
         this.xhrService = xhrService;
         this.$cookieStore = $cookieStore;
+        this.loadingService = loadingService;
 
         if (this.isLoggedIn()) {
             this.loggedInUser = new User(JSON.parse(this.$cookieStore.get("spread.session")));
         }
     }
 
-    SecurityService.$inject = ["xhrService", "$location", "$timeout", "$cookieStore"];
+    SecurityService.$inject = ["xhrService", "$location", "$timeout", "$cookieStore", 'loadingService'];
 
     SecurityService.prototype.login = function (username, password) {
+        this.loadingService.loading = true;
         this.xhrService.login(username, password)
             .done(this.handleSuccess.bind(this))
             .fail(this.handleError.bind(this));
@@ -44,11 +46,13 @@ define(["../models/user"], function (User) {
         }.bind(this));
 
         this.loggedInUser = new User(user);
+        this.loadingService.loading = false;
     };
 
     SecurityService.prototype.handleError = function (/*data, textStatus, jqXHR*/) {
         this.$timeout(function () {
             this.error = "Incorrect username or password";
+            this.loadingService.loading = false;
         }.bind(this));
     };
 

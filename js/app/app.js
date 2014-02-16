@@ -4,15 +4,17 @@ define([
     "./services/xhrService",
     "./services/socketService",
     "./services/subscriptionService",
+    "./services/loadingService",
     "./appController",
     "./appRoutes",
     "./appConfig",
     "./security/module",
     "./game/gameModule",
     "./user/userModule",
-    "css!./css/app.css"],
+    "css!./css/app.css",
+    "css!./css/spinner.css"],
 
-    function (angular, angularRoute, xhrService, socketService, subscriptionService, appController, routes, config) {
+    function (angular, angularRoute, xhrService, socketService, subscriptionService, loadingService, appController, routes, config) {
         'use strict';
 
         var initialise = function () {
@@ -23,6 +25,7 @@ define([
                 .service("xhrService", xhrService)
                 .service("socketService", socketService)
                 .service("subscriptionService", subscriptionService)
+                .service("loadingService", loadingService)
                 .controller('appController', appController);
 
             angular.bootstrap(document, ["appModule"]);

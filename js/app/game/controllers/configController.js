@@ -1,10 +1,11 @@
 define([], function () {
     'use strict';
 
-    function GameConfigCtrl($scope, xhrService, securityService, $location) {
+    function GameConfigCtrl($scope, xhrService, securityService, $location, loadingService) {
         $scope.teams = [];
         $scope.homeTeam = {};
         $scope.awayTeam = {};
+        loadingService.loading = true;
 
         xhrService.getTeams().success(function (teams) {
             $scope.teams = teams;
@@ -21,9 +22,11 @@ define([], function () {
 
             $scope.homeTeam = $scope.teams[0];
             $scope.awayTeam = $scope.teams[1];
+            loadingService.loading = false;
         });
 
         $scope.createGame = function () {
+            loadingService.loading = true;
             xhrService.createGame({ homeTeam: $scope.homeTeam._id, awayTeam: $scope.awayTeam._id })
                 .then(function (data) {
                     $scope.$apply(function () {
@@ -34,7 +37,7 @@ define([], function () {
 
     }
 
-    GameConfigCtrl.$inject = ["$scope", "xhrService", "securityService", "$location"];
+    GameConfigCtrl.$inject = ["$scope", "xhrService", "securityService", "$location", "loadingService"];
 
     return GameConfigCtrl;
 });
