@@ -13,7 +13,7 @@ define(function () {
             this.state = gameStates.BEFORE;
 
             // create a Market object for each market in array
-            this.markets = config.markets.map(function(market) { return new Market(market, $scope) });
+            this.markets = config.markets.map(function(market) { return new Market(market, $scope); });
 
             // subscribe to simulated match events
             socket.on('matchEvent', function(matchEvent) {
