@@ -9,8 +9,7 @@
     "angular-route": "~1.2.10",
     "angular-cookies": "~1.2.11",
     "bootstrap": "~3.1.0",
-    "require-css": "~0.1.2",
-    "socket.io-client": "~0.9.16"
+    "require-css": "~0.1.2"
   },
   "authors": [
     "Reid Philpot <reidphilpot@gmail.com>"

@@ -36,9 +36,6 @@ module.exports = function (grunt) {
                         "angular-cookies": {
                             deps: ["angular"]
                         },
-                        "sockets.io": {
-                            exports: "io"
-                        },
                         "jquery": {
                             exports: "$"
                         }

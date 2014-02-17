@@ -4,7 +4,6 @@ define({
         "angular": "lib/angular/angular",
         "angular-route": "lib/angular-route/angular-route",
         "angular-cookies": "lib/angular-cookies/angular-cookies",
-        "socket.io": "lib/socket.io-client/dist/socket.io.min",
         "text": "lib/requirejs-text/text"
     },
     shim: {
@@ -17,9 +16,6 @@ define({
         },
         "angular-cookies": {
             deps: ["angular"]
-        },
-        "socket.io": {
-            exports: "io"
         },
         "jquery": {
             exports: "$"

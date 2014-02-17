@@ -4,30 +4,28 @@ define([], function () {
     return [
         "$scope",
         "xhrService",
+        "securityService",
         "gameFactory",
         "subscriptionService",
         "gameStates",
+        "$location",
         "socketService",
         "$routeParams",
-        "loadingService",
 
-        function GameCtrl($scope, xhrService, Game, subscriptionService, gameStates, socketService, $routeParams, loadingService) {
+        function GameCtrl($scope, xhrService, securityService, Game, subscriptionService, gameStates, $location, socketService, $routeParams) {
             $scope.gameStates = gameStates;
-            loadingService.loading = false;
 
-            // get game by id
+            // get game by game id
             xhrService.getGame($routeParams.username, $routeParams.gameId)
                 .success(function (data) {
                     $scope.game = new Game(data, $scope);
                     console.log("game created", $scope.game);
-                    loadingService.loading = false;
-                }
-            );
+                });
 
             // send request to start simulation on server
             $scope.startSimulation = function () {
                 $scope.game.state = gameStates.DURING;
-                socketService.emit("startSimulation");
+                socketService.send("startSimulation");
             };
 
         }
