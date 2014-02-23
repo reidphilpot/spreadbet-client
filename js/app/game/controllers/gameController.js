@@ -1,34 +1,36 @@
-define([], function () {
+define(['bootstrap-js'], function () {
     'use strict';
 
-    return [
+    function GameCtrl($scope, xhrService, Game, gameStates, socketService, $routeParams, loadingService) {
+        $scope.gameStates = gameStates;
+        loadingService.setLoading(true);
+
+        // get game by game id
+        xhrService.getGame($routeParams.gameId)
+            .success(function (data) {
+                $scope.game = new Game(data, $scope);
+                loadingService.setLoading(false);
+                $('#gameIntro').modal();
+            });
+
+        // send request to start simulation on server
+        $scope.startSimulation = function () {
+            $scope.game.state = gameStates.DURING;
+            socketService.send("startSimulation");
+        };
+
+    }
+
+    GameCtrl.$inject = [
         "$scope",
         "xhrService",
-        "securityService",
         "gameFactory",
-        "subscriptionService",
         "gameStates",
-        "$location",
         "socketService",
         "$routeParams",
-
-        function GameCtrl($scope, xhrService, securityService, Game, subscriptionService, gameStates, $location, socketService, $routeParams) {
-            $scope.gameStates = gameStates;
-
-            // get game by game id
-            xhrService.getGame($routeParams.username, $routeParams.gameId)
-                .success(function (data) {
-                    $scope.game = new Game(data, $scope);
-                    console.log("game created", $scope.game);
-                });
-
-            // send request to start simulation on server
-            $scope.startSimulation = function () {
-                $scope.game.state = gameStates.DURING;
-                socketService.send("startSimulation");
-            };
-
-        }
+        "loadingService"
     ];
+
+    return GameCtrl;
 });
 

@@ -8,20 +8,16 @@ define([
     "./appController",
     "./appRoutes",
     "./appConfig",
-    "./security/module",
-    "./game/gameModule",
-    "./user/userModule",
-    "css!./css/app.css",
-    "css!./css/spinner.css"],
+    "./game/gameModule"],
 
     function (angular, angularRoute, xhrService, socketService, subscriptionService, loadingService, appController, routes, config) {
         'use strict';
 
         var initialise = function () {
 
-            angular.module("appModule", ['ngRoute', 'securityModule', 'gameModule', 'userModule'], routes)
+            angular.module("appModule", ['ngRoute', 'gameModule'], routes)
                 .config(config)
-                .value("endPoint", "http://spreadbet-server.herokuapp.com")
+                .constant("endPoint", "http://localhost:3000") //http://spreadbet-server.herokuapp.com
                 .service("xhrService", xhrService)
                 .service("socketService", socketService)
                 .service("subscriptionService", subscriptionService)

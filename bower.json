@@ -8,8 +8,9 @@
     "angular": "~1.2.11",
     "angular-route": "~1.2.10",
     "angular-cookies": "~1.2.11",
-    "bootstrap": "~3.1.0",
-    "require-css": "~0.1.2"
+    "require-css": "~0.1.2",
+    "jquery-ui": "~1.10.4",
+    "bootstrap": "~3.1.1"
   },
   "authors": [
     "Reid Philpot <reidphilpot@gmail.com>"

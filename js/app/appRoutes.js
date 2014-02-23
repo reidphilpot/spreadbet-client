@@ -3,10 +3,6 @@ define(function () {
 
     return function ($routeProvider, $locationProvider) {
         // routes
-        $routeProvider.when('/', {
-            templateUrl: '/js/app/templates/main.html',
-            controller: 'appController'
-        });
         $routeProvider.when('/login', {
             templateUrl: '/js/app/security/templates/login.html',
             controller: 'loginController'
@@ -23,11 +19,11 @@ define(function () {
             templateUrl: '/js/app/user/templates/user.html',
             controller: 'userController'
         });
-        $routeProvider.when('/user/:username/game/new', {
+        $routeProvider.when('/', {
             templateUrl: '/js/app/game/templates/config.html',
             controller: 'configController'
         });
-        $routeProvider.when('/user/:username/game/:gameId', {
+        $routeProvider.when('/game/:gameId', {
             templateUrl: '/js/app/game/templates/game.html',
             controller: 'gameController'
         });

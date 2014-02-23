@@ -3,6 +3,7 @@ define(function () {
     return ['gameStates', 'subscriptionService', 'marketFactory', function (gameStates, subscriptionService, Market) {
 
         function Game(config, $scope) {
+            this.id = config._id;
             this.clock = config.clock || 0;
             this.homeTeam = config.homeTeam;
             this.homeTeam.score = 0;
@@ -12,22 +13,26 @@ define(function () {
             this.state = gameStates.BEFORE;
 
             // create a Market object for each market in array
-            this.markets = config.markets.map(function(market) { return new Market(market, $scope); });
+            this.markets = config.markets.map(function (market) {
+                return new Market(market, $scope);
+            });
 
             // subscribe to simulated match events
-            this.subscriptionId = subscriptionService.subscribe('matchEvent', function(matchEvent) {
-                $scope.$apply(function() { this._handleMatchEvent(matchEvent); }.bind(this));
+            this.subscriptionId = subscriptionService.subscribe('matchEvent-' + this.id, function (matchEvent) {
+                $scope.$apply(function () {
+                    this._handleMatchEvent(matchEvent);
+                }.bind(this));
             }.bind(this));
         }
 
         /**
          * unsubscribe from simulated match events
          */
-        Game.prototype.unsubscribe = function() {
+        Game.prototype.unsubscribe = function () {
             subscriptionService.unsubscribe(this.subscriptionId);
         };
 
-        Game.prototype._handleMatchEvent = function(matchEvent) {
+        Game.prototype._handleMatchEvent = function (matchEvent) {
             switch (matchEvent.type) {
                 case "Clock":
                     this.clock = matchEvent.time;
@@ -43,9 +48,10 @@ define(function () {
 
                 case "FullTime":
                     this.unsubscribe();
-                    this.markets.forEach(function(market) {
+                    this.markets.forEach(function (market) {
                         market.unsubscribe();
                     });
+                    this.state = gameStates.AFTER;
                     break;
             }
             this.matchEvents.push(matchEvent);

@@ -48,8 +48,8 @@ define(function () {
             if (Object.keys(subs).length === 0) {
                 delete this._subscriptions[topic];
             }
-            this._subscriptionCounters[topic] = Math.max(this._subscriptionCounters[topic]-1, 0);
-            this._totalSubscriptions = Math.max(this._totalSubscriptions-1, 0);
+            this._subscriptionCounters[topic] = Math.max(this._subscriptionCounters[topic] - 1, 0);
+            this._totalSubscriptions = Math.max(this._totalSubscriptions - 1, 0);
         }
     };
 
@@ -73,13 +73,12 @@ define(function () {
      * Generates the next unique subscription id for a topic.
      *
      * Subscription ids will be of the format <topic>-<counter> where <counter>
-     * is an incrementing integer unique to the topic.'use strict';
+     * is an incrementing integer unique to the topic.
      *
      * @param topic
      * @returns {string}
      */
     SubscriptionService.prototype.nextSubscriptionIdForTopic = function (topic) {
-
         if (!this._subscriptionCounters[topic]) {
             // initialize subscription counter for the topic
             this._subscriptionCounters[topic] = 0;

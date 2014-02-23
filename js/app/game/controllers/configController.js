@@ -1,11 +1,11 @@
-define([], function () {
+define(function () {
     'use strict';
 
-    function GameConfigCtrl($scope, xhrService, securityService, $location, loadingService) {
+    function GameConfigCtrl($scope, xhrService, $location, loadingService) {
         $scope.teams = [];
         $scope.homeTeam = {};
         $scope.awayTeam = {};
-        loadingService.loading = true;
+        loadingService.setLoading(true);
 
         xhrService.getTeams().success(function (teams) {
             $scope.teams = teams;
@@ -22,22 +22,23 @@ define([], function () {
 
             $scope.homeTeam = $scope.teams[0];
             $scope.awayTeam = $scope.teams[1];
-            loadingService.loading = false;
+            loadingService.setLoading(false);
         });
 
         $scope.createGame = function () {
-            loadingService.loading = true;
+            loadingService.setLoading(true);
             xhrService.createGame({ homeTeam: $scope.homeTeam._id, awayTeam: $scope.awayTeam._id })
                 .then(function (data) {
                     $scope.$apply(function () {
-                        $location.path('/user/' + securityService.loggedInUser.username + '/game/' + data.game._id);
+                        $location.path('/game/' + data.game._id);
+                        loadingService.setLoading(false);
                     });
                 });
         };
 
     }
 
-    GameConfigCtrl.$inject = ["$scope", "xhrService", "securityService", "$location", "loadingService"];
+    GameConfigCtrl.$inject = ["$scope", "xhrService", "$location", "loadingService"];
 
     return GameConfigCtrl;
 });

@@ -1,14 +1,12 @@
 define([], function () {
     'use strict';
 
-    function MainCtrl($scope, securityService, loadingService, $location) {
-        $scope.securityService = securityService;
+    function MainCtrl($scope, loadingService, $location) {
         $scope.$location = $location;
         $scope.loadingService = loadingService;
     }
 
-    MainCtrl.$inject = ["$scope", "securityService", "loadingService", "$location"];
+    MainCtrl.$inject = ["$scope", "loadingService", "$location"];
 
     return MainCtrl;
 });
-

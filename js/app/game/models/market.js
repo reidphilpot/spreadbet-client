@@ -5,12 +5,14 @@ define(function () {
         function Market(config, $scope) {
             this.set(config);
             // subscribe to simulated market events
-            this.subscriptionId = subscriptionService.subscribe('marketEvent', function(marketEvent) {
-                $scope.$apply(function() { this.set(marketEvent); }.bind(this));
+            this.subscriptionId = subscriptionService.subscribe('marketEvent', function (marketEvent) {
+                $scope.$apply(function () {
+                    this.set(marketEvent);
+                }.bind(this));
             }.bind(this));
         }
 
-        Market.prototype.set = function(config) {
+        Market.prototype.set = function (config) {
             this.id = config.id;
             this.title = config.title;
             this.sellPrice = config.sellPrice;
@@ -22,7 +24,7 @@ define(function () {
         /**
          * unsubscribe from simulated market events
          */
-        Market.prototype.unsubscribe = function() {
+        Market.prototype.unsubscribe = function () {
             subscriptionService.unsubscribe(this.subscriptionId);
         };
 

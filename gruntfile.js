@@ -24,11 +24,13 @@ module.exports = function (grunt) {
                         "angular": "lib/angular/angular",
                         "angular-route": "lib/angular-route/angular-route",
                         "angular-cookies": "lib/angular-cookies/angular-cookies",
-                        "text": "lib/requirejs-text/text"
+                        "text": "lib/requirejs-text/text",
+                        "bootstrap-js": "lib/bootstrap/dist/js/bootstrap.min"
                     },
                     shim: {
                         "angular": {
-                            exports: "angular"
+                            exports: "angular",
+                            deps: ["jquery"]
                         },
                         "angular-route": {
                             deps: ["angular"]
@@ -38,6 +40,12 @@ module.exports = function (grunt) {
                         },
                         "jquery": {
                             exports: "$"
+                        },
+                        "jquery-ui": {
+                            deps: ["jquery"]
+                        },
+                        "bootstrap-js": {
+                            deps: ["jquery"]
                         }
                     },
                     map: {
@@ -68,19 +76,6 @@ module.exports = function (grunt) {
                     require: true,
                     define: true
                 }
-            },
-            lib_test: {
-                src: ['js/*.js', 'js/app/*.js', 'js/app/**/*.js']
-            }
-        },
-        watch: {
-            gruntfile: {
-                files: '<%= jshint.gruntfile.src %>',
-                tasks: ['jshint:gruntfile']
-            },
-            lib_test: {
-                files: '<%= jshint.lib_test.src %>',
-                tasks: ['jshint:lib_test', 'qunit']
             }
         },
         karma: {
@@ -92,6 +87,31 @@ module.exports = function (grunt) {
             continuous: {
                 singleRun: true
             }
+        },
+        less: {
+            development: {
+                options: {
+                    paths: ["less"]
+                },
+                files: {
+                    "dist/<%= pkg.name %>-min.css": "less/spreadly.less"
+                }
+            },
+            production: {
+                options: {
+                    paths: ["less"],
+                    cleancss: true
+                },
+                files: {
+                    "dist/<%= pkg.name %>-min.css": "less/spreadly.less"
+                }
+            }
+        },
+        watch: {
+            less: {
+                files: "less/*.less",
+                tasks: ["less"]
+            }
         }
     });
 
@@ -100,6 +120,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-contrib-less');
 
     // Default task
     grunt.registerTask('default', ['jshint', 'karma:continuous', 'requirejs']);
