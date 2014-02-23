@@ -129,6 +129,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-bower-task');
 
     // Default task
-    grunt.registerTask('default', ['jshint', 'karma:continuous', 'requirejs', 'bower']);
+    grunt.registerTask('default', ['jshint', 'karma:continuous', 'requirejs']);
     grunt.registerTask('heroku:production', ['bower', 'less:production']);
 };
