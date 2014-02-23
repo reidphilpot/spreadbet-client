@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Spread Bet Client",
   "main": "web.js",
+  "scripts": {
+    "postinstall": "./node_modules/grunt/lib/grunt heroku"
+  },
   "repository": {
     "type": "git",
     "url": "git@heroku.com:spreadbet-client.git"
