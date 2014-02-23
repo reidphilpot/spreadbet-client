@@ -17,7 +17,7 @@ define([
 
             angular.module("appModule", ['ngRoute', 'gameModule'], routes)
                 .config(config)
-                .constant("endPoint", "http://localhost:3000") //http://spreadbet-server.herokuapp.com
+                .constant("endPoint", "http://spreadbet-server.herokuapp.com")
                 .service("xhrService", xhrService)
                 .service("socketService", socketService)
                 .service("subscriptionService", subscriptionService)

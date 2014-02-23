@@ -18,7 +18,7 @@ define(function () {
             });
 
             // subscribe to simulated match events
-            this.subscriptionId = subscriptionService.subscribe('matchEvent-' + this.id, function (matchEvent) {
+            this.subscriptionId = subscriptionService.subscribe('matchEvent', function (matchEvent) {
                 $scope.$apply(function () {
                     this._handleMatchEvent(matchEvent);
                 }.bind(this));
