@@ -112,6 +112,11 @@ module.exports = function (grunt) {
                 files: "less/*.less",
                 tasks: ["less"]
             }
+        },
+        bower: {
+            install: {
+                //just run 'grunt bower:install' and you'll see files from your Bower packages in lib directory
+            }
         }
     });
 
@@ -121,7 +126,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-bower-task');
 
     // Default task
-    grunt.registerTask('default', ['jshint', 'karma:continuous', 'requirejs']);
+    grunt.registerTask('default', ['jshint', 'karma:continuous', 'requirejs', 'bower']);
+    grunt.registerTask('heroku', ['bower', 'less:production']);
 };
