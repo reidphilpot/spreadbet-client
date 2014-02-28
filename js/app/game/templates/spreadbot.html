@@ -1,26 +1,13 @@
-<div class="robot-container">
-    <div class="robot"></div>
-    <div class="robot-feedback">
-        <div ng-hide="configured">
-            <h3>
-                Hi! I'm SpreadBot, I'm here to help you to play the game and learn about Spread Betting along the way.
-            </h3>
+<div class="spreadbot">
+    <div class="spreadbot-tip">
+        <p>
+            <span class="h2">{{game.homeTeam.name}} vs {{game.awayTeam.name}} should be a great match!</span>
+        </p>
 
-            <p>
-                Firstly we need to configure the game, so pick two teams and click "Confirm match setup".
-            </p>
-        </div>
-
-        <div ng-show="configured">
-            <h3>
-                Great! {{homeTeam.name}} vs {{awayTeam.name}} should be a classic match!
-            </h3>
-
-            <p>
-                Next, let's place some bets! Oh My Gears, it's so exciting. Roll over the markets below and I will tell
-                you
-                everything you need to know about how that market works. When you're done, click "Kick-off".
-            </p>
-        </div>
+        <p>
+            Next, let's place some bets! Roll over the markets below and I will tell you everything you need to know
+            about how that market works.
+        </p>
     </div>
+    <img src="/img/agent.png" height="150"/>
 </div>

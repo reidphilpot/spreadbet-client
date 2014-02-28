@@ -2,7 +2,6 @@ define(function () {
     'use strict';
 
     function GameConfigCtrl($scope, xhrService, $location, loadingService) {
-        $scope.teams = [];
         $scope.homeTeam = {};
         $scope.awayTeam = {};
         loadingService.setLoading(true);

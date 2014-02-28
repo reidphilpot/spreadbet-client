@@ -1,63 +1,68 @@
 define(function () {
+    "use strict";
 
-    return ['gameStates', 'subscriptionService', 'marketFactory', function (gameStates, subscriptionService, Market) {
+    return [
+        'gameStates',
+        'subscriptionService',
+        'marketFactory',
+        'teamService',
+        function (gameStates, subscriptionService, Market, teams) {
 
-        function Game(config, $scope) {
-            this.id = config._id;
-            this.clock = config.clock || 0;
-            this.homeTeam = config.homeTeam;
-            this.homeTeam.score = 0;
-            this.awayTeam = config.awayTeam;
-            this.awayTeam.score = 0;
-            this.matchEvents = [];
-            this.state = gameStates.BEFORE;
+            function Game(config, $scope) {
+                this.id = config._id;
+                this.clock = config.clock || 0;
+                this.homeTeam = config.homeTeam;
+                this.awayTeam = config.awayTeam;
+                this.matchEvents = [];
+                this.state = gameStates.BEFORE;
+                this.teamEvents = {};
+                this.teamEvents[teams.HOME] = {};
+                this.teamEvents[teams.AWAY] = {};
 
-            // create a Market object for each market in array
-            this.markets = config.markets.map(function (market) {
-                return new Market(market, $scope);
-            });
+                // create a Market object for each market in array
+                this.markets = config.markets.map(function (market) {
+                    return new Market(market, $scope);
+                });
 
-            // subscribe to simulated match events
-            this.subscriptionId = subscriptionService.subscribe('matchEvent', function (matchEvent) {
-                $scope.$apply(function () {
-                    this._handleMatchEvent(matchEvent);
+                // subscribe to simulated match events
+                this.subscriptionId = subscriptionService.subscribe('matchEvent', function (matchEvent) {
+                    $scope.$apply(function () {
+                        this._handleMatchEvent(matchEvent);
+                    }.bind(this));
                 }.bind(this));
-            }.bind(this));
-        }
-
-        /**
-         * unsubscribe from simulated match events
-         */
-        Game.prototype.unsubscribe = function () {
-            subscriptionService.unsubscribe(this.subscriptionId);
-        };
-
-        Game.prototype._handleMatchEvent = function (matchEvent) {
-            switch (matchEvent.type) {
-                case "Clock":
-                    this.clock = matchEvent.time;
-                    break;
-
-                case "Goal":
-                    if (matchEvent.team === 0) {
-                        this.homeTeam.score++;
-                    } else {
-                        this.awayTeam.score++;
-                    }
-                    break;
-
-                case "FullTime":
-                    this.unsubscribe();
-                    this.markets.forEach(function (market) {
-                        market.unsubscribe();
-                    });
-                    this.state = gameStates.AFTER;
-                    break;
             }
-            this.matchEvents.push(matchEvent);
-        };
 
-        return Game;
-    }];
+            /**
+             * unsubscribe from simulated match events
+             */
+            Game.prototype.unsubscribe = function () {
+                subscriptionService.unsubscribe(this.subscriptionId);
+            };
+
+            Game.prototype._handleMatchEvent = function (matchEvent) {
+                switch (matchEvent.type) {
+                    case "Clock":
+                        this.clock = matchEvent.time;
+                        break;
+
+                    case "FullTime":
+                        this.unsubscribe();
+                        this.markets.forEach(function (market) {
+                            market.unsubscribe();
+                        });
+                        this.state = gameStates.AFTER;
+                        break;
+                }
+
+                this.matchEvents.push(matchEvent);
+
+                if (!this.teamEvents[matchEvent.team][matchEvent.type]) {
+                    this.teamEvents[matchEvent.team][matchEvent.type] = 0;
+                }
+                this.teamEvents[matchEvent.team][matchEvent.type]++;
+            };
+
+            return Game;
+        }];
 
 });

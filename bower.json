@@ -10,7 +10,8 @@
     "angular-cookies": "~1.2.11",
     "require-css": "~0.1.2",
     "jquery-ui": "~1.10.4",
-    "bootstrap": "~3.1.1"
+    "bootstrap": "~3.1.1",
+    "slickgrid-bootstrap": "*"
   },
   "authors": [
     "Reid Philpot <reidphilpot@gmail.com>"
@@ -23,5 +24,8 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "resolutions": {
+    "bootstrap": "~3.1.1"
+  }
 }

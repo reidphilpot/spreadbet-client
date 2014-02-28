@@ -1,8 +1,9 @@
 define(['bootstrap-js'], function () {
     'use strict';
 
-    function GameCtrl($scope, xhrService, Game, gameStates, socketService, $routeParams, loadingService) {
+    function GameCtrl($scope, xhrService, Game, gameStates, socketService, $routeParams, loadingService, teamService) {
         $scope.gameStates = gameStates;
+        $scope.teams = teamService;
         loadingService.setLoading(true);
 
         // get game by game id
@@ -10,7 +11,7 @@ define(['bootstrap-js'], function () {
             .success(function (data) {
                 $scope.game = new Game(data, $scope);
                 loadingService.setLoading(false);
-                $('#gameIntro').modal();
+                //$('#gameIntro').modal();
             });
 
         // send request to start simulation on server
@@ -18,7 +19,6 @@ define(['bootstrap-js'], function () {
             $scope.game.state = gameStates.DURING;
             socketService.send("startSimulation");
         };
-
     }
 
     GameCtrl.$inject = [
@@ -28,7 +28,8 @@ define(['bootstrap-js'], function () {
         "gameStates",
         "socketService",
         "$routeParams",
-        "loadingService"
+        "loadingService",
+        "teamService"
     ];
 
     return GameCtrl;
