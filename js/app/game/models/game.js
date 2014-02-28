@@ -33,12 +33,17 @@ define(function () {
             }
 
             /**
-             * unsubscribe from simulated match events
+             * Un-subscribe from simulated match events
              */
             Game.prototype.unsubscribe = function () {
                 subscriptionService.unsubscribe(this.subscriptionId);
             };
 
+            /**
+             *
+             * @param {Object} matchEvent
+             * @private
+             */
             Game.prototype._handleMatchEvent = function (matchEvent) {
                 switch (matchEvent.type) {
                     case "Clock":

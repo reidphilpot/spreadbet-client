@@ -13,6 +13,10 @@ define(function () {
             }.bind(this));
         }
 
+        /**
+         * Stash config on instance
+         * @param {Object} config
+         */
         Market.prototype.set = function (config) {
             this.id = config.id;
             this.title = config.title;
@@ -23,7 +27,7 @@ define(function () {
         };
 
         /**
-         * unsubscribe from simulated market events
+         * Un-subscribe from simulated market events
          */
         Market.prototype.unsubscribe = function () {
             subscriptionService.unsubscribe(this.subscriptionId);
