@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="A web delivered educational tool that teaches interested amateurs how sports spread betting works">
+    <meta name="author" content="Reid Philpot">
 
     <title>Spreadly</title>
 
@@ -18,25 +18,7 @@
 
 <body ng-controller="appController">
 
-<!--<div class="navbar navbar-default" role="navigation">-->
-    <!--<div class="container">-->
-        <!--<div class="navbar-header">-->
-            <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">-->
-                <!--<span class="sr-only">Toggle navigation</span>-->
-                <!--<span class="icon-bar"></span>-->
-                <!--<span class="icon-bar"></span>-->
-                <!--<span class="icon-bar"></span>-->
-            <!--</button>-->
-            <!--<a class="navbar-brand" href="#">Spreadly</a>-->
-        <!--</div>-->
-        <!--<div class="navbar-collapse collapse">-->
-            <!--<form class="navbar-form navbar-right">-->
-                <!--<button type="submit" class="btn btn-default" ng-click="$location.path('/')">New Game</button>-->
-            <!--</form>-->
-        <!--</div>-->
-        <!--&lt;!&ndash;/.nav-collapse &ndash;&gt;-->
-    <!--</div>-->
-<!--</div>-->
+<div ng-view></div>
 
 <div class="app-spinner" ng-show="loadingService.getLoading()">
     <div class="spinner">
@@ -44,8 +26,6 @@
         <div class="double-bounce2"></div>
     </div>
 </div>
-
-<div ng-view></div>
 
 </body>
 </html>
