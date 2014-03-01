@@ -1,9 +1,9 @@
-<div class='game-facet'>
+<div class="game-facet">
     <div>{{$parent.game.teamEvents[teams.HOME][eventType] || 0}}</div>
-    <div class='game-facet-value'>
+    <div class="game-facet-value">
         <div>{{label}}</div>
-        <div class='progress'>
-            <div class='progress-bar' style='width:{{ eventCountAsPercentage() }}%;'></div>
+        <div class="progress">
+            <div class="progress-bar" style="width:{{ eventCountAsPercentage() }}%;"></div>
         </div>
     </div>
     <div>{{$parent.game.teamEvents[teams.AWAY][eventType] || 0}}</div>

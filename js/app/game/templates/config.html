@@ -1,32 +1,32 @@
-<div class='config-container'>
+<div class="config-container">
 
     <h1>Team Select</h1>
 
-    <div class='match-setup clearfix'>
+    <div class="match-setup clearfix">
 
-        <div class='home-team'>
+        <div class="home-team">
             <div>
-                <span class='h2'>Home Team</span>
+                <span class="h2">Home Team</span>
             </div>
             <div>
-                <img src='/img/{{homeTeam.mnemonic}}.png' height='175'/>
+                <img src="/img/{{homeTeam.mnemonic}}.png" height="175"/>
             </div>
-            <select class='form-control' ng-model='homeTeam' ng-options='team.name for team in teams'></select>
+            <select class="form-control" ng-model="homeTeam" ng-options="team.name for team in teams"></select>
         </div>
 
-        <div class='versus'>
-            <div class='vs'>vs</div>
-            <button class='btn btn-default' ng-click='createGame()'>Confirm match setup</button>
+        <div class="versus">
+            <div class="vs">vs</div>
+            <button class="btn btn-default" ng-click="createGame()">Confirm match setup</button>
         </div>
 
-        <div class='away-team'>
+        <div class="away-team">
             <div>
-                <span class='h2'>Away Team</span>
+                <span class="h2">Away Team</span>
             </div>
             <div>
-                <img src='/img/{{awayTeam.mnemonic}}.png' height='175'/>
+                <img src="/img/{{awayTeam.mnemonic}}.png" height="175"/>
             </div>
-            <select class='form-control' ng-model='awayTeam' ng-options='team.name for team in teams'></select>
+            <select class="form-control" ng-model="awayTeam" ng-options="team.name for team in teams"></select>
         </div>
 
     </div>
