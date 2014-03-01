@@ -17,19 +17,19 @@ define(['bootstrap-js'], function () {
         // send request to start simulation on server
         $scope.startSimulation = function () {
             $scope.game.state = gameStates.DURING;
-            socketService.send("startSimulation");
+            socketService.send('startSimulation');
         };
     }
 
     GameCtrl.$inject = [
-        "$scope",
-        "xhrService",
-        "gameFactory",
-        "gameStates",
-        "socketService",
-        "$routeParams",
-        "loadingService",
-        "teamService"
+        '$scope',
+        'xhrService',
+        'gameFactory',
+        'gameStates',
+        'socketService',
+        '$routeParams',
+        'loadingService',
+        'teamService'
     ];
 
     return GameCtrl;

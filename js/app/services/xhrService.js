@@ -1,4 +1,4 @@
-define(["jquery"], function ($) {
+define(['jquery'], function ($) {
     'use strict';
 
     var XhrService = function ($http, endPoint) {
@@ -6,14 +6,14 @@ define(["jquery"], function ($) {
         this.endPoint = endPoint;
     };
 
-    XhrService.$inject = ["$http", "endPoint", "loadingService"];
+    XhrService.$inject = ['$http', 'endPoint', 'loadingService'];
 
     XhrService.prototype.getTeams = function () {
         return this.$http.get(this.endPoint + '/teams');
     };
 
     XhrService.prototype.createGame = function (putData) {
-        return $.ajax({type: "PUT", url: this.endPoint + '/game/new', data: putData});
+        return $.ajax({type: 'PUT', url: this.endPoint + '/game/new', data: putData});
     };
 
     XhrService.prototype.getGame = function (gameId) {

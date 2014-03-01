@@ -6,7 +6,7 @@ define([], function () {
         $scope.loadingService = loadingService;
     }
 
-    MainCtrl.$inject = ["$scope", "loadingService", "$location"];
+    MainCtrl.$inject = ['$scope', 'loadingService', '$location'];
 
     return MainCtrl;
 });

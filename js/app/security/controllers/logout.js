@@ -5,7 +5,7 @@ define(function () {
         securityService.logout();
     }
 
-    LoginCtrl.$inject = ["securityService"];
+    LoginCtrl.$inject = ['securityService'];
 
     return LoginCtrl;
 });

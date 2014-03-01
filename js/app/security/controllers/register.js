@@ -7,7 +7,7 @@ define(['jquery'], function ($) {
         };
     }
 
-    RegisterCtrl.$inject = ["$scope", "securityService"];
+    RegisterCtrl.$inject = ['$scope', 'securityService'];
 
     return RegisterCtrl;
 });

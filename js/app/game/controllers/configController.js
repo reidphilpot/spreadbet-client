@@ -37,7 +37,7 @@ define(function () {
 
     }
 
-    GameConfigCtrl.$inject = ["$scope", "xhrService", "$location", "loadingService"];
+    GameConfigCtrl.$inject = ['$scope', 'xhrService', '$location', 'loadingService'];
 
     return GameConfigCtrl;
 });

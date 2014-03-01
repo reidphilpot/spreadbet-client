@@ -1,5 +1,5 @@
 define(function () {
-    "use strict";
+    'use strict';
 
     function User(config) {
         this.username = config.username;

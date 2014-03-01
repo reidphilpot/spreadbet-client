@@ -27,19 +27,19 @@
     z-index: 2;
 }
 
-.form-signin input[type="username"] {
+.form-signin input[type='username'] {
     margin-bottom: -1px;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
 
-.form-signin input[type="password"] {
+.form-signin input[type='password'] {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
 
-.form-signin input[type="nickname"] {
+.form-signin input[type='nickname'] {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;

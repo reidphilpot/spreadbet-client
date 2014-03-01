@@ -16,7 +16,7 @@ define(['jquery'], function ($) {
         };
     }
 
-    LoginCtrl.$inject = ["$scope", "securityService", "$location"];
+    LoginCtrl.$inject = ['$scope', 'securityService', '$location'];
 
     return LoginCtrl;
 });

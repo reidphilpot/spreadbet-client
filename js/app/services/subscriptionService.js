@@ -60,12 +60,14 @@ define(function () {
      * @param data
      */
     SubscriptionService.prototype.publish = function (topic, data) {
-        console.info("publishing to topic", topic, data);
+        console.info('publishing to topic', topic, data);
 
         var subscribers = this._subscriptions[topic];
 
         for (var subscriptionId in subscribers) {
-            subscribers[subscriptionId](data);
+            if(subscribers.hasOwnProperty(subscriptionId)){
+                subscribers[subscriptionId](data);
+            }
         }
     };
 
@@ -84,7 +86,7 @@ define(function () {
             this._subscriptionCounters[topic] = 0;
         }
 
-        return topic + "#" + (this._subscriptionCounters[topic]++);
+        return topic + '#' + (this._subscriptionCounters[topic]++);
     };
 
     /**
@@ -93,7 +95,7 @@ define(function () {
      * @returns {*}
      */
     SubscriptionService.prototype.sanitiseTopic = function (topic) {
-        return topic.replace(/[#]/g, "");
+        return topic.replace(/[#]/g, '');
     };
 
     /**
@@ -105,7 +107,7 @@ define(function () {
         var result = topic === this.sanitiseTopic(topic);
 
         if (!result) {
-            throw "Topic string contains invalid characters: " + topic;
+            throw 'Topic string contains invalid characters: ' + topic;
         }
 
         return result;
@@ -117,11 +119,11 @@ define(function () {
      * @returns {*}
      */
     SubscriptionService.prototype.topicFromSubscriptionId = function (subscriptionId) {
-        var parts = subscriptionId.split("#");
+        var parts = subscriptionId.split('#');
 
         // validate parts
         if (parts.length !== 2) {
-            throw "Invalid subscriptionId format: " + subscriptionId;
+            throw 'Invalid subscriptionId format: ' + subscriptionId;
         }
 
         return parts[0];

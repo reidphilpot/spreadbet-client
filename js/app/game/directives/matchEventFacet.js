@@ -3,12 +3,12 @@ define(['text!../templates/matchEventFacet.html'], function (template) {
 
     return ['teamService', function (teamService) {
         return {
-            restrict: "EA",
+            restrict: 'EA',
             template: template,
             replace: true,
             scope: {
-                label: "@",
-                eventType: "@"
+                label: '@',
+                eventType: '@'
             },
             link: function ($scope) {
                 $scope.teams = teamService;

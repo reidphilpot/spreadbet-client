@@ -3,7 +3,7 @@ define(['text!../templates/spreadbot.html'], function (template) {
 
     return function () {
         return {
-            restrict: "EA",
+            restrict: 'EA',
             template: template,
             replace: true
         };

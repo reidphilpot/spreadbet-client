@@ -3,7 +3,7 @@ define(['text!../templates/matchEvent.html'], function (template) {
 
     return function () {
         return {
-            restrict: "EA",
+            restrict: 'EA',
             template: template,
             replace: false,
             transclude: true

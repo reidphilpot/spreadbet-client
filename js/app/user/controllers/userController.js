@@ -13,7 +13,7 @@ define([], function () {
 
     }
 
-    UserCtrl.$inject = ["$scope", "xhrService", "securityService", "$location", "$interval", "socketService", "$routeParams"];
+    UserCtrl.$inject = ['$scope', 'xhrService', 'securityService', '$location', '$interval', 'socketService', '$routeParams'];
 
     return UserCtrl;
 });

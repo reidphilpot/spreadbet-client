@@ -1,5 +1,5 @@
 define(function () {
-    "use strict";
+    'use strict';
 
     return [
         'gameStates',
@@ -46,11 +46,11 @@ define(function () {
              */
             Game.prototype._handleMatchEvent = function (matchEvent) {
                 switch (matchEvent.type) {
-                    case "Clock":
+                    case 'Clock':
                         this.clock = matchEvent.time;
                         break;
 
-                    case "FullTime":
+                    case 'FullTime':
                         this.unsubscribe();
                         this.markets.forEach(function (market) {
                             market.unsubscribe();
@@ -68,6 +68,6 @@ define(function () {
             };
 
             return Game;
-        }];
-
+        }
+    ];
 });

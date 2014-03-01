@@ -1,4 +1,4 @@
-define(["../models/user"], function (User) {
+define(['../models/user'], function (User) {
     'use strict';
 
     function SecurityService(xhrService, $location, $timeout, $cookieStore, loadingService) {
@@ -9,11 +9,11 @@ define(["../models/user"], function (User) {
         this.loadingService = loadingService;
 
         if (this.isLoggedIn()) {
-            this.loggedInUser = new User(JSON.parse(this.$cookieStore.get("spread.session")));
+            this.loggedInUser = new User(JSON.parse(this.$cookieStore.get('spread.session')));
         }
     }
 
-    SecurityService.$inject = ["xhrService", "$location", "$timeout", "$cookieStore", 'loadingService'];
+    SecurityService.$inject = ['xhrService', '$location', '$timeout', '$cookieStore', 'loadingService'];
 
     SecurityService.prototype.login = function (username, password) {
         this.loadingService.loading = true;
@@ -24,8 +24,8 @@ define(["../models/user"], function (User) {
 
     SecurityService.prototype.logout = function () {
         this.xhrService.logout().success(function () {
-            this.$cookieStore.remove("spread.session");
-            this.$location.path("/");
+            this.$cookieStore.remove('spread.session');
+            this.$location.path('/');
         }.bind(this));
     };
 
@@ -35,11 +35,11 @@ define(["../models/user"], function (User) {
     };
 
     SecurityService.prototype.isLoggedIn = function () {
-        return this.$cookieStore.get("spread.session") !== undefined;
+        return this.$cookieStore.get('spread.session') !== undefined;
     };
 
     SecurityService.prototype.handleSuccess = function (user) {
-        this.$cookieStore.put("spread.session", JSON.stringify(user));
+        this.$cookieStore.put('spread.session', JSON.stringify(user));
 
         this.$timeout(function () {
             this.$location.path('/');
@@ -51,7 +51,7 @@ define(["../models/user"], function (User) {
 
     SecurityService.prototype.handleError = function (/*data, textStatus, jqXHR*/) {
         this.$timeout(function () {
-            this.error = "Incorrect username or password";
+            this.error = 'Incorrect username or password';
             this.loadingService.loading = false;
         }.bind(this));
     };
