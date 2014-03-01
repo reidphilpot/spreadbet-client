@@ -1,9 +1,9 @@
 define(['bootstrap-js'], function () {
     'use strict';
 
-    function GameCtrl($scope, xhrService, Game, gameStates, socketService, $routeParams, loadingService, teamService) {
+    function GameCtrl($scope, xhrService, Game, gameStates, socketService, $routeParams, loadingService, teams) {
         $scope.gameStates = gameStates;
-        $scope.teams = teamService;
+        $scope.teams = teams;
         loadingService.setLoading(true);
 
         // get game by game id
@@ -29,7 +29,7 @@ define(['bootstrap-js'], function () {
         'socketService',
         '$routeParams',
         'loadingService',
-        'teamService'
+        'teamConstant'
     ];
 
     return GameCtrl;

@@ -2,14 +2,14 @@ define([
     'angular',
     './controllers/gameController',
     './controllers/configController',
-    './services/gameStates',
-    './services/teams',
+    './constants/gameStates',
+    './constants/teamConstant',
     './models/game',
     './models/market',
     './directives/spreadBotDirective',
     './directives/matchEvent',
     './directives/matchEventFacet'
-], function (angular, gameController, configController, gameStates, teams, Game, Market, spreadBotDirective, matchEventDirective, matchEventFacetDirective) {
+], function (angular, gameController, configController, gameStates, teamConstant, Game, Market, spreadBotDirective, matchEventDirective, matchEventFacetDirective) {
     'use strict';
 
     angular.module('gameModule', [])
@@ -17,8 +17,8 @@ define([
         .controller('configController', configController)
         .factory('gameFactory', Game)
         .factory('marketFactory', Market)
-        .service('gameStates', gameStates)
-        .service('teamService', teams)
+        .constant('gameStates', gameStates)
+        .constant('teamConstant', teamConstant)
         .directive('spreadBot', spreadBotDirective)
         .directive('matchEvent', matchEventDirective)
         .directive('matchEventFacet', matchEventFacetDirective);

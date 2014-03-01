@@ -5,7 +5,7 @@ define(function () {
         'gameStates',
         'subscriptionService',
         'marketFactory',
-        'teamService',
+        'teamConstant',
         function (gameStates, subscriptionService, Market, teams) {
 
             function Game(config, $scope) {
