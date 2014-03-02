@@ -140,6 +140,9 @@ define(function () {
         return this._subscriptions[topic];
     };
 
-    return SubscriptionService;
+    return {
+        Subscription: SubscriptionService,
+        subscriptionService: new SubscriptionService()
+    };
 
 });

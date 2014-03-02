@@ -1,7 +1,7 @@
-define(function () {
+define(['../../services/loadingService'], function (loadingService) {
     'use strict';
 
-    function GameConfigCtrl($scope, xhrService, $location, loadingService) {
+    function GameConfigCtrl($scope, xhrService, $location) {
         $scope.homeTeam = {};
         $scope.awayTeam = {};
         loadingService.setLoading(true);
@@ -37,7 +37,7 @@ define(function () {
 
     }
 
-    GameConfigCtrl.$inject = ['$scope', 'xhrService', '$location', 'loadingService'];
+    GameConfigCtrl.$inject = ['$scope', 'xhrService', '$location'];
 
     return GameConfigCtrl;
 });

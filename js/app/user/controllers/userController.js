@@ -1,7 +1,7 @@
 define([], function () {
     'use strict';
 
-    function UserCtrl($scope, xhrService, securityService, $location, $interval, socketService, $routeParams) {
+    function UserCtrl($scope, xhrService, $routeParams) {
 
         if ($routeParams.username) {
             xhrService.getUser($routeParams.username)
@@ -13,7 +13,7 @@ define([], function () {
 
     }
 
-    UserCtrl.$inject = ['$scope', 'xhrService', 'securityService', '$location', '$interval', 'socketService', '$routeParams'];
+    UserCtrl.$inject = ['$scope', 'xhrService', '$routeParams'];
 
     return UserCtrl;
 });

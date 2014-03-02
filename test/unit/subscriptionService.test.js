@@ -1,11 +1,11 @@
-define(['../../js/app/services/subscriptionService.js'], function(Subscription) {
+define(['../../js/app/services/subscriptionService.js'], function(subService) {
 
     describe("Socket Subscription Tests", function () {
 
         var subscriptionService;
 
         beforeEach(function () {
-            subscriptionService = new Subscription();
+            subscriptionService = new subService.Subscription();
         });
 
         it("topic name is valid", function () {

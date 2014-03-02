@@ -1,7 +1,7 @@
-define(['../models/user'], function (User) {
+define(['../models/user', '../../services/loadingService'], function (User, loadingService) {
     'use strict';
 
-    function SecurityService(xhrService, $location, $timeout, $cookieStore, loadingService) {
+    function SecurityService(xhrService, $location, $timeout, $cookieStore) {
         this.$timeout = $timeout;
         this.$location = $location;
         this.xhrService = xhrService;
@@ -13,10 +13,10 @@ define(['../models/user'], function (User) {
         }
     }
 
-    SecurityService.$inject = ['xhrService', '$location', '$timeout', '$cookieStore', 'loadingService'];
+    SecurityService.$inject = ['xhrService', '$location', '$timeout', '$cookieStore'];
 
     SecurityService.prototype.login = function (username, password) {
-        this.loadingService.loading = true;
+        this.loadingService.setLoading(true);
         this.xhrService.login(username, password)
             .done(this.handleSuccess.bind(this))
             .fail(this.handleError.bind(this));
@@ -46,7 +46,7 @@ define(['../models/user'], function (User) {
         }.bind(this));
 
         this.loggedInUser = new User(user);
-        this.loadingService.loading = false;
+        this.loadingService.setLoading(false);
     };
 
     SecurityService.prototype.handleError = function (/*data, textStatus, jqXHR*/) {

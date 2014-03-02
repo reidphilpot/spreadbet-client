@@ -25,27 +25,31 @@ module.exports = function (grunt) {
                         "angular-route": "lib/angular-route/angular-route",
                         "angular-cookies": "lib/angular-cookies/angular-cookies",
                         "text": "lib/requirejs-text/text",
-                        "bootstrap-js": "lib/bootstrap/dist/js/bootstrap.min"
+                        "bootstrap-js": "lib/bootstrap/dist/js/bootstrap.min",
+                        'mediator-js': 'lib/mediator-js/mediator.min'
                     },
                     shim: {
-                        "angular": {
-                            exports: "angular",
-                            deps: ["jquery"]
+                        'angular': {
+                            exports: 'angular',
+                            deps: ['jquery']
                         },
-                        "angular-route": {
-                            deps: ["angular"]
+                        'angular-route': {
+                            deps: ['angular']
                         },
-                        "angular-cookies": {
-                            deps: ["angular"]
+                        'angular-cookies': {
+                            deps: ['angular']
                         },
-                        "jquery": {
-                            exports: "$"
+                        'jquery': {
+                            exports: '$'
                         },
-                        "jquery-ui": {
-                            deps: ["jquery"]
+                        'jquery-ui': {
+                            deps: ['jquery']
                         },
-                        "bootstrap-js": {
-                            deps: ["jquery"]
+                        'bootstrap-js': {
+                            deps: ['jquery']
+                        },
+                        'mediator-js': {
+                            exports: 'Mediator'
                         }
                     },
                     map: {
@@ -70,6 +74,9 @@ module.exports = function (grunt) {
             },
             continuous: {
                 singleRun: true
+            },
+            unit: {
+                singleRun: false
             }
         },
         less: {

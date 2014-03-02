@@ -1,7 +1,7 @@
-define(['text!../templates/matchEventFacet.html'], function (template) {
+define(['../constants/teamConstant', 'text!../templates/matchEventFacet.html'], function (teams, template) {
     'use strict';
 
-    return ['teamConstant', function (teams) {
+    return function () {
         return {
             restrict: 'EA',
             template: template,
@@ -14,20 +14,20 @@ define(['text!../templates/matchEventFacet.html'], function (template) {
                 $scope.teams = teams;
 
                 $scope.eventCountAsPercentage = function () {
-                    var game = $scope.$parent.game;
+                    var match = $scope.$parent.match;
 
-                    if (!game) {
+                    if (!match) {
                         return 50;
                     }
 
-                    var homeTeamEvent = game.teamEvents[teams.HOME][$scope.eventType] || 0;
-                    var awayTeamEvent = game.teamEvents[teams.AWAY][$scope.eventType] || 0;
+                    var homeTeamEvent = match.teamEvents[teams.HOME][$scope.eventType] || 0;
+                    var awayTeamEvent = match.teamEvents[teams.AWAY][$scope.eventType] || 0;
                     var total = homeTeamEvent + awayTeamEvent;
 
                     return total ? Math.floor((homeTeamEvent / total) * 100) : 50;
                 };
             }
         };
-    }];
+    };
 
 });

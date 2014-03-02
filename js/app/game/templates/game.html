@@ -4,13 +4,13 @@
     <div class="navbar navbar-inverse navbar-default" role="navigation">
         <div class="container">
             <div class="game-controls">
-                <button class="btn btn-success" ng-click="startSimulation()" ng-show="game.state === gameStates.BEFORE">
+                <button class="btn btn-success" ng-click="startSimulation()" ng-show="state === gameStates.BEFORE">
                     Start Simulation
                 </button>
-                <div class="countdown" ng-show="game.state === gameStates.DURING">
-                    <span class="h1">{{game.clock}}:00</span>
+                <div class="countdown" ng-show="state === gameStates.DURING">
+                    <span class="h1">{{match.clock}}:00</span>
                 </div>
-                <button class="btn btn-success" disabled ng-show="game.state === gameStates.AFTER">
+                <button class="btn btn-success" disabled ng-show="state === gameStates.AFTER">
                     Game Over
                 </button>
             </div>

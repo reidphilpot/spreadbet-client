@@ -6,7 +6,8 @@ define({
         'angular-route': 'lib/angular-route/angular-route',
         'angular-cookies': 'lib/angular-cookies/angular-cookies',
         'text': 'lib/requirejs-text/text',
-        'bootstrap-js': 'lib/bootstrap/dist/js/bootstrap.min'
+        'bootstrap-js': 'lib/bootstrap/dist/js/bootstrap.min',
+        'mediator-js': 'lib/mediator-js/mediator.min'
     },
     shim: {
         'angular': {
@@ -27,6 +28,9 @@ define({
         },
         'bootstrap-js': {
             deps: ['jquery']
+        },
+        'mediator-js': {
+            exports: 'Mediator'
         }
     },
     map: {

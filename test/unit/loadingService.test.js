@@ -1,12 +1,6 @@
-define(['../../js/app/services/loadingService.js'], function(Loading) {
+define(['../../js/app/services/loadingService.js'], function(loadingService) {
 
     describe("Loading Service Tests", function () {
-
-        var loadingService;
-
-        beforeEach(function () {
-            loadingService = new Loading();
-        });
 
         it("should set loading correctly", function() {
             loadingService.setLoading(true);

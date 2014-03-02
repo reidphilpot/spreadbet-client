@@ -22,5 +22,5 @@ define(function () {
         return this._loading;
     };
 
-    return LoadingService;
+    return new LoadingService();
 });

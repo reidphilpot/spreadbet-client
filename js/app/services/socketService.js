@@ -1,27 +1,24 @@
-define(function () {
+define(['./endPointService', './subscriptionService'], function (endPoint, sub) {
     'use strict';
 
-    return ['endPoint', 'subscriptionService', function (endPoint, subscriptionService) {
+    var ws = new WebSocket(endPoint.replace(/^http/, 'ws'));
 
-        var ws = new WebSocket(endPoint.replace(/^http/, 'ws'));
+    ws.onerror = function (messageEvent) {
+        console.error('socket error', messageEvent);
+    };
 
-        ws.onerror = function (messageEvent) {
-            console.error('socket error', messageEvent);
-        };
+    ws.onopen = function () {
+        console.info('socket opened');
+    };
 
-        ws.onopen = function () {
-            console.info('socket opened');
-        };
+    ws.onclose = function (messageEvent) {
+        console.info('socket closed', messageEvent);
+    };
 
-        ws.onclose = function (messageEvent) {
-            console.info('socket closed', messageEvent);
-        };
+    ws.onmessage = function (messageEvent) {
+        var msg = JSON.parse(messageEvent.data);
+        sub.subscriptionService.publish(msg.topic, msg.data);
+    };
 
-        ws.onmessage = function (messageEvent) {
-            var msg = JSON.parse(messageEvent.data);
-            subscriptionService.publish(msg.topic, msg.data);
-        };
-
-        return ws;
-    }];
+    return ws;
 });
