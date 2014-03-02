@@ -9,7 +9,7 @@
                 <span class="h2">Home Team</span>
             </div>
             <div>
-                <img src="/img/{{homeTeam.mnemonic}}.png" height="175"/>
+                <img ng-src="/img/{{homeTeam.mnemonic || 'placeholder'}}.png" height="175"/>
             </div>
             <select class="form-control" ng-model="homeTeam" ng-options="team.name for team in teams"></select>
         </div>
@@ -24,7 +24,7 @@
                 <span class="h2">Away Team</span>
             </div>
             <div>
-                <img src="/img/{{awayTeam.mnemonic}}.png" height="175"/>
+                <img ng-src="/img/{{awayTeam.mnemonic || 'placeholder'}}.png" height="175"/>
             </div>
             <select class="form-control" ng-model="awayTeam" ng-options="team.name for team in teams"></select>
         </div>
