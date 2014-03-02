@@ -16,21 +16,16 @@ define([
         $scope.gameStates = gameStates;
         $scope.state = gameStates.BEFORE;
         $scope.teams = teams;
+        $scope.startSimulation = this._startSimulation.bind(this);
+
         loadingService.setLoading(true);
 
         // get game by game id
-        xhrService.getGame($routeParams.gameId)
-            .success(function (data) {
-                this.createGame(data);
-                loadingService.setLoading(false);
-                //$('#gameIntro').modal();
-            }.bind(this));
-
-        // send request to start simulation on server
-        $scope.startSimulation = function () {
-            $scope.state = gameStates.DURING;
-            socketService.send('startSimulation');
-        };
+        xhrService.getGame($routeParams.gameId).success(function (data) {
+            this._createGame(data);
+            loadingService.setLoading(false);
+            //$('#gameIntro').modal();
+        }.bind(this));
     }
 
     GameCtrl.$inject = [
@@ -39,39 +34,91 @@ define([
         '$routeParams'
     ];
 
-    GameCtrl.prototype.createGame = function(data) {
-        this.createMatch(data.homeTeam, data.awayTeam);
-        this.createMarkets(data.markets);
+    /**
+     * Create instance of game
+     * @param {Object} game configuration received from server
+     * @private
+     */
+    GameCtrl.prototype._createGame = function (data) {
+        this._createMatch(data.homeTeam, data.awayTeam, new Date(data.gameCreated));
+        this._createMarkets(data.markets);
     };
 
-    GameCtrl.prototype.createMatch = function(homeTeam, awayTeam) {
-        var $scope = this.$scope;
-        $scope.match = new Match(homeTeam, awayTeam);
+    /**
+     * Send request to start simulation on server
+     * @private
+     */
+    GameCtrl.prototype._startSimulation = function () {
+        this.$scope.state = gameStates.DURING;
+        socketService.send('startSimulation');
+    };
+
+    /**
+     * Un-subscribe from all events when simulation completes
+     * @private
+     */
+    GameCtrl.prototype._endSimulation = function () {
+        this.$scope.state = gameStates.AFTER;
+
+        sub.subscriptionService.unsubscribe(this.matchSubscription);
+
+        this.marketSubscriptions.forEach(function (marketSub) {
+            sub.subscriptionService.unsubscribe(marketSub);
+        });
+    };
+
+    /**
+     * Create Match instance and put it on the scope
+     * @param homeTeam
+     * @param awayTeam
+     * @private
+     */
+    GameCtrl.prototype._createMatch = function (homeTeam, awayTeam, timestamp) {
+        this.$scope.match = new Match(homeTeam, awayTeam, timestamp);
 
         // subscribe to simulated match events
-        sub.subscriptionService.subscribe('matchEvent', function(matchEvent) {
-            $scope.$apply(function() {
-                $scope.match.setEvent(matchEvent);
-            });
-        });
+        this.matchSubscription = sub.subscriptionService.subscribe('matchEvent', this._handleMatchEvent.bind(this));
     };
 
-    GameCtrl.prototype.createMarkets = function(markets) {
+    /**
+     * Update Match with event delta
+     * @param matchEvent
+     * @private
+     */
+    GameCtrl.prototype._handleMatchEvent = function (matchEvent) {
+        this.$scope.$apply(function () {
+
+            if (matchEvent.type === 'FullTime') {
+                this._endSimulation();
+            } else {
+                this.$scope.match.setEvent(matchEvent);
+            }
+
+        }.bind(this));
+    };
+
+    /**
+     * Create Markets and put them on the scope
+     * @param markets
+     * @private
+     */
+    GameCtrl.prototype._createMarkets = function (markets) {
         var $scope = this.$scope;
+        this.marketSubscriptions = [];
 
         // create a Market object for each market in array
-        $scope.markets = markets.map(function (market) {
-            var m = new Market(market);
+        $scope.markets = markets.map(function (m) {
+            var market = new Market(m);
 
             // subscribe to simulated market events
-            sub.subscriptionService.subscribe('marketEvent', function(marketEvent) {
-                $scope.$apply(function() {
-                    m.set(marketEvent);
+            this.marketSubscriptions.push(sub.subscriptionService.subscribe('marketEvent', function (marketEvent) {
+                $scope.$apply(function () {
+                    market.set(marketEvent);
                 });
-            });
+            }));
 
-            return m;
-        });
+            return market;
+        }.bind(this));
     };
 
     return GameCtrl;

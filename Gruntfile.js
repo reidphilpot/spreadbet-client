@@ -26,7 +26,8 @@ module.exports = function (grunt) {
                         "angular-cookies": "lib/angular-cookies/angular-cookies",
                         "text": "lib/requirejs-text/text",
                         "bootstrap-js": "lib/bootstrap/dist/js/bootstrap.min",
-                        'mediator-js': 'lib/mediator-js/mediator.min'
+                        'mediator-js': 'lib/mediator-js/mediator.min',
+                        'moment': 'lib/momentjs/min/moment.min',
                     },
                     shim: {
                         'angular': {
