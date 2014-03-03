@@ -46,7 +46,8 @@ define([
             kickoff.hour(19).minute(45);
         }
 
-        this.kickoffTime = kickoff.format('MMM Do YYYY, h:mm a');
+        this.kickoffDate = kickoff.format('Do MMMM YYYY');
+        this.kickoffTime = kickoff.format('h:mm a');
     };
 
     return Match;

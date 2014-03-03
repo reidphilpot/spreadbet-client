@@ -5,7 +5,7 @@
             <span class="h1">{{match.teamEvents[teams.HOME].Goal || 0}}  - {{match.teamEvents[teams.AWAY].Goal || 0}}</span>
             <img ng-src="/img/{{match.awayTeam.mnemonic || 'placeholder'}}.png" height="50"/>
         </div>
-        <div class="kickoff-time">{{match.kickoffTime}}</div>
+        <div class="kickoff-date">{{match.kickoffDate}}<br><span class="kickoff-time">{{match.kickoffTime}}</span></div>
     </div>
     <div ng-transclude></div>
 </div>

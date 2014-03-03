@@ -11,9 +11,10 @@
     "require-css": "~0.1.2",
     "jquery-ui": "~1.10.4",
     "bootstrap": "~3.1.1",
-    "slickgrid-bootstrap": "*",
     "mediator-js": "~0.9.6",
-    "momentjs": "~2.5.1"
+    "momentjs": "~2.5.1",
+    "slickgrid": "~2.1.0",
+    "jquery.event.drag-drop": "~2.2.1"
   },
   "authors": [
     "Reid Philpot <reidphilpot@gmail.com>"
@@ -28,6 +29,7 @@
     "tests"
   ],
   "resolutions": {
-    "bootstrap": "~3.1.1"
+    "bootstrap": "~3.1.1",
+    "jquery": "1.9"
   }
 }

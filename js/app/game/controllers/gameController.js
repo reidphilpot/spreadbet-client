@@ -6,8 +6,11 @@ define([
     '../../services/loadingService',
     '../../services/socketService',
     '../../services/subscriptionService',
+    'jquery',
+    'slickgrid',
+    'slickdataview',
     'bootstrap-js'
-], function (Match, Market, gameStates, teams, loadingService, socketService, sub) {
+], function (Match, Market, gameStates, teams, loadingService, socketService, sub, $) {
     'use strict';
 
     function GameCtrl($scope, xhrService, $routeParams) {
@@ -26,6 +29,8 @@ define([
             loadingService.setLoading(false);
             //$('#gameIntro').modal();
         }.bind(this));
+
+        this._createMarketGrid();
     }
 
     GameCtrl.$inject = [
@@ -119,6 +124,36 @@ define([
 
             return market;
         }.bind(this));
+
+        this.dataView.beginUpdate();
+        this.dataView.setItems($scope.markets);
+        this.dataView.endUpdate();
+        this.grid.resizeCanvas();
+    };
+
+    GameCtrl.prototype._createMarketGrid = function() {
+
+        function placeBetButton () {
+            return '<button class="btn btn-xs btn-primary">Place Bet</button>';
+        }
+
+        var columns = [
+            {id: 'title', name: 'Market', field: 'title', width: 250},
+            {id: 'soFar', name: 'So Far', field: 'soFar', width: 120, cssClass: 'cell-align-center'},
+            {id: 'sellPrice', name: 'Sell Price', field: 'sellPrice', width: 120, cssClass: 'cell-align-center'},
+            {id: 'buyPrice', name: 'Buy Price', field: 'buyPrice', width: 120, cssClass: 'cell-align-center'}
+        ];
+
+        var options = {
+            enableCellNavigation: true,
+            enableColumnReorder: false,
+            forceFitColumns: true,
+            fullWidthRows: true,
+            rowHeight: 38
+        };
+
+        this.dataView = new Slick.Data.DataView();
+        this.grid = new Slick.Grid('#marketGrid', this.dataView, columns, options);
     };
 
     return GameCtrl;
