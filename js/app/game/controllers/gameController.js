@@ -6,11 +6,10 @@ define([
     '../../services/loadingService',
     '../../services/socketService',
     '../../services/subscriptionService',
-    'jquery',
     'slickgrid',
     'slickdataview',
     'bootstrap-js'
-], function (Match, Market, gameStates, teams, loadingService, socketService, sub, $) {
+], function (Match, Market, gameStates, teams, loadingService, socketService, sub) {
     'use strict';
 
     function GameCtrl($scope, xhrService, $routeParams) {
@@ -132,10 +131,6 @@ define([
     };
 
     GameCtrl.prototype._createMarketGrid = function() {
-
-        function placeBetButton () {
-            return '<button class="btn btn-xs btn-primary">Place Bet</button>';
-        }
 
         var columns = [
             {id: 'title', name: 'Market', field: 'title', width: 250},

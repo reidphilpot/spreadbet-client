@@ -16,13 +16,6 @@ define([], function () {
         this.description = config.description;
     };
 
-    Market.prototype.toJSON = function () {
-        return {
-            id: this.id,
-            title: this.title
-        }
-    };
-
     return Market;
 
 });

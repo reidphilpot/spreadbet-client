@@ -86,6 +86,7 @@
         "console": true,
         "requirejs": true,
         "require": true,
-        "define": true
+        "define": true,
+        "Slick": true
     }        // additional predefined global variables
 }
