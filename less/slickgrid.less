@@ -12,10 +12,12 @@ classes should alter those!
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid black;
   text-transform: uppercase;
+  cursor: pointer;
 }
 
 .slick-header-column-sorted, .slick-header-column:hover, .slick-header-column-active {
   #gradient > .vertical(@gray-darker, @gray-dark);
+  font-style: normal;
 }
 
 .slick-header-column.ui-state-default {
@@ -26,9 +28,28 @@ classes should alter those!
   line-height: 18px;
 }
 
+.slick-sort-indicator {
+  width: 16px;
+  height: 12px;
+  margin-left: 0;
+  margin-top: 0;
+}
+
+.slick-sort-indicator-desc, .slick-sort-indicator-asc {
+  background: url("../img/treesprite.png")
+}
+
+.slick-sort-indicator-desc {
+  background-position: 0 0;
+}
+
+.slick-sort-indicator-asc {
+  background-position: 0 -32px;
+}
+
 .slick-row .slick-cell {
-  padding-left: 4px;
-  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
   background: @gray-dark;
   border-top: 1px solid #3e3e3e;
   border-bottom: 1px solid #111;
@@ -42,4 +63,24 @@ classes should alter those!
 
 .cell-align-center {
   text-align: center;
+}
+
+.slick-row .slick-cell.cell-action {
+  line-height: 30px;
+
+  .btn {
+    width: 40px;
+  }
+}
+
+.slick-cell.changed {
+  #gradient > .vertical(lighten(@brand-warning, 5%), @brand-warning);
+  border-color: @brand-warning;
+  border-right: 1px solid darken(@brand-warning, 10%);
+  border-bottom: 1px solid darken(@brand-warning, 10%);
+  border-left: 1px solid lighten(@brand-warning, 10%);
+  border-top: 1px solid lighten(@brand-warning, 10%);
+  border-style: solid;
+  color: white;
+  text-shadow: 1px 1px 1px #000;
 }

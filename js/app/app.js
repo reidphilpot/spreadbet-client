@@ -5,7 +5,8 @@ define([
         './appController',
         './appRoutes',
         './appConfig',
-        './game/gameModule'
+        './game/gameModule',
+        './security/module'
     ],
 
     function (angular, angularRoute, xhrService, appController, routes, config) {
@@ -13,7 +14,7 @@ define([
 
         var initialise = function () {
 
-            angular.module('appModule', ['ngRoute', 'gameModule'], routes)
+            angular.module('appModule', ['ngRoute', 'gameModule', 'securityModule'], routes)
                 .config(config)
                 .service('xhrService', xhrService)
                 .controller('appController', appController);
