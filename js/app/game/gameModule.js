@@ -4,8 +4,9 @@ define([
     './controllers/configController',
     './directives/spreadBotDirective',
     './directives/matchEvent',
-    './directives/matchEventFacet'
-], function (angular, gameController, configController, spreadBotDirective, matchEventDirective, matchEventFacetDirective) {
+    './directives/matchEventFacet',
+    './services/marketService'
+], function (angular, gameController, configController, spreadBotDirective, matchEventDirective, matchEventFacetDirective, marketService) {
     'use strict';
 
     angular.module('gameModule', [])
@@ -13,5 +14,6 @@ define([
         .controller('configController', configController)
         .directive('spreadBot', spreadBotDirective)
         .directive('matchEvent', matchEventDirective)
-        .directive('matchEventFacet', matchEventFacetDirective);
+        .directive('matchEventFacet', matchEventFacetDirective)
+        .service('marketService', marketService);
 });

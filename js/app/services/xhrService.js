@@ -24,7 +24,7 @@ define(['./endPointService', 'jquery'], function (endPoint, $) {
     // security
 
     XhrService.prototype.login = function(username, password) {
-        return $.ajax({type: "POST", url: endPoint + '/login', data: { username: username, password: password }});
+        return $.ajax({type: 'POST', url: endPoint + '/login', data: { username: username, password: password }});
     };
 
     XhrService.prototype.logout = function () {
@@ -32,7 +32,7 @@ define(['./endPointService', 'jquery'], function (endPoint, $) {
     };
 
     XhrService.prototype.register = function(postData) {
-        return $.ajax({type: "POST", url: endPoint + '/register', data: postData});
+        return $.ajax({type: 'POST', url: endPoint + '/register', data: postData});
     };
 
     XhrService.prototype.getUser = function (username) {
