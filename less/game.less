@@ -45,16 +45,18 @@
   }
 
   .game-facet {
+    position: relative;
+    height: 40px;
 
     >div {
-      float: left;
-      width: 172px;
-      height: 40px;
+
+      height: 100%;
       text-align: center;
 
       &.game-facet-value {
         background-color: @gray-darker;
         color: white;
+        margin: 0 45px;
 
         >div {
           &:first-child {
@@ -67,6 +69,9 @@
       }
 
       &:first-child {
+        position: absolute;
+        left: 0;
+        top: 0;
         width: 45px;
         #gradient > .vertical(@start-color: @dropdown-link-hover-bg;
         @end-color: darken(@dropdown-link-hover-bg, 5%));
@@ -76,6 +81,9 @@
       }
 
       &:last-child {
+        position: absolute;
+        right: 0;
+        top: 0;
         width: 45px;
         #gradient > .vertical(@start-color: @dropdown-link-hover-bg;
         @end-color: darken(@dropdown-link-hover-bg, 5%));
@@ -127,6 +135,14 @@
 
   #marketGrid {
     height: 420px;
+    margin-top: 20px;
+    background: rgba(0, 0, 0, 0.4);
+
+    *, *:before, *:after { -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; }
+  }
+
+  #betGrid {
+    height: 315px;
     margin-top: 20px;
     background: rgba(0, 0, 0, 0.4);
 

@@ -9,7 +9,7 @@ define([
 ], function (Match, gameStates, teams, loadingService, socketService, sub) {
     'use strict';
 
-    function GameCtrl($scope, xhrService, marketService, $routeParams) {
+    function GameCtrl($scope, xhrService, marketService, betService, $routeParams) {
         this.$scope = $scope;
 
         $scope.gameStates = gameStates;
@@ -18,6 +18,7 @@ define([
         $scope.startSimulation = this._startSimulation.bind(this);
 
         this.marketService = marketService;
+        this.betService = betService;
 
         loadingService.setLoading(true);
 
@@ -29,12 +30,14 @@ define([
         }.bind(this));
 
         marketService.createMarketGrid();
+        betService.createBetsGrid();
     }
 
     GameCtrl.$inject = [
         '$scope',
         'xhrService',
         'marketService',
+        'betService',
         '$routeParams'
     ];
 

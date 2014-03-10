@@ -17,22 +17,24 @@
     </div>
 
     <!-- Begin page content -->
-    <div class="container">
+    <div class="container-fluid">
 
         <div class="row">
 
-            <div class="col-md-3">
+            <div class="col-md-4">
 
-                <div match-event>
+                <div match-event class="clearfix">
                     <div match-event-facet label="Goals" event-type="Goal"/>
                     <div match-event-facet label="Corners" event-type="Corner"/>
                     <div match-event-facet label="Offsides" event-type="Offside"/>
                     <div match-event-facet label="Yellow Cards" event-type="YellowCard"/>
                 </div>
 
+                <div id="betGrid"></div>
+
             </div>
 
-            <div class="col-md-9">
+            <div class="col-md-8">
 
                 <div spread-bot></div>
 

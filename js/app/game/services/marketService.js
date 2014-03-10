@@ -1,15 +1,17 @@
 define([
     '../models/market',
     '../../services/subscriptionService',
-    '../betEntry',
     'slickgrid',
     'slickdataview'
-], function (Market, sub, betEntry) {
+], function (Market, sub) {
     'use strict';
 
-    function MarketService() {
+    function MarketService(betEntryFactory) {
         this.markets = null;
+        this.betEntryFactory = betEntryFactory;
     }
+
+    MarketService.$injector = ['betEntryFactory'];
 
     MarketService.prototype._getMarketById = function (marketId) {
         for (var i = 0; i < this.markets.length; i++) {
@@ -64,10 +66,10 @@ define([
         var columns = [
             {id: 'title', name: 'Market', field: 'title', width: 300, sortable: true},
             {id: 'soFar', name: 'So Far', field: 'soFar', width: 100, sortable: true, cssClass: 'cell-align-center'},
-            {id: 'sellAction', name: '', field: 'sellAction', width: 75, sortable: true, cssClass: 'cell-align-center cell-action', formatter: sellButton, editor: betEntry},
+            {id: 'sellAction', name: '', field: 'sellAction', width: 75, sortable: true, cssClass: 'cell-align-center cell-action', formatter: sellButton, editor: this.betEntryFactory},
             {id: 'sellPrice', name: 'Sell Price', field: 'sellPrice', width: 100, sortable: true, cssClass: 'cell-align-center'},
             {id: 'buyPrice', name: 'Buy Price', field: 'buyPrice', width: 100, sortable: true, cssClass: 'cell-align-center'},
-            {id: 'buyAction', name: '', field: 'buyAction', width: 75, sortable: true, cssClass: 'cell-align-center cell-action', formatter: buyButton, editor: betEntry}
+            {id: 'buyAction', name: '', field: 'buyAction', width: 75, sortable: true, cssClass: 'cell-align-center cell-action', formatter: buyButton, editor: this.betEntryFactory}
         ];
 
         var options = {
