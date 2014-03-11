@@ -1,18 +1,25 @@
 define([
     '../models/market',
     '../../services/subscriptionService',
-    'slickgrid',
-    'slickdataview'
+    'slickGrid',
+    'slickDataView'
 ], function (Market, sub) {
     'use strict';
 
-    function MarketService(betEntryFactory) {
+    function MarketService(betEntryFactory, gridService) {
         this.markets = null;
-        this.betEntryFactory = betEntryFactory;
+        this._betEntryFactory = betEntryFactory;
+        this._gridService = gridService;
     }
 
-    MarketService.$injector = ['betEntryFactory'];
+    MarketService.$injector = ['betEntryFactory', 'gridFactory'];
 
+    /**
+     * Get Market by ID
+     * @param marketId
+     * @returns {*}
+     * @private
+     */
     MarketService.prototype._getMarketById = function (marketId) {
         for (var i = 0; i < this.markets.length; i++) {
             var market = this.markets[i];
@@ -45,85 +52,68 @@ define([
             return market;
         }.bind(this));
 
-        this.dataView.beginUpdate();
-        this.dataView.setItems(this.markets);
-        this.dataView.endUpdate();
+        this.grid.dataView.beginUpdate();
+        this.grid.dataView.setItems(this.markets);
+        this.grid.dataView.endUpdate();
 
         return this.markets;
     };
 
+    /**
+     * Create Market Grid
+     */
     MarketService.prototype.createMarketGrid = function () {
-        var sortCol = 'title';
-
-        function sellButton() {
-            return '<button class="btn btn-xs btn-danger">SELL</button>';
-        }
-
-        function buyButton() {
-            return '<button class="btn btn-xs btn-primary">BUY</button>';
-        }
-
-        var columns = [
+        this.grid = this._gridService.create('#marketGrid', [
             {id: 'title', name: 'Market', field: 'title', width: 300, sortable: true},
             {id: 'soFar', name: 'So Far', field: 'soFar', width: 100, sortable: true, cssClass: 'cell-align-center'},
-            {id: 'sellAction', name: '', field: 'sellAction', width: 75, sortable: true, cssClass: 'cell-align-center cell-action', formatter: sellButton, editor: this.betEntryFactory},
+            {id: 'sellAction', name: '', field: 'sellAction', width: 75, sortable: true, cssClass: 'cell-align-center cell-action', formatter: this._sellButtonFormatter.bind(this), editor: this._betEntryFactory},
             {id: 'sellPrice', name: 'Sell Price', field: 'sellPrice', width: 100, sortable: true, cssClass: 'cell-align-center'},
             {id: 'buyPrice', name: 'Buy Price', field: 'buyPrice', width: 100, sortable: true, cssClass: 'cell-align-center'},
-            {id: 'buyAction', name: '', field: 'buyAction', width: 75, sortable: true, cssClass: 'cell-align-center cell-action', formatter: buyButton, editor: this.betEntryFactory}
-        ];
-
-        var options = {
-            enableCellNavigation: true,
-            enableColumnReorder: true,
-            forceFitColumns: true,
-            fullWidthRows: true,
-            rowHeight: 38,
-            editable: true
-        };
-
-        function comparer(a, b) {
-            var x = a[sortCol], y = b[sortCol];
-            return (x === y ? 0 : (x > y ? 1 : -1));
-        }
-
-        this.dataView = new Slick.Data.DataView();
-
-        this.dataView.onRowCountChanged.subscribe(function () {
-            this.grid.updateRowCount();
-            this.grid.render();
-        }.bind(this));
-
-        this.dataView.onRowsChanged.subscribe(function (e, args) {
-            this.grid.invalidateRows(args.rows);
-            this.grid.render();
-        }.bind(this));
-
-        this.grid = new Slick.Grid('#marketGrid', this.dataView, columns, options);
-
-        this.grid.onSort.subscribe(function (e, args) {
-            sortCol = args.sortCol.field;
-            this.dataView.sort(comparer, args.sortAsc);
-        }.bind(this));
+            {id: 'buyAction', name: '', field: 'buyAction', width: 75, sortable: true, cssClass: 'cell-align-center cell-action', formatter: this._buyButtonFormatter.bind(this), editor: this._betEntryFactory}
+        ]);
     };
 
+    /**
+     * Handle Market event
+     * @param marketEvent
+     * @private
+     */
     MarketService.prototype._handleMarketEvent = function (marketEvent) {
         var market = this._getMarketById(marketEvent.id);
         market.set(marketEvent);
 
-        this.dataView.updateItem(market.id, market);
+        this.grid.dataView.updateItem(market.id, market);
 
-        var row = this.dataView.getRowById(market.id);
+        var row = this.grid.dataView.getRowById(market.id);
 
         var hash = {};
         hash[row] = {};
         hash[row].soFar = 'changed';
 
-        this.grid.setCellCssStyles('highlight' + row, hash);
+        this.grid.slickGrid.setCellCssStyles('highlight' + row, hash);
 
         // Turn off highlight
         setTimeout(function () {
-            this.grid.removeCellCssStyles('highlight' + row);
+            this.grid.slickGrid.removeCellCssStyles('highlight' + row);
         }.bind(this), 500);
+    };
+
+    /**
+     * Sell Button Formatter
+     * @returns {string}
+     * @private
+     */
+    MarketService.prototype._sellButtonFormatter = function() {
+        return '<button class="btn btn-xs btn-danger">SELL</button>';
+    };
+
+    /**
+     * Buy Button Formatter
+     * @returns {string}
+     * @private
+     */
+    MarketService.prototype._buyButtonFormatter = function() {
+        return '<button class="btn btn-xs btn-primary">BUY</button>';
     };
 
     return MarketService;
