@@ -1,4 +1,4 @@
-define(function() {
+define(function () {
     'use strict';
 
     var options = {
@@ -17,9 +17,9 @@ define(function() {
         return (x === y ? 0 : (x > y ? 1 : -1));
     }
 
-    return function() {
+    return function () {
 
-        this.create = function(elementId, columns) {
+        this.create = function (elementId, columns) {
 
             var dataView = new Slick.Data.DataView();
 

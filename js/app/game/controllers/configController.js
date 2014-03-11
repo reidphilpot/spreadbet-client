@@ -46,7 +46,7 @@ define(['../../services/loadingService'], function (loadingService) {
             .then(this._loadGame.bind(this));
     };
 
-    GameConfigCtrl.prototype._loadGame = function(data) {
+    GameConfigCtrl.prototype._loadGame = function (data) {
         loadingService.setLoading(false);
 
         this.$scope.$apply(function () {

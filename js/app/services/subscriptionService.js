@@ -65,7 +65,7 @@ define(function () {
         var subscribers = this._subscriptions[topic];
 
         for (var subscriptionId in subscribers) {
-            if(subscribers.hasOwnProperty(subscriptionId)){
+            if (subscribers.hasOwnProperty(subscriptionId)) {
                 subscribers[subscriptionId](data);
             }
         }

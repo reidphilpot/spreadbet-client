@@ -1,14 +1,14 @@
-define(['jquery'], function($) {
+define(['jquery'], function ($) {
     'use strict';
 
-    return ['betService', function(betService) {
+    return ['betService', function (betService) {
 
         function BetEntry(args) {
             var $input, $wrapper;
             var defaultValue;
             var scope = this;
 
-            this.init = function() {
+            this.init = function () {
                 var $container = $('body');
 
                 $wrapper = $('<div style="z-index:10000;position:absolute;background:white;padding:5px;" />').appendTo($container);
@@ -23,7 +23,7 @@ define(['jquery'], function($) {
                 $input.focus().select();
             };
 
-            this.handleKeyDown = function(e) {
+            this.handleKeyDown = function (e) {
                 if (e.which === $.ui.keyCode.ENTER /*&& e.ctrlKey*/) {
                     scope.save();
                 }
@@ -33,56 +33,56 @@ define(['jquery'], function($) {
                 }
             };
 
-            this.save = function() {
+            this.save = function () {
                 console.log(args);
                 betService.createBet(args.item, $input.val(), args.column.id === 'sellAction' ? 0 : 1);
                 scope.cancel();
             };
 
-            this.cancel = function() {
+            this.cancel = function () {
                 $input.val(defaultValue);
                 args.cancelChanges();
             };
 
-            this.hide = function() {
+            this.hide = function () {
                 $wrapper.hide();
             };
 
-            this.show = function() {
+            this.show = function () {
                 $wrapper.show();
             };
 
-            this.position = function(position) {
+            this.position = function (position) {
                 $wrapper.css('top', position.top).css('left', position.left);
             };
 
-            this.destroy = function() {
+            this.destroy = function () {
                 $wrapper.remove();
             };
 
-            this.focus = function() {
+            this.focus = function () {
                 $input.focus();
             };
 
-            this.loadValue = function(item) {
+            this.loadValue = function (item) {
                 defaultValue = item[args.column.field];
                 $input.val('');
                 $input.select();
             };
 
-            this.serializeValue = function() {
+            this.serializeValue = function () {
                 return $input.val();
             };
 
-            this.applyValue = function(item,state) {
+            this.applyValue = function (item, state) {
                 item[args.column.field] = state;
             };
 
-            this.isValueChanged = function() {
+            this.isValueChanged = function () {
                 return (!($input.val() === '' && defaultValue === null)) && ($input.val() !== defaultValue);
             };
 
-            this.validate = function() {
+            this.validate = function () {
                 return {
                     valid: true,
                     msg: null

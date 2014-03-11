@@ -103,7 +103,7 @@ define([
      * @returns {string}
      * @private
      */
-    MarketService.prototype._sellButtonFormatter = function() {
+    MarketService.prototype._sellButtonFormatter = function () {
         return '<button class="btn btn-xs btn-danger">SELL</button>';
     };
 
@@ -112,7 +112,7 @@ define([
      * @returns {string}
      * @private
      */
-    MarketService.prototype._buyButtonFormatter = function() {
+    MarketService.prototype._buyButtonFormatter = function () {
         return '<button class="btn btn-xs btn-primary">BUY</button>';
     };
 

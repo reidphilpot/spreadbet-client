@@ -18,7 +18,7 @@ define([
      * @param {Number} stake
      * @param {Boolean} direction
      */
-    BetService.prototype.createBet = function(market, stake, direction) {
+    BetService.prototype.createBet = function (market, stake, direction) {
         var bet = new Bet(market, stake, direction);
         bet.id = this.bets.length;
 
@@ -38,11 +38,11 @@ define([
         ]);
     };
 
-    BetService.prototype._stakeFormatter = function(row, col, value) {
+    BetService.prototype._stakeFormatter = function (row, col, value) {
         return '£' + value;
     };
 
-    BetService.prototype._directionFormatter = function(row, col, value) {
+    BetService.prototype._directionFormatter = function (row, col, value) {
         return value ? 'Buy' : 'Sell';
     };
 
