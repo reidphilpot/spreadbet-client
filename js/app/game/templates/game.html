@@ -23,22 +23,21 @@
 
             <div class="col-md-4">
 
-                <div match-event class="clearfix">
+                <div spread-bot></div>
+
+                <div match-event class="match-event clearfix">
                     <div match-event-facet label="Goals" event-type="Goal"/>
                     <div match-event-facet label="Corners" event-type="Corner"/>
                     <div match-event-facet label="Offsides" event-type="Offside"/>
                     <div match-event-facet label="Yellow Cards" event-type="YellowCard"/>
                 </div>
 
-                <div id="betGrid"></div>
-
             </div>
 
             <div class="col-md-8">
 
-                <div spread-bot></div>
-
-                <div id="marketGrid"></div>
+                <div class="game-grid" id="marketGrid"></div>
+                <div class="game-grid" id="betGrid"></div>
 
             </div>
 

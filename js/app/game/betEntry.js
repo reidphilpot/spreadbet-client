@@ -34,8 +34,11 @@ define(['jquery'], function ($) {
             };
 
             this.save = function () {
-                console.log(args);
-                betService.createBet(args.item, $input.val(), args.column.id === 'sellAction' ? 0 : 1);
+                var direction = args.column.id === 'buyAction' ? 1 : 0;
+                var price = direction ? args.item.buyPrice : args.item.sellPrice;
+
+                betService.createBet(args.item, $input.val(), price, direction);
+
                 scope.cancel();
             };
 

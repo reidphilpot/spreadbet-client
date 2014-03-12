@@ -37,20 +37,13 @@ define([
      * @returns {Object[]}
      */
     MarketService.prototype.createMarkets = function (markets, gameId) {
-        this.marketSubscriptions = [];
-
         // create a Market object for each market in array
         this.markets = markets.map(function (m) {
-            var market = new Market(m);
+            return new Market(m);
+        });
 
-            // subscribe to simulated market events
-            this.marketSubscriptions.push(
-                sub.subscriptionService.subscribe('marketEvent-' + gameId,
-                    this._handleMarketEvent.bind(this))
-            );
-
-            return market;
-        }.bind(this));
+        // subscribe to simulated market events
+        sub.subscriptionService.subscribe('marketEvent-' + gameId, this._handleMarketEvent.bind(this));
 
         this.grid.dataView.beginUpdate();
         this.grid.dataView.setItems(this.markets);
@@ -64,12 +57,12 @@ define([
      */
     MarketService.prototype.createMarketGrid = function () {
         this.grid = this._gridService.create('#marketGrid', [
-            {id: 'title', name: 'Market', field: 'title', width: 300, sortable: true},
-            {id: 'soFar', name: 'So Far', field: 'soFar', width: 100, sortable: true, cssClass: 'cell-align-center'},
-            {id: 'sellAction', name: '', field: 'sellAction', width: 75, sortable: true, cssClass: 'cell-align-center cell-action', formatter: this._sellButtonFormatter.bind(this), editor: this._betEntryFactory},
-            {id: 'sellPrice', name: 'Sell Price', field: 'sellPrice', width: 100, sortable: true, cssClass: 'cell-align-center'},
-            {id: 'buyPrice', name: 'Buy Price', field: 'buyPrice', width: 100, sortable: true, cssClass: 'cell-align-center'},
-            {id: 'buyAction', name: '', field: 'buyAction', width: 75, sortable: true, cssClass: 'cell-align-center cell-action', formatter: this._buyButtonFormatter.bind(this), editor: this._betEntryFactory}
+            {id: 'title', name: 'Market', field: 'title', width: 350, sortable: true},
+            {id: 'soFar', name: 'So Far', field: 'soFar', width: 100, cssClass: 'cell-align-center'},
+            {id: 'sellAction', name: '', field: 'sellAction', width: 85, cssClass: 'cell-align-center cell-action', formatter: this._sellButtonFormatter.bind(this), editor: this._betEntryFactory},
+            {id: 'sellPrice', name: 'Sell Price', field: 'sellPrice', width: 100, cssClass: 'cell-align-center'},
+            {id: 'buyPrice', name: 'Buy Price', field: 'buyPrice', width: 100, cssClass: 'cell-align-center'},
+            {id: 'buyAction', name: '', field: 'buyAction', width: 85, cssClass: 'cell-align-center cell-action', formatter: this._buyButtonFormatter.bind(this), editor: this._betEntryFactory}
         ]);
     };
 

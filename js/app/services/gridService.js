@@ -4,7 +4,6 @@ define(function () {
     var options = {
         enableCellNavigation: true,
         enableColumnReorder: true,
-        forceFitColumns: true,
         fullWidthRows: true,
         rowHeight: 38,
         editable: true
