@@ -58,6 +58,7 @@ define([
      */
     GameCtrl.prototype._startSimulation = function () {
         this.$scope.state = gameStates.DURING;
+
         socketService.send(JSON.stringify({
             key: 'startSimulation',
             value: this._gameId
@@ -97,9 +98,9 @@ define([
 
             if (matchEvent.type === 'FullTime') {
                 this._endSimulation();
-            } else {
-                this.$scope.match.setEvent(matchEvent);
             }
+
+            this.$scope.match.setEvent(matchEvent);
 
         }.bind(this));
     };

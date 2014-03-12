@@ -1,9 +1,9 @@
 <div class="game-details">
     <div class="game-score">
         <div>
-            <img ng-src="/img/{{match.homeTeam.mnemonic || 'placeholder'}}.png" height="50"/>
+            <img ng-src="/img/{{match.homeTeam.mnemonic || 'placeholder'}}.png" />
             <span class="h1">{{match.teamEvents[teams.HOME].Goal || 0}}  - {{match.teamEvents[teams.AWAY].Goal || 0}}</span>
-            <img ng-src="/img/{{match.awayTeam.mnemonic || 'placeholder'}}.png" height="50"/>
+            <img ng-src="/img/{{match.awayTeam.mnemonic || 'placeholder'}}.png" />
         </div>
     </div>
     <div ng-transclude></div>
