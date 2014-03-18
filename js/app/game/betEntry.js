@@ -11,9 +11,9 @@ define(['jquery'], function ($) {
             this.init = function () {
                 var $container = $('body');
 
-                $wrapper = $('<div style="z-index:10000;position:absolute;background:white;padding:5px;" />').appendTo($container);
+                $wrapper = $('<div class="bet-entry" />').appendTo($container);
                 $input = $('<input type="text" class="form-control" placeholder="Enter stake">').appendTo($wrapper);
-                $('<div><button class="btn btn-sm btn-default">Submit</button><button class="btn btn-sm btn-default">Cancel</button></div>').appendTo($wrapper);
+                $('<div><button class="btn btn-sm btn-primary">Submit</button> <button class="btn btn-sm btn-default">Cancel</button></div>').appendTo($wrapper);
 
                 $wrapper.find('button:first').bind('click', this.save);
                 $wrapper.find('button:last').bind('click', this.cancel);

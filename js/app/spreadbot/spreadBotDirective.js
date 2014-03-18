@@ -6,7 +6,7 @@ define(['text!./spreadBot.html'], function (template) {
             restrict: 'EA',
             template: template,
             replace: true,
-            link: function(scope, element, attrs) {
+            link: function(scope) {
                 scope.spreadBotService = spreadBotService;
             }
         };
