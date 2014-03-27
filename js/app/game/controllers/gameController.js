@@ -4,18 +4,18 @@ define([
     '../constants/teamConstant',
     '../../services/loadingService',
     '../../services/socketService',
-    '../../services/subscriptionService',
-    'bootstrap-js'
+    '../../services/subscriptionService'
 ], function (Match, gameStates, teams, loadingService, socketService, sub) {
     'use strict';
 
-    function GameCtrl($scope, xhrService, marketService, betService, $routeParams) {
+    function GameCtrl($scope, xhrService, marketService, betService, spreadBotService, $routeParams) {
         this.$scope = $scope;
 
         $scope.gameStates = gameStates;
         $scope.state = gameStates.BEFORE;
         $scope.teams = teams;
-        $scope.startSimulation = this._startSimulation.bind(this);
+        $scope.startSimulation = this._startSimulation.bind(this)
+        $scope.spreadBotService = spreadBotService;
 
         this.marketService = marketService;
         this.betService = betService;
@@ -26,10 +26,20 @@ define([
         xhrService.getGame($routeParams.gameId).success(function (data) {
             this._createGame(data);
             loadingService.setLoading(false);
-            //$('#gameIntro').modal();
         }.bind(this));
 
         marketService.createMarketGrid();
+
+        marketService.grid.slickGrid.onClick.subscribe(function(e, args) {
+            $scope.$apply(function() {
+                if(args.cell === 0) {
+                    var dataItem = args.grid.getDataItem(args.row);
+                    $scope.spreadBotService.tip = dataItem.title;
+                }
+                e.stopPropagation();
+            });
+        });
+
         betService.createBetsGrid();
     }
 
@@ -38,6 +48,7 @@ define([
         'xhrService',
         'marketService',
         'betService',
+        'spreadBotService',
         '$routeParams'
     ];
 

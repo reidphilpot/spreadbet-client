@@ -1,4 +1,4 @@
-<div class="game-container">
+<div class="game-container" ng-class="{showtips: spreadBotService.showTips}">
 
     <div class="navbar navbar-inverse navbar-default" role="navigation">
         <div class="container">
@@ -12,7 +12,9 @@
                 <button class="btn btn-success" disabled ng-show="state === gameStates.AFTER">
                     Game Over
                 </button>
+                <span class="game-tip"></span>
             </div>
+
         </div>
     </div>
 
@@ -26,10 +28,10 @@
                 <div spread-bot></div>
 
                 <div match-event class="match-event clearfix">
-                    <div match-event-facet label="Goals" event-type="Goal"/>
-                    <div match-event-facet label="Corners" event-type="Corner"/>
-                    <div match-event-facet label="Offsides" event-type="Offside"/>
-                    <div match-event-facet label="Yellow Cards" event-type="YellowCard"/>
+                    <div match-event-facet event-type="Goal">Goals</div>
+                    <div match-event-facet event-type="Corner">Corners</div>
+                    <div match-event-facet event-type="Offside">Offsides</div>
+                    <div match-event-facet event-type="YellowCard">Yellow Cards</div>
                 </div>
 
             </div>
@@ -50,12 +52,10 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">Spreadly</h4>
+                        <h4 class="modal-title" id="myModalLabel">Spread Better</h4>
                     </div>
                     <div class="modal-body">
-                        <h5>Welcome to Spreadly, the tool that teaches you to Spread Better</h5>
-
-                        <p>First let"s place some bets.</p>
+                        {{spreadBotService.tip}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal">Got it!</button>

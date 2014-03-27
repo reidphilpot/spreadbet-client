@@ -6,6 +6,7 @@ define(['../constants/teamConstant', 'text!../templates/matchEventFacet.html'], 
             restrict: 'EA',
             template: template,
             replace: true,
+            transclude: true,
             scope: {
                 label: '@',
                 eventType: '@'

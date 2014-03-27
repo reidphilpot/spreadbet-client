@@ -57,7 +57,7 @@ define([
      */
     MarketService.prototype.createMarketGrid = function () {
         this.grid = this._gridService.create('#marketGrid', [
-            {id: 'title', name: 'Market', field: 'title', width: 350, sortable: true},
+            {id: 'title', name: 'Market', field: 'title', formatter: this._marketFormatter.bind(this), width: 350, sortable: true},
             {id: 'soFar', name: 'So Far', field: 'soFar', width: 100, cssClass: 'cell-align-center'},
             {id: 'sellAction', name: '', field: 'sellAction', width: 85, cssClass: 'cell-align-center cell-action', formatter: this._sellButtonFormatter.bind(this), editor: this._betEntryFactory},
             {id: 'sellPrice', name: 'Sell Price', field: 'sellPrice', width: 100, cssClass: 'cell-align-center'},
@@ -89,6 +89,15 @@ define([
         setTimeout(function () {
             this.grid.slickGrid.removeCellCssStyles('highlight' + row);
         }.bind(this), 500);
+    };
+
+    /**
+     * Title Formatter
+     * @returns {string}
+     * @private
+     */
+    MarketService.prototype._marketFormatter = function (row, col, value) {
+        return value + ' <span class="game-tip"></span>';
     };
 
     /**

@@ -5,7 +5,7 @@ define([
 ], function (moment, gameStates, teams) {
     'use strict';
 
-    function Match(homeTeam, awayTeam /*,matchEvents*/) {
+    function Match(homeTeam, awayTeam) {
         this.clock = 0;
 
         this.homeTeam = homeTeam;

@@ -1,7 +1,7 @@
 <div class="game-facet clearfix">
     <div>{{$parent.match.teamEvents[teams.HOME][eventType] || 0}}</div>
     <div class="game-facet-value">
-        <div>{{label}}</div>
+        <div ng-transclude></div>
         <div class="progress">
             <div class="progress-bar" style="width:{{ eventCountAsPercentage() }}%;"></div>
         </div>

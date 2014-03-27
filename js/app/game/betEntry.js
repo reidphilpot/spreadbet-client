@@ -24,7 +24,7 @@ define(['jquery'], function ($) {
             };
 
             this.handleKeyDown = function (e) {
-                if (e.which === $.ui.keyCode.ENTER /*&& e.ctrlKey*/) {
+                if (e.which === $.ui.keyCode.ENTER) {
                     scope.save();
                 }
                 else if (e.which === $.ui.keyCode.ESCAPE) {
