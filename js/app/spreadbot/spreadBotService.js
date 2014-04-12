@@ -1,9 +1,22 @@
-define(function() {
+define(['jquery', 'bootstrap-js'], function($) {
     'use strict';
 
     function SpreadBotService () {
-        this.tip = 'I\'m here to teach you about Spread Betting';
+        this.showTips = false;
+        this._tip = '';
     }
+
+    SpreadBotService.prototype = Object.create(SpreadBotService.prototype, {
+        tip: {
+            get: function() {
+                return this._tip;
+            },
+            set: function(value) {
+                this._tip = value;
+                $('#gameIntro').modal();
+            }
+        }
+    });
 
     return SpreadBotService;
 

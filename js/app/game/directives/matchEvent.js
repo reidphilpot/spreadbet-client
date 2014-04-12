@@ -1,4 +1,4 @@
-define(['text!../templates/matchEvent.html'], function (template) {
+define(['../constants/teamConstant', 'text!../templates/matchEvent.html'], function (teams, template) {
     'use strict';
 
     return function () {
@@ -6,7 +6,13 @@ define(['text!../templates/matchEvent.html'], function (template) {
             restrict: 'EA',
             template: template,
             replace: false,
-            transclude: true
+            transclude: true,
+            scope: {
+                match: '=matchEvent'
+            },
+            link: function(scope) {
+                scope.teams = teams;
+            }
         };
     };
 

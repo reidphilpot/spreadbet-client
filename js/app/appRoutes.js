@@ -21,11 +21,13 @@ define(function () {
         });
         $routeProvider.when('/', {
             templateUrl: '/js/app/game/templates/config.html',
-            controller: 'configController'
+            controller: 'configController',
+            controllerAs: 'gameConfigCtrl'
         });
         $routeProvider.when('/game/:gameId', {
             templateUrl: '/js/app/game/templates/game.html',
-            controller: 'gameController'
+            controller: 'gameController',
+            controllerAs: 'gameController'
         });
         $routeProvider.otherwise({ redirectTo: '/'});
         $locationProvider.html5Mode(false);

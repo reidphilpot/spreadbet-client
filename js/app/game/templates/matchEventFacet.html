@@ -1,10 +1,10 @@
 <div class="game-facet clearfix">
-    <div>{{$parent.match.teamEvents[teams.HOME][eventType] || 0}}</div>
+    <div>{{match.teamEvents[teams.HOME][eventType] || 0}}</div>
     <div class="game-facet-value">
         <div ng-transclude></div>
         <div class="progress">
             <div class="progress-bar" style="width:{{ eventCountAsPercentage() }}%;"></div>
         </div>
     </div>
-    <div>{{$parent.match.teamEvents[teams.AWAY][eventType] || 0}}</div>
+    <div>{{match.teamEvents[teams.AWAY][eventType] || 0}}</div>
 </div>

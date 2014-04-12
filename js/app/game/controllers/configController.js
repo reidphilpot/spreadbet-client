@@ -6,9 +6,9 @@ define(['../../services/loadingService'], function (loadingService) {
         this.$location = $location;
         this.xhrService = xhrService;
 
-        $scope.homeTeam = {};
-        $scope.awayTeam = {};
-        $scope.createGame = this._createGame.bind(this);
+        this.homeTeam = {};
+        this.awayTeam = {};
+        this.createGame = this._createGame.bind(this);
 
         loadingService.setLoading(true);
 
@@ -19,9 +19,9 @@ define(['../../services/loadingService'], function (loadingService) {
     GameConfigCtrl.$inject = ['$scope', 'xhrService', '$location'];
 
     GameConfigCtrl.prototype._setTeams = function (teams) {
-        this.$scope.teams = teams;
+        this.teams = teams;
 
-        teams.sort(function (a, b) {
+        this.teams.sort(function (a, b) {
             if (a.name < b.name) {
                 return -1;
             }
@@ -31,18 +31,16 @@ define(['../../services/loadingService'], function (loadingService) {
             return 0;
         });
 
-        this.$scope.homeTeam = teams[0];
-        this.$scope.awayTeam = teams[1];
+        this.homeTeam = teams[0];
+        this.awayTeam = teams[1];
 
         loadingService.setLoading(false);
     };
 
     GameConfigCtrl.prototype._createGame = function () {
-        var $scope = this.$scope;
-
         loadingService.setLoading(true);
 
-        this.xhrService.createGame({ homeTeam: $scope.homeTeam._id, awayTeam: $scope.awayTeam._id })
+        this.xhrService.createGame({ homeTeam: this.homeTeam._id, awayTeam: this.awayTeam._id })
             .then(this._loadGame.bind(this));
     };
 
@@ -53,6 +51,13 @@ define(['../../services/loadingService'], function (loadingService) {
             this.$location.path('/game/' + data.game._id);
         }.bind(this));
     };
+
+    GameConfigCtrl.prototype.filterOutSameTeam = function (team) {
+        return function(item) {
+            return item !== team;
+        };
+    };
+
 
     return GameConfigCtrl;
 });

@@ -9,7 +9,12 @@
     </div>
     <div class="spreadbot-tip">
         <p>
-            {{spreadBotService.tip}}
+            {{message()}}
+        </p>
+        <p>
+            <button class="btn btn-primary" ng-click="spreadBotService.showTips = !spreadBotService.showTips">
+                {{buttonLabel()}}
+            </button>
         </p>
     </div>
 </div>

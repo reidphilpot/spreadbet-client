@@ -9,13 +9,14 @@ define(['../constants/teamConstant', 'text!../templates/matchEventFacet.html'], 
             transclude: true,
             scope: {
                 label: '@',
-                eventType: '@'
+                eventType: '@',
+                match: '=matchEventFacet'
             },
             link: function ($scope) {
                 $scope.teams = teams;
 
                 $scope.eventCountAsPercentage = function () {
-                    var match = $scope.$parent.match;
+                    var match = $scope.match;
 
                     if (!match) {
                         return 50;

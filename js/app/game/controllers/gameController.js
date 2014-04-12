@@ -1,21 +1,19 @@
 define([
     '../models/match',
     '../constants/gameStates',
-    '../constants/teamConstant',
     '../../services/loadingService',
     '../../services/socketService',
     '../../services/subscriptionService'
-], function (Match, gameStates, teams, loadingService, socketService, sub) {
+], function (Match, gameStates, loadingService, socketService, sub) {
     'use strict';
 
     function GameCtrl($scope, xhrService, marketService, betService, spreadBotService, $routeParams) {
+        // Angular scope
         this.$scope = $scope;
 
-        $scope.gameStates = gameStates;
-        $scope.state = gameStates.BEFORE;
-        $scope.teams = teams;
-        $scope.startSimulation = this._startSimulation.bind(this)
-        $scope.spreadBotService = spreadBotService;
+        this.gameStates = gameStates;
+        this.gameState = gameStates.BEFORE;
+        this.spreadBotService = spreadBotService;
 
         this.marketService = marketService;
         this.betService = betService;
@@ -67,8 +65,8 @@ define([
      * Send request to start simulation on server
      * @private
      */
-    GameCtrl.prototype._startSimulation = function () {
-        this.$scope.state = gameStates.DURING;
+    GameCtrl.prototype.startSimulation = function () {
+        this.gameState = gameStates.DURING;
 
         socketService.send(JSON.stringify({
             key: 'startSimulation',
@@ -81,8 +79,7 @@ define([
      * @private
      */
     GameCtrl.prototype._endSimulation = function () {
-        this.$scope.state = gameStates.AFTER;
-
+        this.gameState = gameStates.AFTER;
         sub.subscriptionService.unsubscribe(this.matchSubscription);
     };
 
@@ -93,8 +90,7 @@ define([
      * @private
      */
     GameCtrl.prototype._createMatch = function (homeTeam, awayTeam, timestamp) {
-        this.$scope.match = new Match(homeTeam, awayTeam, timestamp);
-
+        this.match = new Match(homeTeam, awayTeam, timestamp);
         // subscribe to simulated match events
         this.matchSubscription = sub.subscriptionService.subscribe('matchEvent-' + this._gameId, this._handleMatchEvent.bind(this));
     };
@@ -111,7 +107,7 @@ define([
                 this._endSimulation();
             }
 
-            this.$scope.match.setEvent(matchEvent);
+            this.match.setEvent(matchEvent);
 
         }.bind(this));
     };

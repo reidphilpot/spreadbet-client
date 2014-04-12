@@ -1,15 +1,15 @@
-<div class="game-container" ng-class="{showtips: spreadBotService.showTips}">
+<div class="game-container" ng-class="{showtips: gameController.spreadBotService.showTips}">
 
     <div class="navbar navbar-inverse navbar-default" role="navigation">
         <div class="container">
             <div class="game-controls">
-                <button class="btn btn-success" ng-click="startSimulation()" ng-show="state === gameStates.BEFORE">
+                <button class="btn btn-success" ng-click="gameController.startSimulation()" ng-show="gameController.gameState === gameController.gameStates.BEFORE">
                     Start Simulation
                 </button>
-                <div class="countdown" ng-show="state === gameStates.DURING">
-                    <span class="h1">{{match.clock}}:00</span>
+                <div class="countdown" ng-show="gameController.gameState === gameController.gameStates.DURING">
+                    <span class="h1">{{gameController.match.clock}}:00</span>
                 </div>
-                <button class="btn btn-success" disabled ng-show="state === gameStates.AFTER">
+                <button class="btn btn-success" disabled ng-show="gameController.gameState === gameController.gameStates.AFTER">
                     Game Over
                 </button>
                 <span class="game-tip"></span>
@@ -27,11 +27,11 @@
 
                 <div spread-bot></div>
 
-                <div match-event class="match-event clearfix">
-                    <div match-event-facet event-type="Goal">Goals</div>
-                    <div match-event-facet event-type="Corner">Corners</div>
-                    <div match-event-facet event-type="Offside">Offsides</div>
-                    <div match-event-facet event-type="YellowCard">Yellow Cards</div>
+                <div match-event="gameController.match" class="match-event clearfix">
+                    <div match-event-facet="gameController.match" event-type="Goal">Goals</div>
+                    <div match-event-facet="gameController.match" event-type="Corner">Corners</div>
+                    <div match-event-facet="gameController.match" event-type="Offside">Offsides</div>
+                    <div match-event-facet="gameController.match" event-type="YellowCard">Yellow Cards</div>
                 </div>
 
             </div>
@@ -55,7 +55,7 @@
                         <h4 class="modal-title" id="myModalLabel">Spread Better</h4>
                     </div>
                     <div class="modal-body">
-                        {{spreadBotService.tip}}
+                        {{gameController.spreadBotService.tip}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal">Got it!</button>
