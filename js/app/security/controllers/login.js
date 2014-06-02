@@ -1,22 +1,19 @@
-define(['jquery'], function ($) {
+define(function () {
     'use strict';
 
-    function LoginCtrl($scope, securityService, $location) {
-        $scope.securityService = securityService;
-
-        $scope.login = function () {
-            var u = $('input[type=username]').val();
-            var p = $('input[type=password]').val();
-
-            securityService.login(u, p);
-        };
-
-        $scope.register = function () {
-            $location.path('/register');
-        };
+    function LoginCtrl(securityService) {
+        this.securityService = securityService;
     }
 
-    LoginCtrl.$inject = ['$scope', 'securityService', '$location'];
+    LoginCtrl.$inject = ['securityService'];
+
+    LoginCtrl.prototype.login = function () {
+        this.securityService.login(this.username, this.password);
+    };
+
+    LoginCtrl.prototype.register = function () {
+        this.securityService.register(this.r_username, this.r_password);
+    };
 
     return LoginCtrl;
 });

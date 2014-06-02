@@ -30,3 +30,39 @@ body {
   font-family: "Zwodrei Bold";
   src: url("/fonts/zwodrei_bold_demo.ttf");
 }
+
+.security-username {
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.login-container {
+  margin: 80px auto 0;
+  padding: 30px 50px 80px;
+  width: 900px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 4px 4px 0 0;
+  text-align: center;
+
+  h2 {
+    font-family: "Zwodrei Bold", "Helvetica Neue", Arial, serif;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, 0.8);
+    color: white;
+    font-size: 50px;
+    margin-bottom: 50px;
+  }
+
+  > div {
+    float: left;
+    width: 400px;
+
+  }
+
+  > div:last-child {
+    border-left: 2px solid white;
+  }
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}

@@ -14,7 +14,7 @@ define(['./endPointService', 'jquery'], function (endPoint, $) {
     };
 
     XhrService.prototype.createGame = function (putData) {
-        return $.ajax({type: 'PUT', url: endPoint + '/game/new', data: putData});
+        return $.ajax({type: 'PUT', url: endPoint + '/game', data: putData});
     };
 
     XhrService.prototype.getGame = function (gameId) {

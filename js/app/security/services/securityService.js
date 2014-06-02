@@ -17,7 +17,8 @@ define(['../models/user', '../../services/loadingService'], function (User, load
 
     SecurityService.prototype.login = function (username, password) {
         this.loadingService.setLoading(true);
-        this.xhrService.login(username, password)
+
+        return this.xhrService.login(username, password)
             .done(this.handleSuccess.bind(this))
             .fail(this.handleError.bind(this));
     };
@@ -25,6 +26,7 @@ define(['../models/user', '../../services/loadingService'], function (User, load
     SecurityService.prototype.logout = function () {
         this.xhrService.logout().success(function () {
             this.$cookieStore.remove('spread.session');
+            this.loggedInUser = null;
             this.$location.path('/');
         }.bind(this));
     };
@@ -42,7 +44,7 @@ define(['../models/user', '../../services/loadingService'], function (User, load
         this.$cookieStore.put('spread.session', JSON.stringify(user));
 
         this.$timeout(function () {
-            this.$location.path('/');
+            this.$location.path('/users/' + user.username + '/games/create');
         }.bind(this));
 
         this.loggedInUser = new User(user);
@@ -52,7 +54,7 @@ define(['../models/user', '../../services/loadingService'], function (User, load
     SecurityService.prototype.handleError = function (/*data, textStatus, jqXHR*/) {
         this.$timeout(function () {
             this.error = 'Incorrect username or password';
-            this.loadingService.loading = false;
+            this.loadingService.setLoading(false);
         }.bind(this));
     };
 

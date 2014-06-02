@@ -4,10 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="A web delivered educational tool that teaches interested amateurs how sports spread betting works">
+    <meta name="description"
+          content="A web delivered educational tool that teaches interested amateurs how sports spread betting works">
     <meta name="author" content="Reid Philpot">
 
-    <title>Spreadly</title>
+    <title>Spread Better</title>
 
     <!-- Bootstrap core CSS -->
     <link href="dist/spreadbet-client-min.css" rel="stylesheet">
@@ -17,6 +18,30 @@
 </head>
 
 <body ng-controller="appController">
+
+<div class="navbar navbar-inverse navbar-default" role="navigation" ng-cloak>
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Spread Better</a></div>
+        <div class="navbar-collapse collapse" ng-cloak>
+            <form class="navbar-form navbar-right" role="form">
+                <div ng-show="securityService.loggedInUser" style="color: white">
+                    <span class="security-username">Username: {{securityService.loggedInUser.username}}</span>
+                    <button ng-click="securityService.logout()" class="btn btn-danger">Logout</button>
+                </div>
+                <div class="pull-right" ng-show="!securityService.loggedInUser">
+                    <button ng-click="go('/login')"class="btn btn-primary">Register/Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <div ng-view></div>
 

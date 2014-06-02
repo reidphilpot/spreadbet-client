@@ -1,10 +1,11 @@
 define(['../../services/loadingService'], function (loadingService) {
     'use strict';
 
-    function GameConfigCtrl($scope, xhrService, $location) {
+    function GameConfigCtrl($scope, xhrService, $location, securityService) {
         this.$scope = $scope;
         this.$location = $location;
         this.xhrService = xhrService;
+        this.securityService = securityService;
 
         this.homeTeam = {};
         this.awayTeam = {};
@@ -16,7 +17,7 @@ define(['../../services/loadingService'], function (loadingService) {
         xhrService.getTeams().success(this._setTeams.bind(this));
     }
 
-    GameConfigCtrl.$inject = ['$scope', 'xhrService', '$location'];
+    GameConfigCtrl.$inject = ['$scope', 'xhrService', '$location', 'securityService'];
 
     GameConfigCtrl.prototype._setTeams = function (teams) {
         this.teams = teams;
@@ -40,15 +41,18 @@ define(['../../services/loadingService'], function (loadingService) {
     GameConfigCtrl.prototype._createGame = function () {
         loadingService.setLoading(true);
 
-        this.xhrService.createGame({ homeTeam: this.homeTeam._id, awayTeam: this.awayTeam._id })
-            .then(this._loadGame.bind(this));
+        this.xhrService.createGame({
+            homeTeam: this.homeTeam._id,
+            awayTeam: this.awayTeam._id,
+            user: this.securityService.loggedInUser.id
+        }).then(this._loadGame.bind(this));
     };
 
-    GameConfigCtrl.prototype._loadGame = function (data) {
+    GameConfigCtrl.prototype._loadGame = function (game) {
         loadingService.setLoading(false);
 
         this.$scope.$apply(function () {
-            this.$location.path('/game/' + data.game._id);
+            this.$location.path('/users/' + this.securityService.loggedInUser.username + '/games/' + game._id);
         }.bind(this));
     };
 

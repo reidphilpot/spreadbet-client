@@ -5,7 +5,8 @@ define(function () {
         // routes
         $routeProvider.when('/login', {
             templateUrl: '/js/app/security/templates/login.html',
-            controller: 'loginController'
+            controller: 'loginController',
+            controllerAs: 'loginController'
         });
         $routeProvider.when('/logout', {
             templateUrl: '/js/app/security/templates/login.html',
@@ -19,12 +20,12 @@ define(function () {
             templateUrl: '/js/app/user/templates/user.html',
             controller: 'userController'
         });
-        $routeProvider.when('/', {
+        $routeProvider.when('/users/:username/games/create', {
             templateUrl: '/js/app/game/templates/config.html',
             controller: 'configController',
             controllerAs: 'gameConfigCtrl'
         });
-        $routeProvider.when('/game/:gameId', {
+        $routeProvider.when('/users/:username/games/:gameId', {
             templateUrl: '/js/app/game/templates/game.html',
             controller: 'gameController',
             controllerAs: 'gameController'

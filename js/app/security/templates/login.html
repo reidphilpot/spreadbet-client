@@ -1,16 +1,33 @@
-<div class='container'>
+<div class="login-container clearfix">
 
-    <form class='form-signin login' ng-submit='login()' method='post'>
-        <h2 class='form-signin-heading'>Please sign in</h2>
+    <h2>Spread Better</h2>
 
-        <p class='text-danger' ng-show='securityService.error'><span
-                class='glyphicon glyphicon-exclamation-sign'></span> {{securityService.error}}</p>
-        <input type='username' class='form-control' placeholder='Username' value='testuser' required autofocus>
-        <input type='password' class='form-control' placeholder='Password' value='spreadbet' required>
-        <label class='checkbox'>
-            <input type='checkbox' value='remember-me'> Remember me
-        </label>
-        <button class='btn btn-lg btn-primary btn-block' type='submit'>Sign in</button>
-    </form>
+    <div>
+
+        <form class="form-signin register" ng-submit="loginController.register()" method="post">
+            <p class="text-danger" ng-show="loginController.securityService.error">
+                <span class="glyphicon glyphicon-exclamation-sign"></span> {{loginController.securityService.error}}
+            </p>
+
+            <input type="username" class="form-control" placeholder="Username" ng-model="loginController.r_username" required>
+            <input type="password" class="form-control" placeholder="Password" ng-model="loginController.r_password" required>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+        </form>
+
+    </div>
+
+    <div>
+
+        <form class="form-signin login" ng-submit="loginController.login()" method="post">
+            <p class="text-danger" ng-show="loginController.securityService.error">
+                <span class="glyphicon glyphicon-exclamation-sign"></span> {{loginController.securityService.error}}
+            </p>
+
+            <input type="username" class="form-control" placeholder="Username" ng-model="loginController.username" required autofocus>
+            <input type="password" class="form-control" placeholder="Password" ng-model="loginController.password" required>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+        </form>
+
+     </div>
 
 </div>

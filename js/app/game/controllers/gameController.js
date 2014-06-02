@@ -32,7 +32,7 @@ define([
             $scope.$apply(function() {
                 if(args.cell === 0) {
                     var dataItem = args.grid.getDataItem(args.row);
-                    $scope.spreadBotService.tip = dataItem.title;
+                    spreadBotService.tip = dataItem.title;
                 }
                 e.stopPropagation();
             });
