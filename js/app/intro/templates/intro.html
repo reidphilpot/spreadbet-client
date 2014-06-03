@@ -1,0 +1,19 @@
+<div class="intro-content">
+    <h2>{{introController.page.title}}</h2>
+    <p>{{introController.page.body}}</p>
+</div>
+
+<div class="intro-pagination">
+    <ul class="pagination">
+        <li ng-class="{disabled: !introController.canNavigateBackwards()}">
+            <a ng-click="introController.prev()">&laquo;</a>
+        </li>
+        <li ng-repeat="page in introController.pages" ng-class="{active: page == introController.page}">
+            <a ng-click="introController.page = page">{{page.tab}}</a>
+        </li>
+        <li ng-class="{disabled: !introController.canNavigateForwards()}">
+            <a ng-click="introController.next()">&raquo;</a>
+        </li>
+    </ul>
+</div>
+

@@ -30,6 +30,11 @@ define(function () {
             controller: 'gameController',
             controllerAs: 'gameController'
         });
+        $routeProvider.when('/', {
+            templateUrl: '/js/app/intro/templates/intro.html',
+            controller: 'introController',
+            controllerAs: 'introController'
+        });
         $routeProvider.otherwise({ redirectTo: '/'});
         $locationProvider.html5Mode(false);
     };
