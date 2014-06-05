@@ -21,6 +21,28 @@ define(['./endPointService', 'jquery'], function (endPoint, $) {
         return this.$http.get(endPoint + '/game/' + gameId);
     };
 
+    // bet
+
+    XhrService.prototype.createBet = function (gameId, username, market, stake, price, direction) {
+        return $.ajax({
+            type: 'PUT',
+            url: endPoint + '/users/' + username + '/games/' + gameId + '/bet',
+            data: {
+                market: market,
+                stake: stake,
+                price: price,
+                direction: direction
+            }});
+    };
+
+    XhrService.prototype.getBets = function (gameId, username) {
+        return this.$http.get(endPoint + '/users/' + username + '/games/' + gameId + '/bets');
+    };
+
+    XhrService.prototype.deleteBet = function (gameId, username, betId) {
+        return this.$http.delete(endPoint + '/users/' + username + '/games/' + gameId + '/bets/' + betId);
+    };
+
     // security
 
     XhrService.prototype.login = function (username, password) {

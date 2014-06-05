@@ -20,25 +20,25 @@ define([
 
         loadingService.setLoading(true);
 
-        // get game by game id
-        xhrService.getGame($routeParams.gameId).success(function (data) {
-            this._createGame(data);
-            loadingService.setLoading(false);
-        }.bind(this));
-
         marketService.createMarketGrid();
 
         marketService.grid.slickGrid.onClick.subscribe(function(e, args) {
             $scope.$apply(function() {
                 if(args.cell === 0) {
                     var dataItem = args.grid.getDataItem(args.row);
-                    spreadBotService.tip = dataItem.title;
+                    spreadBotService.tip = dataItem.tip;
                 }
                 e.stopPropagation();
             });
         });
 
         betService.createBetsGrid();
+
+        // get game by game id
+        xhrService.getGame($routeParams.gameId)
+            .then(this._createGame.bind(this))
+            .then(betService.getBets.bind(betService))
+            .then(function() { loadingService.setLoading(false); });
     }
 
     GameCtrl.$inject = [
@@ -55,10 +55,12 @@ define([
      * @param {Object} game configuration received from server
      * @private
      */
-    GameCtrl.prototype._createGame = function (data) {
+    GameCtrl.prototype._createGame = function (json) {
+        var data = json.data;
         this._gameId = data._id;
         this._createMatch(data.homeTeam, data.awayTeam);
         this.marketService.createMarkets(data.markets, this._gameId);
+        this.betService.gameId = this._gameId;
     };
 
     /**

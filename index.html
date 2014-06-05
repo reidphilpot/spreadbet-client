@@ -25,10 +25,10 @@
             <a class="navbar-brand" href="#">Spread Better</a>
         </div>
         <ul class="nav navbar-nav">
-            <li>
+            <li ng-class="{active: $route.current.templateUrl == '/js/app/intro/templates/intro.html'}">
                 <a href="#/">Learn</a>
             </li>
-            <li ng-show="securityService.loggedInUser">
+            <li ng-show="securityService.loggedInUser" ng-class="{active: $route.current.templateUrl == '/js/app/game/templates/config.html'}">
                 <a href="#/users/{{securityService.loggedInUser.username}}/games/create">New Game</a>
             </li>
             <!--<li class="dropdown">-->
@@ -46,7 +46,6 @@
         </ul>
         <div class="navbar-collapse collapse" ng-cloak>
             <form class="navbar-form navbar-right" role="form">
-                {{$route.current.scope.name}}
                 <div ng-show="securityService.loggedInUser" style="color: white">
                     <span class="security-username">Username: {{securityService.loggedInUser.username}}</span>
                     <button ng-click="securityService.logout()" class="btn btn-danger">Logout</button>

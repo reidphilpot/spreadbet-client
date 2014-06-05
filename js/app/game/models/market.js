@@ -12,6 +12,7 @@ define([], function () {
         this.buyPrice = config.buyPrice;
         this.soFar = config.soFar;
         this.description = config.description;
+        this.tip = config.tip;
     };
 
     return Market;

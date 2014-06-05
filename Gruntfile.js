@@ -126,6 +126,45 @@ module.exports = function (grunt) {
             install: {
                 //just run 'grunt bower:install' and you'll see files from your Bower packages in lib directory
             }
+        },
+        nightwatch: {
+            options: {
+                "src_folders" : ["acceptance/tests"],
+                "output_folder" : "reports",
+                "custom_commands_path" : "",
+                "custom_assertions_path" : "",
+                "globals_path" : "",
+
+                "selenium" : {
+                    "start_process" : false,
+                    "server_path" : "",
+                    "log_path" : "",
+                    "host" : "127.0.0.1",
+                    "port" : 4444
+                },
+
+                "test_settings" : {
+                    "default" : {
+                        "launch_url" : "http://localhost",
+                        "selenium_port"  : 4444,
+                        "selenium_host"  : "localhost",
+                        "silent": true,
+                        "firefox_profile": false,
+                        "chrome_driver": "",
+                        "ie_driver": "",
+                        "screenshots" : {
+                            "enabled" : false,
+                            "path" : ""
+                        },
+                        "desiredCapabilities": {
+                            "browserName": "firefox",
+                            "javascriptEnabled": true,
+                            "acceptSslCerts": true
+                        }
+                    }
+                }
+
+            }
         }
     });
 
@@ -136,6 +175,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-bower-task');
+    grunt.loadNpmTasks('grunt-nightwatch');
 
     // Default task
     grunt.registerTask('default', ['jshint', 'karma:continuous', 'requirejs', 'less:development']);

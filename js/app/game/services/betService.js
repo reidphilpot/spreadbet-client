@@ -5,17 +5,21 @@ define([
 ], function (Bet) {
     'use strict';
 
-    function BetService(gridService) {
+    function BetService(gridService, xhrService, securityService) {
         this._gridService = gridService;
+        this._xhrService = xhrService;
+        this._securityService = securityService;
         this.bets = [];
     }
 
-    BetService.$injector = ['gridService'];
+    BetService.$injector = ['gridService', 'xhrService', 'securityService'];
 
     /**
      * Create Bets Grid
      */
     BetService.prototype.createBetsGrid = function () {
+        this.bets.length = 0;
+
         this.grid = this._gridService.create('#betGrid', [
             {id: 'delete', name: '', field: 'delete', width: 50, cssClass: 'cell-align-center', formatter: this._deleteFormatter.bind(this)},
             {id: 'title', name: 'Market', field: 'title', width: 300},
@@ -43,8 +47,24 @@ define([
      * @param {Boolean} direction
      */
     BetService.prototype.createBet = function (market, stake, price, direction) {
-        var bet = new Bet(market, stake, price, direction);
-        bet.id = this.bets.length;
+        return this._xhrService.createBet(
+                this.gameId,
+                this._securityService.loggedInUser.username,
+                market.title,
+                stake,
+                price,
+                direction)
+        .then(this._bindBetToGrid.bind(this));
+    };
+
+    BetService.prototype._bindBetToGrid = function(betObject) {
+        var bet = new Bet(
+            betObject._id,
+            betObject.market,
+            betObject.stake,
+            betObject.price,
+            betObject.direction
+        );
 
         this.bets.unshift(bet);
 
@@ -54,11 +74,21 @@ define([
     };
 
     BetService.prototype._removeBet = function (bet) {
-        this.bets.splice(this.bets.indexOf(bet), 1);
+        return this._xhrService.deleteBet(this.gameId, this._securityService.loggedInUser.username, bet.id)
+            .success(function() {
+                this.bets.splice(this.bets.indexOf(bet), 1);
+                this.grid.dataView.beginUpdate();
+                this.grid.dataView.setItems(this.bets);
+                this.grid.dataView.endUpdate();
+            }.bind(this));
+    };
 
-        this.grid.dataView.beginUpdate();
-        this.grid.dataView.setItems(this.bets);
-        this.grid.dataView.endUpdate();
+    BetService.prototype.getBets = function() {
+        this._xhrService.getBets(this.gameId, this._securityService.loggedInUser.username)
+            .then(function(json) {
+                var bets = json.data;
+                bets.forEach(this._bindBetToGrid.bind(this));
+            }.bind(this));
     };
 
     BetService.prototype._stakeFormatter = function (row, col, value) {
