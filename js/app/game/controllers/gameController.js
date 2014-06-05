@@ -38,6 +38,11 @@ define([
         xhrService.getGame($routeParams.gameId)
             .then(this._createGame.bind(this))
             .then(betService.getBets.bind(betService))
+            .then(function(bets) {
+                if(this.gameState === gameStates.AFTER) {
+                    this._calculateWinnings(bets);
+                }
+            }.bind(this))
             .then(function() { loadingService.setLoading(false); });
     }
 
@@ -58,9 +63,13 @@ define([
     GameCtrl.prototype._createGame = function (json) {
         var data = json.data;
         this._gameId = data._id;
-        this._createMatch(data.homeTeam, data.awayTeam);
+        this.gameState = data.gameState;
+        this._createMatch(data.homeTeam, data.awayTeam, data.minutesElapsed);
         this.marketService.createMarkets(data.markets, this._gameId);
         this.betService.gameId = this._gameId;
+        if(this.gameState === 1) {
+            this.startSimulation();
+        }
     };
 
     /**
@@ -83,6 +92,23 @@ define([
     GameCtrl.prototype._endSimulation = function () {
         this.gameState = gameStates.AFTER;
         sub.subscriptionService.unsubscribe(this.matchSubscription);
+        this.betService.getBets().then(this._calculateWinnings.bind(this));
+    };
+
+    GameCtrl.prototype._calculateWinnings = function(bets) {
+        var pnl = bets.map(function(bet) { return bet.result; }).reduce(function(previousValue, currentValue) {
+            return previousValue + currentValue;
+        });
+
+        if(pnl > 0) {
+            this.spreadBotService.tip = 'Congratulations you won £' + Math.abs(pnl).toFixed(2);
+        }
+        else if(pnl < 0) {
+            this.spreadBotService.tip = 'Sorry you lost £' + Math.abs(pnl).toFixed(2);
+        }
+        else {
+            this.spreadBotService.tip = 'You broke even';
+        }
     };
 
     /**
@@ -91,8 +117,8 @@ define([
      * @param awayTeam
      * @private
      */
-    GameCtrl.prototype._createMatch = function (homeTeam, awayTeam, timestamp) {
-        this.match = new Match(homeTeam, awayTeam, timestamp);
+    GameCtrl.prototype._createMatch = function (homeTeam, awayTeam, minutesElapsed) {
+        this.match = new Match(homeTeam, awayTeam, minutesElapsed);
         // subscribe to simulated match events
         this.matchSubscription = sub.subscriptionService.subscribe('matchEvent-' + this._gameId, this._handleMatchEvent.bind(this));
     };

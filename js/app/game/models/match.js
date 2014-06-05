@@ -5,8 +5,8 @@ define([
 ], function (moment, gameStates, teams) {
     'use strict';
 
-    function Match(homeTeam, awayTeam) {
-        this.clock = 0;
+    function Match(homeTeam, awayTeam, minutesElapsed) {
+        this.clock = minutesElapsed;
 
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;

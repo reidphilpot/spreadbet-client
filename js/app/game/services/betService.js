@@ -26,7 +26,7 @@ define([
             {id: 'direction', name: 'Dir', field: 'direction', width: 100, cssClass: 'cell-align-center', formatter: this._directionFormatter.bind(this)},
             {id: 'stake', name: 'Stake', field: 'stake', width: 120, cssClass: 'cell-align-center', formatter: this._stakeFormatter.bind(this)},
             {id: 'price', name: 'Price', field: 'price', width: 120, cssClass: 'cell-align-center'},
-            {id: 'result', name: 'Result', field: 'result', width: 120, cssClass: 'cell-align-center'}
+            {id: 'result', name: 'Result', field: 'result', width: 120, cssClass: 'cell-align-center', formatter: this._stakeFormatter.bind(this)}
         ]);
 
         this.grid.slickGrid.onClick.subscribe(function(e, args) {
@@ -63,7 +63,8 @@ define([
             betObject.market,
             betObject.stake,
             betObject.price,
-            betObject.direction
+            betObject.direction,
+            betObject.result
         );
 
         this.bets.unshift(bet);
@@ -84,15 +85,17 @@ define([
     };
 
     BetService.prototype.getBets = function() {
-        this._xhrService.getBets(this.gameId, this._securityService.loggedInUser.username)
+        return this._xhrService.getBets(this.gameId, this._securityService.loggedInUser.username)
             .then(function(json) {
                 var bets = json.data;
+                this.bets.length = 0;
                 bets.forEach(this._bindBetToGrid.bind(this));
+                return bets;
             }.bind(this));
     };
 
     BetService.prototype._stakeFormatter = function (row, col, value) {
-        return '£' + value;
+        return value ? '£' + value.toFixed(2) : '';
     };
 
     BetService.prototype._directionFormatter = function (row, col, value) {
