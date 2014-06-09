@@ -57,12 +57,12 @@ define([
      */
     MarketService.prototype.createMarketGrid = function () {
         this.grid = this._gridService.create('#marketGrid', [
-            {id: 'title', name: 'Market', field: 'title', formatter: this._marketFormatter.bind(this), width: 350, sortable: true},
-            {id: 'soFar', name: 'So Far', field: 'soFar', width: 100, cssClass: 'cell-align-center'},
-            {id: 'sellAction', name: '', field: 'sellAction', width: 85, cssClass: 'cell-align-center cell-action', formatter: this._sellButtonFormatter.bind(this), editor: this._betEntryFactory},
+            {id: 'title', name: 'Market', field: 'title', formatter: this._marketFormatter.bind(this), width: 300, sortable: true},
+            {id: 'soFar', name: 'So Far', field: 'soFar', width: 90, cssClass: 'cell-align-center'},
+            {id: 'sellAction', name: '', field: 'sellAction', width: 70, cssClass: 'cell-action', formatter: this._sellButtonFormatter.bind(this), editor: this._betEntryFactory},
             {id: 'sellPrice', name: 'Sell Price', field: 'sellPrice', width: 100, cssClass: 'cell-align-center'},
             {id: 'buyPrice', name: 'Buy Price', field: 'buyPrice', width: 100, cssClass: 'cell-align-center'},
-            {id: 'buyAction', name: '', field: 'buyAction', width: 85, cssClass: 'cell-align-center cell-action', formatter: this._buyButtonFormatter.bind(this), editor: this._betEntryFactory}
+            {id: 'buyAction', name: '', field: 'buyAction', width: 220, cssClass: 'cell-action', formatter: this._buyButtonFormatter.bind(this), editor: this._betEntryFactory}
         ]);
     };
 

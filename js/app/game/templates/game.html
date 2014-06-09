@@ -2,16 +2,15 @@
 
 
     <div class="game-controls">
-        <button class="btn btn-success" ng-click="gameController.startSimulation()" ng-show="gameController.gameState === gameController.gameStates.BEFORE">
+        <button class="btn btn-success" ng-click="gameController.startSimulation()" ng-show="gameController.gameStateService.state === gameController.gameStates.BEFORE">
             Start Simulation
         </button>
-        <div class="countdown" ng-show="gameController.gameState === gameController.gameStates.DURING">
+        <div class="countdown" ng-show="gameController.gameStateService.state === gameController.gameStates.DURING">
             <span class="h1">{{gameController.match.clock}}:00</span>
         </div>
-        <button class="btn btn-success" disabled ng-show="gameController.gameState === gameController.gameStates.AFTER">
+        <button class="btn btn-success" disabled ng-show="gameController.gameStateService.state === gameController.gameStates.AFTER">
             Game Over
         </button>
-        <span class="game-tip"></span>
     </div>
 
     <!-- Begin page content -->

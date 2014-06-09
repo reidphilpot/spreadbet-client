@@ -7,9 +7,10 @@ define([
     './services/marketService',
     './services/betService',
     '../services/gridService',
+    './services/gameStateService',
     './betEntry',
     '../spreadBot/spreadBotModule'
-], function (angular, gameController, configController, matchEventDirective, matchEventFacetDirective, marketService, betService, gridService, betEntry) {
+], function (angular, gameController, configController, matchEventDirective, matchEventFacetDirective, marketService, betService, gridService, gameStateService, betEntry) {
     'use strict';
 
     angular.module('gameModule', ['spreadBotModule'])
@@ -20,5 +21,6 @@ define([
         .service('marketService', marketService)
         .service('betService', betService)
         .service('gridService', gridService)
+        .service('gameStateService', gameStateService)
         .factory('betEntryFactory', betEntry);
 });

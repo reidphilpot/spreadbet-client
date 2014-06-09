@@ -7,16 +7,15 @@ define([
 ], function (Match, gameStates, loadingService, socketService, sub) {
     'use strict';
 
-    function GameCtrl($scope, xhrService, marketService, betService, spreadBotService, $routeParams) {
+    function GameCtrl($scope, xhrService, marketService, betService, spreadBotService, gameStateService, $routeParams) {
         // Angular scope
         this.$scope = $scope;
 
-        this.gameStates = gameStates;
-        this.gameState = gameStates.BEFORE;
+        this.gameStateService = gameStateService;
         this.spreadBotService = spreadBotService;
-
         this.marketService = marketService;
         this.betService = betService;
+        this.gameStates = gameStates;
 
         loadingService.setLoading(true);
 
@@ -39,7 +38,7 @@ define([
             .then(this._createGame.bind(this))
             .then(betService.getBets.bind(betService))
             .then(function(bets) {
-                if(this.gameState === gameStates.AFTER) {
+                if(this.gameStateService.state === gameStates.AFTER) {
                     this._calculateWinnings(bets);
                 }
             }.bind(this))
@@ -52,6 +51,7 @@ define([
         'marketService',
         'betService',
         'spreadBotService',
+        'gameStateService',
         '$routeParams'
     ];
 
@@ -63,11 +63,11 @@ define([
     GameCtrl.prototype._createGame = function (json) {
         var data = json.data;
         this._gameId = data._id;
-        this.gameState = data.gameState;
-        this._createMatch(data.homeTeam, data.awayTeam, data.minutesElapsed);
+        this.gameStateService.state = data.gameState;
+        this._createMatch(data.homeTeam, data.awayTeam, data.minutesElapsed, data.matchEvents);
         this.marketService.createMarkets(data.markets, this._gameId);
         this.betService.gameId = this._gameId;
-        if(this.gameState === 1) {
+        if(this.gameStateService.state === 1) {
             this.startSimulation();
         }
     };
@@ -77,7 +77,7 @@ define([
      * @private
      */
     GameCtrl.prototype.startSimulation = function () {
-        this.gameState = gameStates.DURING;
+        this.gameStateService.state = gameStates.DURING;
 
         socketService.send(JSON.stringify({
             key: 'startSimulation',
@@ -90,12 +90,16 @@ define([
      * @private
      */
     GameCtrl.prototype._endSimulation = function () {
-        this.gameState = gameStates.AFTER;
+        this.gameStateService.state = gameStates.AFTER;
         sub.subscriptionService.unsubscribe(this.matchSubscription);
         this.betService.getBets().then(this._calculateWinnings.bind(this));
     };
 
     GameCtrl.prototype._calculateWinnings = function(bets) {
+        if(bets.length === 0) {
+            return;
+        }
+
         var pnl = bets.map(function(bet) { return bet.result; }).reduce(function(previousValue, currentValue) {
             return previousValue + currentValue;
         });
@@ -117,8 +121,9 @@ define([
      * @param awayTeam
      * @private
      */
-    GameCtrl.prototype._createMatch = function (homeTeam, awayTeam, minutesElapsed) {
-        this.match = new Match(homeTeam, awayTeam, minutesElapsed);
+    GameCtrl.prototype._createMatch = function (homeTeam, awayTeam, minutesElapsed, matchEvents) {
+        this.match = new Match(homeTeam, awayTeam, minutesElapsed, matchEvents);
+
         // subscribe to simulated match events
         this.matchSubscription = sub.subscriptionService.subscribe('matchEvent-' + this._gameId, this._handleMatchEvent.bind(this));
     };

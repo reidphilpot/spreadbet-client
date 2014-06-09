@@ -1,7 +1,7 @@
-define(['jquery'], function ($) {
+define(['jquery', './constants/gameStates'], function ($, gameStates) {
     'use strict';
 
-    return ['betService', function (betService) {
+    return ['betService', 'gameStateService', function (betService, gameStateService) {
 
         function BetEntry(args) {
             var $input, $wrapper;
@@ -12,10 +12,11 @@ define(['jquery'], function ($) {
                 var $container = $('body');
 
                 $wrapper = $('<div class="bet-entry" />').appendTo($container);
-                $input = $('<input type="text" class="form-control" placeholder="Enter stake">').appendTo($wrapper);
+                $('<span>£</span>').appendTo($wrapper);
+                $input = $('<input type="text" class="form-control" placeholder="Enter stake">').attr('disabled', gameStateService.state === gameStates.AFTER).appendTo($wrapper);
                 $('<div><button class="btn btn-sm btn-primary">Submit</button> <button class="btn btn-sm btn-default">Cancel</button></div>').appendTo($wrapper);
 
-                $wrapper.find('button:first').bind('click', this.save);
+                $wrapper.find('button:first').bind('click', this.save).attr('disabled', gameStateService.state === gameStates.AFTER);
                 $wrapper.find('button:last').bind('click', this.cancel);
                 $input.bind('keydown', this.handleKeyDown);
 

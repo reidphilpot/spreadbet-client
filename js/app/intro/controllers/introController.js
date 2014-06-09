@@ -1,7 +1,9 @@
 define(function () {
     'use strict';
 
-    function IntroCtrl() {
+    function IntroCtrl($scope, securityService) {
+        $scope.securityService = securityService;
+
         this.pages = [
             {
                 tab:   'The basics',
@@ -40,7 +42,22 @@ define(function () {
             }
         ];
         this.page = this.pages[0];
+
+        $scope.$watch('securityService.loggedInUser', function(loggedInUser) {
+            this.pages[4].body = loggedInUser
+                ?
+                    'The best way to learn about sports spread betting is to try it out for yourself. ' +
+                     '<a href="#/users/' + loggedInUser.username + '/games/create">Click here</a> to pick ' +
+                     'two teams and simulate a football match. Then place some spread bets to win or lose ' +
+                     'some virtual money!'
+                :
+                    'The best way to learn about sports spread betting is to try it out for yourself. ' +
+                    '<a href="#/login">Register here</a> to pick two teams and simulate a football ' +
+                    'match. Then place some spread bets to win or lose some virtual money!';
+        }.bind(this));
     }
+
+    IntroCtrl.$inject = ['$scope', 'securityService'];
 
     IntroCtrl.prototype.canNavigateBackwards = function() {
         return this.pages.indexOf(this.page) > 0;
