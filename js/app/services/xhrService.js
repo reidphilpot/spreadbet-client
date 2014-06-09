@@ -32,7 +32,8 @@ define(['./endPointService', 'jquery'], function (endPoint, $) {
                 stake: stake,
                 price: price,
                 direction: direction
-            }});
+            }
+        });
     };
 
     XhrService.prototype.getBets = function (gameId, username) {

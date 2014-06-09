@@ -1,7 +1,7 @@
-define(['text!./spreadBot.html'], function (template) {
+define(['../game/constants/gameStates', 'text!./spreadBot.html'], function (gameStates, template) {
     'use strict';
 
-    return ['spreadBotService', function (spreadBotService) {
+    return ['spreadBotService', 'gameStateService', function (spreadBotService, gameStateService) {
         return {
             restrict: 'EA',
             template: template,
@@ -14,6 +14,10 @@ define(['text!./spreadBot.html'], function (template) {
                 };
 
                 scope.message = function () {
+                    if(gameStateService.state === gameStates.AFTER) {
+                        return 'Congratulations you\'ve completed the game. Click "New Game" above to play again';
+                    }
+
                     if(!spreadBotService.showTips) {
                         return 'Before we start let\'s turn on game tips by clicking the button below.';
                     } else {

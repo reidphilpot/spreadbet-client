@@ -25,6 +25,7 @@ module.exports = function (grunt) {
                         'angular': 'lib/angular/angular',
                         'angular-route': 'lib/angular-route/angular-route',
                         'angular-cookies': 'lib/angular-cookies/angular-cookies',
+                        'angular-sanitize': 'lib/angular-sanitize/angular-sanitize',
                         'text': 'lib/requirejs-text/text',
                         'bootstrap-js': 'lib/bootstrap/dist/js/bootstrap.min',
                         'mediator-js': 'lib/mediator-js/mediator.min',
@@ -41,6 +42,9 @@ module.exports = function (grunt) {
                             deps: ['jquery']
                         },
                         'angular-route': {
+                            deps: ['angular']
+                        },
+                        'angular-sanitize': {
                             deps: ['angular']
                         },
                         'angular-cookies': {
