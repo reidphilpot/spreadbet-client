@@ -60,9 +60,11 @@ define([
             {id: 'title', name: 'Market', field: 'title', formatter: this._marketFormatter.bind(this), width: 300, sortable: true},
             {id: 'soFar', name: 'So Far', field: 'soFar', width: 90, cssClass: 'cell-align-center'},
             {id: 'sellAction', name: '', field: 'sellAction', width: 70, cssClass: 'cell-action', formatter: this._sellButtonFormatter.bind(this), editor: this._betEntryFactory},
+            {id: 'sellTip', name: '', field: 'sellTip', width: 60, cssClass: 'cell-action', formatter: this._tipFormatter.bind(this)},
             {id: 'sellPrice', name: 'Sell Price', field: 'sellPrice', width: 100, cssClass: 'cell-align-center'},
             {id: 'buyPrice', name: 'Buy Price', field: 'buyPrice', width: 100, cssClass: 'cell-align-center'},
-            {id: 'buyAction', name: '', field: 'buyAction', width: 220, cssClass: 'cell-action', formatter: this._buyButtonFormatter.bind(this), editor: this._betEntryFactory}
+            {id: 'buyAction', name: '', field: 'buyAction', width: 70, cssClass: 'cell-action', formatter: this._buyButtonFormatter.bind(this), editor: this._betEntryFactory},
+            {id: 'buyTip', name: '', field: 'buyTip', width: 100, cssClass: 'cell-action', formatter: this._tipFormatter.bind(this)}
         ]);
     };
 
@@ -98,6 +100,15 @@ define([
      */
     MarketService.prototype._marketFormatter = function (row, col, value) {
         return value + ' <span class="game-tip"></span>';
+    };
+
+    /**
+     * Title Formatter
+     * @returns {string}
+     * @private
+     */
+    MarketService.prototype._tipFormatter = function () {
+        return '<span class="game-tip"></span>';
     };
 
     /**

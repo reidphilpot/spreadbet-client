@@ -6,15 +6,16 @@ define([
 ], function (Bet, gameStates) {
     'use strict';
 
-    function BetService(gridService, xhrService, securityService, gameStateService) {
+    function BetService(gridService, xhrService, securityService, gameStateService, spreadBotService) {
         this._gridService = gridService;
         this._xhrService = xhrService;
         this._securityService = securityService;
         this._gameStateService = gameStateService;
+        this._spreadBotService = spreadBotService;
         this.bets = [];
     }
 
-    BetService.$injector = ['gridService', 'xhrService', 'securityService', 'gameStateService'];
+    BetService.$injector = ['gridService', 'xhrService', 'securityService', 'gameStateService', 'spreadBotService'];
 
     /**
      * Create Bets Grid
@@ -31,15 +32,6 @@ define([
             {id: 'result', name: 'Result', field: 'result', width: 290, formatter: this._resultFormatter.bind(this)}
         ]);
 
-        this.grid.slickGrid.onClick.subscribe(function(e, args) {
-            if(args.cell === 0) {
-                var dataItem = args.grid.getDataItem(args.row);
-                if (dataItem) {
-                    this._removeBet(dataItem);
-                }
-            }
-            e.stopPropagation();
-        }.bind(this));
     };
 
     /**
@@ -76,8 +68,8 @@ define([
         this.grid.dataView.endUpdate();
     };
 
-    BetService.prototype._removeBet = function (bet) {
-        if(this._gameStateService !== gameStates.BEFORE) {
+    BetService.prototype.removeBet = function (bet) {
+        if(this._gameStateService.state !== gameStates.BEFORE) {
             return;
         }
 
@@ -89,6 +81,7 @@ define([
                 this.grid.dataView.endUpdate();
             }.bind(this));
     };
+
 
     BetService.prototype.getBets = function() {
         return this._xhrService.getBets(this.gameId, this._securityService.loggedInUser.username)
@@ -115,7 +108,7 @@ define([
     };
 
     BetService.prototype._resultFormatter = function (row, col, value) {
-        return value != null ? '&nbsp;&nbsp;£' + value.toFixed(2) + ' <span class="game-tip"></span>' : '';
+        return value !== undefined ? '&nbsp;&nbsp;£' + value.toFixed(2) + ' <span class="game-tip"></span>' : '';
     };
 
     BetService.prototype._directionFormatter = function (row, col, value) {
