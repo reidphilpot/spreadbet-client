@@ -8,7 +8,7 @@ define([
 ], function ($, Match, gameStates, loadingService, socketService, sub) {
     'use strict';
 
-    function GameCtrl($scope, xhrService, marketService, betService, spreadBotService, gameStateService, $routeParams) {
+    function GameCtrl($scope, xhrService, marketService, betService, spreadBotService, gameStateService, securityService, $routeParams) {
         // Angular scope
         this.$scope = $scope;
 
@@ -16,6 +16,7 @@ define([
         this.spreadBotService = spreadBotService;
         this.marketService = marketService;
         this.betService = betService;
+        this.securityService = securityService;
         this.gameStates = gameStates;
 
         loadingService.setLoading(true);
@@ -84,6 +85,7 @@ define([
         'betService',
         'spreadBotService',
         'gameStateService',
+        'securityService',
         '$routeParams'
     ];
 
@@ -122,9 +124,14 @@ define([
      * @private
      */
     GameCtrl.prototype._endSimulation = function () {
+        var loggedInUser = this.securityService.loggedInUser
+
         this.gameStateService.state = gameStates.AFTER;
         sub.subscriptionService.unsubscribe(this.matchSubscription);
-        this.betService.getBets().then(this._calculateWinnings.bind(this));
+        this.betService.getBets()
+            .then(this._calculateWinnings.bind(this))
+            .then(this.securityService.getUser.bind(this.securityService, loggedInUser.username))
+            .then(function(user) { loggedInUser.balance = user.balance; });
     };
 
     GameCtrl.prototype._calculateWinnings = function(bets) {
@@ -132,9 +139,9 @@ define([
             return;
         }
 
-        var pnl = bets.map(function(bet) { return bet.result; }).reduce(function(previousValue, currentValue) {
-            return previousValue + currentValue;
-        });
+        var pnl = bets.reduce(function(previousValue, currentValue) {
+            return previousValue + currentValue.result;
+        }, 0);
 
         if(pnl > 0) {
             this.spreadBotService.tip = 'Congratulations you won £' + Math.abs(pnl).toFixed(2);

@@ -47,6 +47,7 @@
         <div class="navbar-collapse collapse" ng-cloak>
             <form class="navbar-form navbar-right" role="form">
                 <div ng-show="securityService.loggedInUser" style="color: white">
+                    <span class="security-balance">Balance: {{securityService.loggedInUser.balance | customCurrency : '£'}}</span>
                     <span class="security-username">Username: {{securityService.loggedInUser.username}}</span>
                     <button ng-click="securityService.logout()" class="btn btn-danger">Logout</button>
                 </div>

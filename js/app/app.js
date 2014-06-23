@@ -7,11 +7,12 @@ define([
     './appRoutes',
     './appConfig',
     './intro/controllers/introController',
+    './filters/currency',
     './game/gameModule',
     './security/module'
 ],
 
-    function (angular, angularRoute, angularSanitize, xhrService, appController, routes, config, introController) {
+    function (angular, angularRoute, angularSanitize, xhrService, appController, routes, config, introController, currencyFilter) {
         'use strict';
 
         function initialise() {
@@ -19,7 +20,8 @@ define([
                 .config(config)
                 .service('xhrService', xhrService)
                 .controller('appController', appController)
-                .controller('introController', introController);
+                .controller('introController', introController)
+                .filter('customCurrency', currencyFilter);
 
             angular.bootstrap(document, ['appModule']);
         }

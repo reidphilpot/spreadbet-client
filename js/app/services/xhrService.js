@@ -59,7 +59,7 @@ define(['./endPointService', 'jquery'], function (endPoint, $) {
     };
 
     XhrService.prototype.getUser = function (username) {
-        return this.$http.get(endPoint + '/user/' + username);
+        return this.$http.get(endPoint + '/users/' + username).then(function(json) { return json.data; });
     };
 
     return XhrService;
