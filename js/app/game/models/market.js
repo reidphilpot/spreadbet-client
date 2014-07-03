@@ -13,6 +13,7 @@ define([], function () {
         this.soFar = config.soFar;
         this.description = config.description;
         this.tip = config.tip;
+        this.unit = config.unit;
     };
 
     return Market;

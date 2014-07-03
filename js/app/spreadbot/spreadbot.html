@@ -8,9 +8,7 @@
         <img src="/img/agent.png"/>
     </div>
     <div class="spreadbot-tip">
-        <p>
-            {{message()}}
-        </p>
+        <p ng-bind-html="message()"></p>
         <p>
             <button class="btn btn-primary" ng-click="spreadBotService.showTips = !spreadBotService.showTips">
                 {{buttonLabel()}}

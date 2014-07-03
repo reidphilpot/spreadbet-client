@@ -20,14 +20,15 @@
 
             <div class="col-md-4">
 
+                <div spread-bot></div>
+
                 <div match-event="gameController.match" class="match-event clearfix">
                     <div match-event-facet="gameController.match" event-type="Goal">Goals</div>
                     <div match-event-facet="gameController.match" event-type="Corner">Corners</div>
                     <div match-event-facet="gameController.match" event-type="Offside">Offsides</div>
                     <div match-event-facet="gameController.match" event-type="YellowCard">Yellow Cards</div>
+                    <div match-event-facet="gameController.match" event-type="RedCard">Red Cards</div>
                 </div>
-
-                <div spread-bot></div>
 
             </div>
 
@@ -47,14 +48,13 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">Spread Better</h4>
+                        <h4 class="modal-title" id="myModalLabel">Hi, I'm SpreadBot</h4>
                     </div>
-                    <div class="modal-body">
-                        {{gameController.spreadBotService.tip}}
-                    </div>
+                    <div class="modal-body" ng-bind-html="gameController.spreadBotService.tip"></div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal">Got it!</button>
                     </div>
+                    <img src="/img/agent.png"/>
                 </div>
             </div>
         </div>

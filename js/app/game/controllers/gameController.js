@@ -34,7 +34,7 @@ define([
                 var dataItem = args.grid.getDataItem(args.row);
 
                 if(args.cell === 0) {
-                    spreadBotService.tip = this._getMarketTip(dataItem);
+                    spreadBotService.tip = dataItem.description;
                 }
                 else if(args.cell === 3 ) {
                     spreadBotService.tip = this._getBettingTip(dataItem, 0);
@@ -124,7 +124,7 @@ define([
      * @private
      */
     GameCtrl.prototype._endSimulation = function () {
-        var loggedInUser = this.securityService.loggedInUser
+        var loggedInUser = this.securityService.loggedInUser;
 
         this.gameStateService.state = gameStates.AFTER;
         sub.subscriptionService.unsubscribe(this.matchSubscription);
@@ -185,20 +185,25 @@ define([
     };
 
     GameCtrl.prototype._getMarketTip = function (market) {
-        var marketType = market.description;
+        var marketType = market.unit;
         var buy = market.buyPrice;
         var sell = market.sellPrice;
         var homeTeam = this.match.homeTeam.name;
         var awayTeam = this.match.awayTeam.name;
 
-        return 'This is a market on the number of ' + marketType + ' in the ' + homeTeam + ' v ' + awayTeam + ' game. ' +
+        return market.description + '<br><br>This is a market on the number of ' + marketType + ' in the ' + homeTeam + ' v ' + awayTeam + ' game. ' +
             'The prediction is ' + buy + '  – ' + sell + '. If you decide there are going to be more ' +
             'than ' + sell + ' ' + marketType + ', you can buy at ' + sell + '. On the other hand, if you think ' +
             'there will be less than ' + buy + ' ' + marketType + ' you can sell at ' + buy + '.';
     };
 
+
     GameCtrl.prototype._getBettingTip = function (market, direction) {
-        var marketType = market.description;
+        if(market.id === 1) {
+            return this._getWinningMarginTip(market, direction);
+        }
+
+        var marketType = market.unit;
         var price = direction ? market.buyPrice : market.sellPrice;
         var buttonName = direction ? 'buy' : 'sell';
         var directionPast = direction ? 'bought' : 'sold';
@@ -206,15 +211,36 @@ define([
         var aboveBelow = direction ? 'above' : 'below';
         var moreLess = direction ? 'more' : 'less';
 
-        return 'Clicking the ' + buttonName + ' button allows you to enter a stake on this market. Say, for example, you enter ' +
+        return market.description + '<br><br>Clicking the ' + buttonName + ' button allows you to enter a stake on this market. Say, for example, you enter ' +
             'a £5 stake, this means you have '  + directionPast  + ' ' + marketType + 's at ' + price + ' for £5 a ' + marketType + '.' +
             ' In order to make a profit you require ' + moreLess + ' than ' + price + ' ' +  marketType + 's during the match. When the match finishes' +
             ', for every ' + marketType + ' there has been ' + aboveBelow + ' ' + price + ' you will make £5, but for every ' +  marketType  +
             ' ' + belowAbove + ' ' + price + '  you will lose £5.';
     };
 
+    GameCtrl.prototype._getWinningMarginTip = function (market, direction) {
+        var price = direction ? market.buyPrice : market.sellPrice;
+        var buttonName = direction ? 'buy' : 'sell';
+        var directionPast = direction ? 'bought' : 'sold';
+        var belowAbove = direction ? 'below' : 'above';
+        var aboveBelow = direction ? 'above' : 'below';
+        var moreLess = direction ? 'more' : 'less';
+
+        return market.description + '<br><br>Clicking the ' + buttonName + ' button allows you to enter a stake on this market. Say, for example, you enter ' +
+            'a £5 stake, this means you have '  + directionPast  + ' the winning margin at ' + price + ' for £5.' +
+            ' In order to make a profit you require the winning margin to be ' + moreLess + ' than ' + price + '. When the match finishes' +
+            ', if the winning margin is ' + aboveBelow + ' ' + price + ' you will make £5 for every goal, but if the winning margin is ' + belowAbove + ' ' + price + '' +
+            ' you will lose £5 for every goal';
+    };
+
     GameCtrl.prototype._getBetTip = function (market) {
-        var marketType = this.marketService.markets.filter(function(m) { return m.title === market.title; })[0].description || '';
+        var marketId = this.marketService.markets.filter(function(m) { return m.title === market.title; })[0].id || '';
+
+        if(marketId === 1) {
+            return this._getWinningMarginBetTip(market);
+        }
+
+        var marketType = this.marketService.markets.filter(function(m) { return m.title === market.title; })[0].unit || '';
         var price = market.price;
         var stake = market.stake;
         var directionPast = market.direction ? 'bought' : 'sold';
@@ -228,9 +254,23 @@ define([
             ' ' + belowAbove + ' ' + price + '  you will lose £' + stake + '.';
     };
 
+    GameCtrl.prototype._getWinningMarginBetTip = function (market) {
+        var price = market.price;
+        var stake = market.stake;
+        var directionPast = market.direction ? 'bought' : 'sold';
+        var belowAbove = market.direction ? 'below' : 'above';
+        var aboveBelow = market.direction ? 'above' : 'below';
+        var moreLess = market.direction ? 'more' : 'less';
+
+        return 'You have '  + directionPast  + ' the winning margin at ' + price + ' for £' + stake + '.' +
+            ' In order to make a profit you require the winning margin to be ' + moreLess + ' than ' + price + '. When the match finishes' +
+            ', if the winning margin is ' + aboveBelow + ' ' + price + ' you will make £' + stake + ' for every goal, but if the winning margin is' +
+            ' ' + belowAbove + ' ' + price + '  you will lose £' + stake + ' per goal.';
+    };
+
     GameCtrl.prototype._getResultTip = function (bet) {
         var market = this.marketService.markets.filter(function(m) { return m.title === bet.title; })[0];
-        var marketType = market.description || '';
+        var marketType = market.unit || '';
 
         if(bet.result === 0) {
             return 'You broke even on this bet because there were the same amount of ' + marketType + 's as predicted';
@@ -238,7 +278,17 @@ define([
 
         var result = Math.abs(bet.result);
         var wonLost = bet.result > 0 ? 'won' : 'lost';
-        var soFar = Math.abs(market.soFar - bet.price).toFixed(1);
+        var scores = market.soFar.toString().split("-");
+        var soFar = market.soFar;
+
+        if(scores.length === 2) {
+            var homeScore = parseInt(scores[0]);
+            var awayScore = parseInt(scores[1]);
+            soFar = Math.abs(homeScore - awayScore);
+        }
+
+        soFar = Math.abs(soFar - bet.price).toFixed(1);
+
         var moreFewer;
 
         if(bet.direction) {
