@@ -116,7 +116,8 @@ define([
     };
 
     BetService.prototype._deleteFormatter = function () {
-        return '<span class="glyphicon glyphicon-trash"></span>';
+        var disabled = this._gameStateService.state !== gameStates.BEFORE ? 'disabled' : '';
+        return '<button class="btn btn-xs btn-delete"' + disabled + '><span class="glyphicon glyphicon-trash"></span></button>';
     };
 
     return BetService;

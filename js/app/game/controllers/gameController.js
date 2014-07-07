@@ -46,6 +46,10 @@ define([
             }.bind(this));
         }.bind(this));
 
+        marketService.grid.slickGrid.onBeforeEditCell.subscribe(function() {
+            return gameStateService.state === gameStates.BEFORE;
+        });
+
         betService.createBetsGrid();
 
         betService.grid.slickGrid.onClick.subscribe(function(e, args) {
@@ -76,6 +80,7 @@ define([
                 }
             }.bind(this))
             .then(function() { loadingService.setLoading(false); });
+
     }
 
     GameCtrl.$inject = [
@@ -101,7 +106,7 @@ define([
         this._createMatch(data.homeTeam, data.awayTeam, data.minutesElapsed, data.matchEvents);
         this.marketService.createMarkets(data.markets, this._gameId);
         this.betService.gameId = this._gameId;
-        if(this.gameStateService.state === 1) {
+        if(this.gameStateService.state === gameStates.DURING) {
             this.startSimulation();
         }
     };
@@ -112,6 +117,8 @@ define([
      */
     GameCtrl.prototype.startSimulation = function () {
         this.gameStateService.state = gameStates.DURING;
+
+        $('.grid-canvas button').attr('disabled', true);
 
         socketService.send(JSON.stringify({
             key: 'startSimulation',
@@ -293,12 +300,11 @@ define([
 
         if(bet.direction) {
             moreFewer = bet.result > 0 ? 'more' : 'fewer';
-        }
-        else {
+        } else {
             moreFewer = bet.result < 0 ? 'more' : 'fewer';
         }
 
-        return 'You ' + wonLost +' £' + result + ' because there were ' + soFar + ' ' + moreFewer + ' ' + marketType + 's that you predicted at £' +
+        return 'You ' + wonLost +' £' + result + ' because there were ' + soFar + ' ' + moreFewer + ' ' + marketType + 's than predicted at £' +
             bet.stake + ' a ' + marketType + '.';
     };
 

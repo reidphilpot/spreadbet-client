@@ -1,18 +1,20 @@
 define([
     '../models/market',
     '../../services/subscriptionService',
+    '../constants/gameStates',
     'slickGrid',
     'slickDataView'
-], function (Market, sub) {
+], function (Market, sub, gameStates) {
     'use strict';
 
-    function MarketService(betEntryFactory, gridService) {
+    function MarketService(betEntryFactory, gridService, gameStateService) {
         this.markets = null;
         this._betEntryFactory = betEntryFactory;
         this._gridService = gridService;
+        this._gameStateService = gameStateService;
     }
 
-    MarketService.$injector = ['betEntryFactory', 'gridFactory'];
+    MarketService.$injector = ['betEntryFactory', 'gridFactory', 'gameStateService'];
 
     /**
      * Get Market by ID
@@ -117,7 +119,8 @@ define([
      * @private
      */
     MarketService.prototype._sellButtonFormatter = function () {
-        return '<button class="btn btn-xs btn-danger">SELL</button>';
+        var disabled = this._gameStateService.state !== gameStates.BEFORE ? 'disabled' : '';
+        return '<button class="btn btn-xs btn-danger"' + disabled + '>SELL</button>';
     };
 
     /**
@@ -126,7 +129,8 @@ define([
      * @private
      */
     MarketService.prototype._buyButtonFormatter = function () {
-        return '<button class="btn btn-xs btn-primary">BUY</button>';
+        var disabled = this._gameStateService.state !== gameStates.BEFORE ? 'disabled' : '';
+        return '<button class="btn btn-xs btn-primary"' + disabled + '>BUY</button>';
     };
 
     return MarketService;
