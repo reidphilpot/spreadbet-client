@@ -9,7 +9,7 @@ define(function () {
                 tab: 'The basics',
                 title: 'What is sports spread betting?',
                 body: 'The bookmaker makes a prediction on various aspects of a sporting event; ' +
-                    'you then decide whether that prediction has been pitched too high or two low. What ' +
+                    'you then decide whether that prediction has been pitched too high or too low. What ' +
                     'you then win or lose depends on the stake you choose and how right or wrong you are.'
             },
             {
@@ -36,9 +36,7 @@ define(function () {
             {
                 tab: 'Let\'s play!',
                 title: 'Let\'s play!',
-                body: 'The best way to learn about sports spread betting is to try it out for yourself. ' +
-                    '<a href="#/login">Register here</a> to pick two teams and simulate a football ' +
-                    'match. Then place some spread bets to win or lose some virtual money!'
+                body: ''
             }
         ];
         this.page = this.pages[0];
@@ -48,11 +46,12 @@ define(function () {
                 'The best way to learn about sports spread betting is to try it out for yourself. ' +
                     '<a href="#/users/' + loggedInUser.username + '/games/create">Click here</a> to pick ' +
                     'two teams and simulate a football match. Then place some spread bets to win or lose ' +
-                    'some virtual money!'
+                    'some virtual money! You can test how much you\'ve learnt by taking our online quiz.'
                 :
                 'The best way to learn about sports spread betting is to try it out for yourself. ' +
                     '<a href="#/login">Register here</a> to pick two teams and simulate a football ' +
-                    'match. Then place some spread bets to win or lose some virtual money!';
+                    'match. Then place some spread bets to win or lose some virtual money! You can test how ' +
+                    'much you\'ve learnt by taking our online quiz.';
         }.bind(this));
     }
 

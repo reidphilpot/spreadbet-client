@@ -8,7 +8,7 @@ define([
 ], function ($, Match, gameStates, loadingService, socketService, sub) {
     'use strict';
 
-    function GameCtrl($scope, xhrService, marketService, betService, spreadBotService, gameStateService, securityService, $routeParams) {
+    function GameCtrl($scope, xhrService, marketService, betService, spreadBotService, gameStateService, securityService, assessmentService, $routeParams) {
         // Angular scope
         this.$scope = $scope;
 
@@ -17,6 +17,7 @@ define([
         this.marketService = marketService;
         this.betService = betService;
         this.securityService = securityService;
+        this.assessmentService = assessmentService;
         this.gameStates = gameStates;
 
         loadingService.setLoading(true);
@@ -91,6 +92,7 @@ define([
         'spreadBotService',
         'gameStateService',
         'securityService',
+        'assessmentService',
         '$routeParams'
     ];
 
@@ -106,6 +108,7 @@ define([
         this._createMatch(data.homeTeam, data.awayTeam, data.minutesElapsed, data.matchEvents);
         this.marketService.createMarkets(data.markets, this._gameId);
         this.betService.gameId = this._gameId;
+        this.assessmentService.completed = data.completedAssessment;
         if(this.gameStateService.state === gameStates.DURING) {
             this.startSimulation();
         }

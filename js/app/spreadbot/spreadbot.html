@@ -13,6 +13,16 @@
             <button class="btn btn-primary" ng-click="spreadBotService.showTips = !spreadBotService.showTips">
                 {{buttonLabel()}}
             </button>
+
+            <button
+                    class="btn btn-primary"
+                    ng-show="
+                        gameStateService.state == gameStates.AFTER &&
+                        !securityService.loggedInUser.passedAssessment &&
+                        !assessmentService.completed"
+                    ng-click="assessmentService.start()">
+                Start Quiz
+            </button>
         </p>
     </div>
 </div>

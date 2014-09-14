@@ -39,8 +39,8 @@ define(['../models/user', '../../services/loadingService'], function (User, load
         }.bind(this));
     };
 
-    SecurityService.prototype.register = function (username, password) {
-        this.xhrService.register({ username: username, password: password})
+    SecurityService.prototype.register = function (username, password, experience) {
+        this.xhrService.register({ username: username, password: password, experience: experience})
             .done(this.handleSuccess.bind(this));
     };
 

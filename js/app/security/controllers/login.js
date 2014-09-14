@@ -12,7 +12,7 @@ define(function () {
     };
 
     LoginCtrl.prototype.register = function () {
-        this.securityService.register(this.r_username, this.r_password);
+        this.securityService.register(this.r_username, this.r_password, this.r_experience);
     };
 
     return LoginCtrl;

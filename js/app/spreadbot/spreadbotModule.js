@@ -1,11 +1,15 @@
 define([
     'angular',
     './spreadBotDirective',
-    './spreadBotService'
-], function (angular, spreadBotDirective, spreadBotService) {
+    './assessmentDirective',
+    './spreadBotService',
+    './assessmentService'
+], function (angular, spreadBotDirective, assessmentDirective, spreadBotService, assessmentService) {
     'use strict';
 
     angular.module('spreadBotModule', [])
         .service('spreadBotService', spreadBotService)
-        .directive('spreadBot', spreadBotDirective);
+        .service('assessmentService', assessmentService)
+        .directive('spreadBot', spreadBotDirective)
+        .directive('assessment', assessmentDirective);
 });

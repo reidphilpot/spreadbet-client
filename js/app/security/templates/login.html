@@ -2,32 +2,60 @@
 
     <h2>Spread Better</h2>
 
-    <div>
+    <div class="clearfix">
 
-        <form class="form-signin register" ng-submit="loginController.register()" method="post">
-            <p class="text-danger" ng-show="loginController.securityService.error">
-                <span class="glyphicon glyphicon-exclamation-sign"></span> {{loginController.securityService.error}}
-            </p>
+        <div>
 
-            <input type="username" class="form-control" placeholder="Username" ng-model="loginController.r_username" required>
-            <input type="password" class="form-control" placeholder="Password" ng-model="loginController.r_password" required>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-        </form>
+            <form class="form-signin register" ng-submit="loginController.register()" method="post">
+                <p class="text-danger" ng-show="loginController.securityService.error">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span> {{loginController.securityService.error}}
+                </p>
+
+                <input type="username" class="form-control" placeholder="Username" ng-model="loginController.r_username"
+                       required>
+                <input type="password" class="form-control" placeholder="Password" ng-model="loginController.r_password"
+                       required>
+
+                <div class="experience">
+                    <p>Please tell us how much you know about Spread Betting. (1 = Novice; 5 = Expert)</p>
+                </div>
+
+                <select ng-model="loginController.r_experience" name="experience" class="form-control" required>
+                    <option value="">Select Experience</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+            </form>
+
+        </div>
+
+        <div>
+
+            <form class="form-signin login" ng-submit="loginController.login()" method="post">
+                <p class="text-danger" ng-show="loginController.securityService.error">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span> {{loginController.securityService.error}}
+                </p>
+
+                <input type="username" class="form-control" placeholder="Username" ng-model="loginController.username"
+                       required autofocus>
+                <input type="password" class="form-control" placeholder="Password" ng-model="loginController.password"
+                       required>
+
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+            </form>
+
+        </div>
 
     </div>
 
-    <div>
-
-        <form class="form-signin login" ng-submit="loginController.login()" method="post">
-            <p class="text-danger" ng-show="loginController.securityService.error">
-                <span class="glyphicon glyphicon-exclamation-sign"></span> {{loginController.securityService.error}}
-            </p>
-
-            <input type="username" class="form-control" placeholder="Username" ng-model="loginController.username" required autofocus>
-            <input type="password" class="form-control" placeholder="Password" ng-model="loginController.password" required>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-        </form>
-
-     </div>
+    <p class="disclaimer">
+        By Registering for Spread Better you understand the game herein features simulated events for education purposed
+        only and may not accurately reflect real markets or results. <a>Legal Disclaimer</a>
+    </p>
 
 </div>

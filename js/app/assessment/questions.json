@@ -1,0 +1,36 @@
+[
+    {
+        "question": "Say you bought corners at 6 for £5 a corner and the total number of corners when the game finished was 10. How much would you win or lose?",
+        "options": [
+            "Win £5",
+            "Win £20",
+            "Lose £20",
+            "Win £15"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "In what form will a bookmaker predict the result of a market",
+        "options": [
+            "One fixed price",
+            "A buy price and a sell price"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "A bookmaker predicts there will be between 3 and 4 goals scored during a football match. You believe there will be less goals so should you buy or sell the market?",
+        "options": [
+            "Buy",
+            "Sell"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "The amount of money you receive at the end of the game depends on what?",
+        "options": [
+            "It depends how accurate you are",
+            "It depends whether you win or lose"
+        ],
+        "answer": 0
+    }
+]

@@ -1,0 +1,69 @@
+<div class="modal fade" id="assessment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Assessment - {{assessmentService.title()}}</h4>
+            </div>
+            <div class="modal-body">
+                <div ng-hide="assessmentService.question || assessmentService.result">
+                    <p class="assessment-intro">
+                        This assessment is designed to test your knowledge of Spread Betting. You will be presented with 5
+                        questions of which you must answer 4 correctly in order to pass. Don't worry if you don't pass first
+                        time as you can re-take the test as many times as you like.
+                    </p>
+                </div>
+
+                <div ng-show="assessmentService.question && !assessmentService.result">
+                    <p>{{assessmentService.question.question}}</p>
+                    <ul>
+                        <li ng-repeat="option in assessmentService.question.choices">
+                            <input type="radio"
+                                   name="answer"
+                                   ng-model="assessmentService.question.selected"
+                                   ng-value="option"/>&nbsp;&nbsp;{{option}}
+                        </li>
+                    </ul>
+                </div>
+
+                <div ng-show="assessmentService.result">
+                    {{assessmentService.result}}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button
+                        type="button"
+                        class="btn btn-primary"
+                        ng-hide="assessmentService.question"
+                        ng-click="assessmentService.question = assessmentService.questions[0]">Begin</button>
+
+                <div ng-show="assessmentService.question && !assessmentService.result">
+                    <button
+                            type="button"
+                            class="btn btn-primary"
+                            ng-class="{disabled: !assessmentService.canNavigateBackwards()}"
+                            ng-click="assessmentService.prev()">Back</button>
+                    <button
+                            type="button"
+                            class="btn btn-primary"
+                            ng-hide="assessmentService.onLastQuestion()"
+                            ng-class="{disabled: !assessmentService.canNavigateForwards()}"
+                            ng-click="assessmentService.next()">Next</button>
+                    <button
+                            type="button"
+                            class="btn btn-primary"
+                            ng-show="assessmentService.onLastQuestion()"
+                            ng-class="{disabled: !assessmentService.question.selected}"
+                            ng-click="assessmentService.submitAnswers()">Complete Test</button>
+                </div>
+
+                <button
+                        type="button"
+                        class="btn btn-primary"
+                        ng-show="assessmentService.result"
+                        data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>

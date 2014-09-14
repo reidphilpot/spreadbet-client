@@ -62,5 +62,19 @@ define(['./endPointService', 'jquery'], function (endPoint, $) {
         return this.$http.get(endPoint + '/users/' + username).then(function(json) { return json.data; });
     };
 
+    // Assessment
+
+    XhrService.prototype.getQuestions = function () {
+        return this.$http.get(endPoint + '/questions');
+    };
+
+    XhrService.prototype.submitAnswers = function (gameId, username, postData) {
+        return $.ajax({
+            type: 'POST',
+            url: endPoint + '/users/' + username + '/games/' + gameId + '/questions',
+            data: postData
+        });
+    };
+
     return XhrService;
 });
